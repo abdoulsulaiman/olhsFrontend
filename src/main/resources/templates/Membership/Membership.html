@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OLHS -MEMBERSHIPS</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+	<link type="text/css" rel="stylesheet" href="css/dtb.css">
+
+    <Style>
+        /* .spinner {
+            width: 40px;
+            height: 40px;
+            /* margin: 100px auto; */
+            /* background-color: #333; */
+
+            border-radius: 100%;
+            -webkit-animation: sk-scaleout 1.4s infinite ease-in-out;
+            animation: sk-scaleout 1.4s infinite ease-in-out;
+        }
+ */
+        .outline-left {
+            border-left:0.6px solid white;
+        }
+        .outline-right {
+            border-right:0.6px solid white;
+        }
+        @-webkit-keyframes sk-scaleout {
+            0% {
+                -webkit-transform: scale(0)
+            }
+
+            100% {
+                -webkit-transform: scale(1.0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes sk-scaleout {
+            0% {
+                -webkit-transform: scale(0);
+                transform: scale(0);
+            }
+
+            100% {
+                -webkit-transform: scale(1.0);
+                transform: scale(1.0);
+                opacity: 0;
+            }
+        }
+    </Style>
+
+</head>
+
+<body class="leftbar-view">
+
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+        <div class="container-fluid">
+            <div>
+
+                <div class="page-header filled full-block light">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2> <span data-localize="loans">MEMBERSHIPS</span></h2>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-page-breadcrumb">
+                                <li> <span data-localize="menu">Menu</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li> <span data-localize="loans">Memberships</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li class="active-page"> <span data-localize="loans">Membership</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget-wrap">
+                            <div class="widget-header margin-bottom-0 block-header clearfix">
+                                <div class="pull-left">
+                                    <a th:if="${session.a_reg.getRegistrantCategory().equalsIgnoreCase('UPCOMING_LAWYER')}"
+                                        class="btn btn-primary" href="new_membership"> <i class="zmdi zmdi-plus"></i> <span data-localize="new loan">NEW</span></a>
+                                </div>
+
+                            </div>
+                            <div class="widget-container">
+                                <div class="widget-content">
+                                    <div class="row">
+                                        <div class="row">
+                                            <section class="panel">
+                                                <header class="panel-heading tab-bg-dark-navy-blue ">
+                                                    <ul class="nav nav-tabs nav-justified">
+                                                        <li class="active">
+                                                            <a data-toggle="tab" class="list" id="pending"
+                                                                href="#pendingTable" data-localize="pending">Pending</a>
+                                                        </li>
+                                                        <li class="list">
+                                                            <a data-toggle="tab" id="referred" class="spinner"
+                                                                href="#referredTable" data-localize="referred">Referred</a>
+                                                        </li>
+                                                        <li class="list">
+                                                            <a data-toggle="tab" id="resubmitted" class="spinner"
+                                                                href="#resubmittedTable" data-localize="resubmitted">Resubmitted</a>
+                                                        </li>
+                                                        <li class="list">
+                                                            <a data-toggle="tab" id="inProgress" class="spinner"
+                                                                href="#inProgressTable" data-localize="inProgress">In Progress</a>
+                                                        </li>
+                                                        <li class="list ">
+                                                            <a data-toggle="tab" id="rejected" class="spinner"
+                                                                href="#rejectedTable" data-localize="rejected">Rejected</a>
+                                                        </li>
+                                                        <li class="list">
+                                                            <a data-toggle="tab" id="completed" class="spinner"
+                                                                href="#completedTable" data-localize="completed">Completed</a>
+                                                        </li>
+                                                        <li class="list">
+                                                            <a data-toggle="tab" id="all" class="spinner"
+                                                                href="#allTable" data-localize="all">All</a>
+                                                        </li>
+                                                    </ul>
+                                                </header>
+                                                <div class="panel-body">
+                                                    <div class="tab-content">
+                                                        <!--pending table-->
+                                                        <div id="pendingTable" class="tab-pane active">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="widget-wrap">
+                                                                        <div class="widget-container">
+                                                                            <div class="widget-content">
+                                                                                <a target="blank"
+                                                                                    style="margin-bottom: 1vh"
+                                                                                    id="printPending"
+                                                                                    class="btn btn-md btn-primary hidden pull-right"
+                                                                                    href=""><i
+                                                                                        class="zmdi zmdi-print"></i>
+                                                                                    Print All</a>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <table id="tablePending"
+                                                                                            class="display table table-striped">
+                                                                                            <thead>
+                                                                                                <th>#</th>
+                																				 <th>Date</th>
+                                                                                                <th>Applicant Name</th>
+                                                                                                <th>CaseType</th>
+                                                                                                <th>Status</th>
+                                                                                                <th>Stage</th>
+                                                                                                <th>Action</th> 
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <!-- inProgressTable -->
+                                                        <div id="inProgressTable" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="widget-wrap">
+                                                                        <div class="widget-container">
+                                                                            <div class="widget-content">
+                                                                                <a target="blank"
+                                                                                    style="margin-bottom: 1vh"
+                                                                                    id="printInProgress"
+                                                                                    class="btn btn-md btn-primary hidden pull-right"
+                                                                                    href=""><i
+                                                                                        class="zmdi zmdi-print"></i>
+                                                                                    Print All</a>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <table id="tableInProgress"
+                                                                                            class="display table table-striped">
+                                                                                            <thead>
+                                                                                                <th>#</th>
+                																				 <th>Date</th>
+                                                                                                <th>Applicant Name</th>
+                                                                                                <th>CaseType</th>
+                                                                                                <th>Status</th>
+                                                                                                <th>Stage</th>
+                                                                                                <th>Action</th>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- rejectedTable -->
+                                                        <div id="rejectedTable" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="widget-wrap">
+                                                                        <div class="widget-container">
+                                                                            <div class="widget-content">
+                                                                                <a target="blank"
+                                                                                    style="margin-bottom: 1vh"
+                                                                                    id="printRejected"
+                                                                                    class="btn btn-md btn-primary hidden pull-right"
+                                                                                    href=""><i
+                                                                                        class="zmdi zmdi-print"></i>
+                                                                                    Print All</a>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <table id="tableRejected"
+                                                                                            class="display table table-striped">
+                                                                                            <thead>
+                                                                                                <th>#</th>
+                																				 <th>Date</th>
+                                                                                                <th>Applicant Name</th>
+                                                                                                <th>CaseType</th>
+                                                                                                <th>Status</th>
+                                                                                                <th>Stage</th>
+                                                                                                <th>Action</th>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- completedTable -->
+                                                        <div id="completedTable" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="widget-wrap">
+                                                                        <div class="widget-container">
+                                                                            <div class="widget-content">
+                                                                                <a target="blank"
+                                                                                    style="margin-bottom: 1vh"
+                                                                                    id="printCompleted"
+                                                                                    class="btn btn-md btn-primary hidden pull-right"
+                                                                                    href=""><i
+                                                                                        class="zmdi zmdi-print"></i>
+                                                                                    Print All</a>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <table id="tableCompleted"
+                                                                                            class="display table table-striped">
+                                                                                            <thead>
+                                                                                                <th>#</th>
+                																				 <th>Date</th>
+                                                                                                <th>Applicant Name</th>
+                                                                                                <th>CaseType</th>
+                                                                                                <th>Status</th>
+                                                                                                <th>Stage</th>
+                                                                                                <th>Action</th>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- referred Table -->
+                                                        <div id="referredTable" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="widget-wrap">
+                                                                        <div class="widget-container">
+                                                                            <div class="widget-content">
+                                                                                <a target="blank"
+                                                                                    style="margin-bottom: 1vh"
+                                                                                    id="printReferred"
+                                                                                    class="btn btn-md btn-primary hidden pull-right"
+                                                                                    href=""><i
+                                                                                        class="zmdi zmdi-print"></i>
+                                                                                    Print All</a>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <table id="tableReferred"
+                                                                                            class="display table table-striped">
+                                                                                            <thead>
+                                                                                                <th>#</th>
+                																				 <th>Date</th>
+                                                                                                <th>Applicant Name</th>
+                                                                                                <th>CaseType</th>
+                                                                                                <th>Status</th>
+                                                                                                <th>Stage</th>
+                                                                                                <th>Action</th>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- resubmitted Table -->
+                                                        <div id="resubmittedTable" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="widget-wrap">
+                                                                        <div class="widget-container">
+                                                                            <div class="widget-content">
+                                                                                <a target="blank"
+                                                                                    style="margin-bottom: 1vh"
+                                                                                    id="printResubmitted"
+                                                                                    class="btn btn-md btn-primary hidden pull-right"
+                                                                                    href=""><i
+                                                                                        class="zmdi zmdi-print"></i>
+                                                                                    Print All</a>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <table id="tableResubmitted"
+                                                                                            class="display table table-striped">
+                                                                                            <thead>
+                                                                                                <th>#</th>
+                																				 <th>Date</th>
+                                                                                                <th>Applicant Name</th>
+                                                                                                <th>CaseType</th>
+                                                                                                <th>Status</th>
+                                                                                                <th>Stage</th>
+                                                                                                <th>Action</th>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- inProgressTable -->
+                                                        <div id="allTable" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="widget-wrap">
+                                                                        <div class="widget-container">
+                                                                            <div class="widget-content">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <table id="tableAll"
+                                                                                            class="display table table-striped">
+                                                                                            <thead>
+                                                                                                <th>#</th>
+                																				 <th>Date</th>
+                                                                                                <th>Applicant Name</th>
+                                                                                                <th>CaseType</th>
+                                                                                                <th>Status</th>
+                                                                                                <th>Stage</th>
+                                                                                                <th>Action</th>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+
+                <!--Modal for cancel-loan  items-->
+
+                <div class="modal fade" id="cancel_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-ms">
+                        <div class="modal-content">
+                            <div class="modal-header modal-danger" style="background: rgb(253, 97, 2)">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;
+                                </button>
+                                <h4 class="modal-title">Warning</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        You are about to cancel a loan application, do you really want to perform this
+                                        action?
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-actions">
+                                            <a class="btn btn-primary pull-right" data-dismiss="modal" id="cancel"> <i
+                                                    class="zmdi zmdi-block"></i> Yes, cancel application</a>
+                                            <a href="#" class="btn btn-default pull-left" data-dismiss="modal"> No</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Modal for confirm -loan payment items-->
+
+                <div class="modal fade" id="confirm_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-ms">
+                        <div class="modal-content">
+                            <div class="modal-header modal-primary">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;
+                                </button>
+                                <h4 class="modal-title">Warning</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        You are about to confirm payment for a loan application, do you really want to
+                                        perform this action?
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-actions">
+                                            <a class="btn btn-primary pull-right" data-dismiss="modal" id="confirm"> <i
+                                                    class="zmdi zmdi-check"></i> Yes</a>
+                                            <a href="#" class="btn btn-default pull-left" data-dismiss="modal"> No</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal for processing -loan payment items-->
+
+                <div class="modal fade" id="process_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-ms">
+                        <div class="modal-content">
+                            <div class="modal-header modal-primary">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;
+                                </button>
+                                <h4 class="modal-title">Warning</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="modal_process_loan_form" class="form-group  material-form ">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <!-- <label class="col-md-4 control-label"></label> -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="span4 row">
+                                                        <label class="radio-toggle col-md-4">
+                                                            <input type="radio" value="false" name="processLoanAction"
+                                                                id="Approve">
+                                                            <i></i>
+                                                            Approve
+                                                        </label>
+                                                        <label class="radio-toggle col-md-4">
+                                                            <input type="radio" value="false" name="processLoanAction"
+                                                                id="Reject">
+                                                            <i></i>
+                                                            Reject
+                                                        </label>
+                                                        <label class="radio-toggle col-md-4">
+                                                            <input type="radio" value="false" name="processLoanAction"
+                                                                id="Referral">
+                                                            <i></i>
+                                                            Referral
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div id="processLoanMessage" class="hidden"></div>
+                                            </div>
+                                            <div class="row" style="margin-top: 1.5vh">
+                                                <div class="hidden" id="paymentFieldSet">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label">Loan Payment Date
+                                                            <span class="text-danger">*</span> </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" name="date" placeholder="payment date"
+                                                                class="form-control" id="paymentDate"
+                                                                required="required">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label">Interest Rate
+                                                            <span class="text-danger">*</span> </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" placeholder="Interest Rate(%)"
+                                                                class="form-control" id="interestRate" min="0" max="100"
+                                                                required="required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="margin-top: 2vh">
+                                            <div class="form-actions">
+                                                <button class="btn btn-primary pull-right" type="submit"
+                                                    id="processLoanSubmit">
+                                                    <i class="zmdi zmdi-check"></i> Submit</button>
+                                                <a href="#" class="btn btn-default pull-left" data-dismiss="modal"><i
+                                                        class="zmdi zmdi-close"></i>
+                                                    Close</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div data-th-replace="/Layout/Footer :: myFooter"></div>
+            </div>
+
+        </div>
+        </div>
+
+
+
+        <div data-th-replace="/Link/Script :: myScript"></div>
+
+        <script>
+        
+        function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+    
+    $('input[name="dates"]').daterangepicker({
+		singleDatePicker: true,
+	   
+	    
+		locale: {
+            format: 'YYYY-MM-DD '
+          }
+	
+	});
+            var registrantId = $.parseJSON(sessionStorage.getItem('a_registrant')).uuid;
+            /*
+            $("#printPending").attr("href", bfw_url() + "/loans/report/registrant/" + registrantId + "/pending");
+            $("#printInProgress").attr("href", bfw_url() + "/loans/report/registrant/" + registrantId + "/inprogress");
+            $("#printReferred").attr("href", bfw_url() + "/loans/report/registrant/" + registrantId + "/referred");
+            $("#printResubmitted").attr("href", bfw_url() + "/loans/report/registrant/" + registrantId +
+                "/resubmitted");
+            $("#printRejected").attr("href", bfw_url() + "/loans/report/registrant/" + registrantId + "/rejected");
+            $("#printCompleted").attr("href", bfw_url() + "/loans/report/registrant/" + registrantId + "/completed");
+            */
+            var category = $.parseJSON(sessionStorage.getItem('a_registrant')).registrantCategory;
+            
+            $(function(){
+            	listPending();
+            	listInprogress();
+            	listRefferedById();
+            	listResubmittedbyId();
+            	listRejected();
+            	listCompletedByRegistrant();
+            })
+            
+            function listPending() {
+            	var tables=$('#tablePending').DataTable().clear().draw();
+                var res;
+                $.ajax({
+                    url: olhs_url() +'/memberships/pending/registrant/all/'+ registrantId,
+                    type: "GET", // type of action POST || GET
+                    data: {}, // post data || get data
+                    headers: {
+                        'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                    },
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+                            pending = result.OBJECT;
+                           console.log(pending);
+                           
+                           $.each(pending, function (i, p) {
+   							var stage="";
+   							if(p.membershipStage=='001'){
+   								stage="SUBMISSION";
+   							}else if(p.membershipStage=='002'){
+   								stage="ACCEPT SUBMISSION"
+   							}else if(p.membershipStage=='003'){
+   								stage="REVISION"
+   							}else if(p.membershipStage=='003'){
+   								stage="LEGAL";
+   							}else{
+   								stage="ISSUED";
+   							}
+   							
+   							var l=''; 
+                        	l += " <ul class='icons-list' style='list-style: none'>";
+							l += "<li class='dropdown'>"
+							l += "  <a href='datatable_basic.htm#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-bars'></i></a>";
+							l += " <ul class='dropdown-menu dropdown-menu-right'>";
+							if(p.memberStatus=='PENDING'){
+                             l+="<li><a data-toggle='tooltip'  title='cancel this membership application' href='javascript:void(0)' class='cancel' id='/memberships/cancel/'"+p.uuid +"'><i class='zmdi zmdi-block'></i> cancel application</a></li>";       
+							}
+							l+="<li class='divider'></li><li><a data-toggle='tooltip'  title='view details of this membership' href='membershipDetails_"+p.uuid +"_"+ p.applicant.uuid +"'><i class='zmdi zmdi-eye'></i> view details</a></li>";
+	                         l+= " </ul>";
+							l+= " </li>";
+							l+= " </ul>";   
+								tables.row.add(
+									[
+										i+1,
+										formatDate(p.applicationDate,'dd-MM-yyyy'),
+										p.applicant.names,
+										p.casetype,
+										p.memberStatus,
+										stage,
+										l
+									]
+								).draw();
+								
+							});
+                            $("#pending").removeClass("spinner");
+                        } else {
+                            $.alert('Error Occurred ' + result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+                    }
+                });
+            }
+            
+         // The Method To Retrieve All Completed Membership by Registrant
+            
+            function listCompletedByRegistrant() {
+           	var tables=$('#tableCompleted').DataTable().clear().draw();
+               var res;
+               $.ajax({
+                   url: olhs_url() + '/memberships/completed/registrant/all/'+registrantId,
+                   type: "GET", // type of action POST || GET
+                   data: {}, // post data || get data
+                   headers: {
+                       'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                   },
+                   success: function (result, textStatus, jQxhr) {
+                       if (result.CODE == 200) {
+                           pending = result.OBJECT;
+                          console.log(pending);
+                          $.each(pending, function (i, p) {
+                       	   var stage="";
+     							if(p.membershipStage=='001'){
+     								stage="SUBMISSION";
+     							}else if(p.membershipStage=='002'){
+     								stage="ACCEPT SUBMISSION"
+     							}else if(p.membershipStage=='003'){
+     								stage="REVISION"
+     							}else if(p.membershipStage=='004'){
+     								stage="LEGAL";
+     							}else{
+     								stage="ISSUED";
+     							}
+     							
+     							var l=''; 
+                            	l += " <ul class='icons-list' style='list-style: none'>";
+    							l += "<li class='dropdown'>"
+    							l += "  <a href='datatable_basic.htm#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-bars'></i></a>";
+    							l += " <ul class='dropdown-menu dropdown-menu-right'>";
+    							if(p.memberStatus=='PENDING'){
+                                 l+="<li><a data-toggle='tooltip'  title='cancel this membership application' href='javascript:void(0)' class='cancel' id='/memberships/cancel/'"+p.uuid +"'><i class='zmdi zmdi-block'></i> cancel application</a></li>";       
+    							}
+    							l+="<li class='divider'></li><li><a data-toggle='tooltip'  title='view details of this membership' href='membershipDetails_"+p.uuid +"_"+ p.applicant.uuid +"'><i class='zmdi zmdi-eye'></i> view details</a></li>";
+    	                         l+= " </ul>";
+    							l+= " </li>";
+    							l+= " </ul>";   
+								tables.row.add(
+									[
+										i+1,
+										formatDate(p.applicationDate,'dd-MM-yyyy'),
+										p.applicant.names,
+										p.casetype,
+										p.memberStatus,
+										stage,
+										l
+		       
+									]
+								).draw();
+								
+							});
+                           $("#pending").removeClass("spinner");
+                       } else {
+                           $.alert('Error Occurred ' + result.DESCRIPTION, {
+                               type: "danger",
+                               position: ['top-right',
+                                   [-0.42, 0]
+                               ],
+                           });
+                       }
+                   },
+                   error: function (xhr, resp, text) {
+                       console.log(xhr, resp, text);
+
+                       $.alert('Error Occurred' + xhr.responseText, {
+                           type: "danger",
+                           position: ['top-right',
+                               [-0.42, 0]
+                           ],
+                       });
+                   }
+               });
+           }
+            
+            // The Method To Retrieve All Resubmitted Membership
+            
+            function listResubmittedbyId() {
+           	var tables=$('#tableResubmitted').DataTable().clear().draw();
+               var res;
+               $.ajax({
+                   url: olhs_url() + '/memberships/resubmited/applicant/'+registrantId,
+                   type: "GET", // type of action POST || GET
+                   data: {}, // post data || get data
+                   headers: {
+                       'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                   },
+                   success: function (result, textStatus, jQxhr) {
+                       if (result.CODE == 200) {
+                           pending = result.OBJECT;
+                          console.log(pending);
+                          $.each(pending, function (i, p) {
+                       	   var stage="";
+     							if(p.membershipStage=='001'){
+     								stage="SUBMISSION";
+     							}else if(p.membershipStage=='002'){
+     								stage="ACCEPT SUBMISSION"
+     							}else if(p.membershipStage=='003'){
+     								stage="REVISION"
+     							}else if(p.membershipStage=='004'){
+     								stage="LEGAL";
+     							}else{
+     								stage="ISSUED";
+     							}
+     							var l=''; 
+                            	l += " <ul class='icons-list' style='list-style: none'>";
+    							l += "<li class='dropdown'>"
+    							l += "  <a href='datatable_basic.htm#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-bars'></i></a>";
+    							l += " <ul class='dropdown-menu dropdown-menu-right'>";
+    							if(p.memberStatus=='RESUBMITTED'){
+                                 l+="<li><a data-toggle='tooltip'  title='cancel this membership application' href='javascript:void(0)' class='cancel' id='/memberships/cancel/'"+p.uuid +"'><i class='zmdi zmdi-block'></i> cancel application</a></li>";       
+    							}
+    							l+="<li class='divider'></li><li><a data-toggle='tooltip'  title='view details of this membership' href='membershipDetails_"+p.uuid +"_"+ p.applicant.uuid +"'><i class='zmdi zmdi-eye'></i> view details</a></li>";
+    	                         l+= " </ul>";
+    							l+= " </li>";
+    							l+= " </ul>";   
+								tables.row.add(
+									[
+										i+1,
+										formatDate(p.applicationDate,'dd-MM-yyyy'),
+										p.applicant.names,
+										p.casetype,
+										p.memberStatus,
+										stage,
+										 l
+									]
+								).draw();
+								
+							});
+                           $("#pending").removeClass("spinner");
+                       } else {
+                           $.alert('Error Occurred ' + result.DESCRIPTION, {
+                               type: "danger",
+                               position: ['top-right',
+                                   [-0.42, 0]
+                               ],
+                           });
+                       }
+                   },
+                   error: function (xhr, resp, text) {
+                       console.log(xhr, resp, text);
+
+                       $.alert('Error Occurred' + xhr.responseText, {
+                           type: "danger",
+                           position: ['top-right',
+                               [-0.42, 0]
+                           ],
+                       });
+                   }
+               });
+           }
+           
+            // The Method to retrieve Membership by Registrant
+            function listRejected() {
+            	var tables=$('#tableRejected').DataTable().clear().draw();
+                var res;
+                $.ajax({
+                    url: olhs_url() + '/memberships//rejected/registrant/all/'+registrantId,
+                    type: "GET", // type of action POST || GET
+                    data: {}, // post data || get data
+                    headers: {
+                        'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                    },
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+                            pending = result.OBJECT;
+                           console.log(pending);
+                           $.each(pending, function (i, p) {
+                        	   var stage="";
+      							if(p.membershipStage=='001'){
+      								stage="SUBMISSION";
+      							}else if(p.membershipStage=='002'){
+      								stage="ACCEPT SUBMISSION"
+      							}else if(p.membershipStage=='003'){
+      								stage="REVISION"
+      							}else if(p.membershipStage=='004'){
+      								stage="LEGAL";
+      							}else{
+      								stage="ISSUED";
+      							}
+      							
+      							var l=''; 
+                            	l += " <ul class='icons-list' style='list-style: none'>";
+    							l += "<li class='dropdown'>"
+    							l += "  <a href='datatable_basic.htm#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-bars'></i></a>";
+    							l += " <ul class='dropdown-menu dropdown-menu-right'>";
+    							if(p.p.memberStatus=='REJECTED'){
+    							}
+    							l+="<li class='divider'></li><li><a data-toggle='tooltip'  title='view details of this membership' href='membershipDetails_"+p.uuid +"_"+ p.applicant.uuid +"'><i class='zmdi zmdi-eye'></i> view details</a></li>";
+		                         l+= " </ul>";
+								l+= " </li>";
+								l+= " </ul>";          
+								tables.row.add(
+									[
+										i+1,
+										formatDate(p.applicationDate,'dd-MM-yyyy'),
+										p.applicant.names,
+										p.casetype,
+										p.memberStatus,
+										stage,
+										 l
+		       
+									]
+								).draw();
+								
+							});
+                            $("#pending").removeClass("spinner");
+                        } else {
+                            $.alert('Error Occurred ' + result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+                    }
+                });
+            }
+             
+            
+            
+            
+            //The Method To retrieved All Inprogress By Registrant
+            
+             function listInprogress() {
+            	var tables=$('#tableInProgress').DataTable().clear().draw();
+                var res;
+                $.ajax({
+                    url: olhs_url() + '/memberships/inprogress/applicant/all/'+registrantId,
+                    type: "GET", // type of action POST || GET
+                    data: {}, // post data || get data
+                    headers: {
+                        'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                    },
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+                            pending = result.OBJECT;
+                           console.log(pending);
+                           $.each(pending, function (i, p) {
+                        	   var stage="";
+      							if(p.membershipStage=='001'){
+      								stage="SUBMISSION";
+      							}else if(p.membershipStage=='002'){
+      								stage="ACCEPT SUBMISSION"
+      							}else if(p.membershipStage=='003'){
+      								stage="REVISION"
+      							}else if(p.membershipStage=='003'){
+      								stage="LEGAL";
+      							}else{
+      								stage="ISSUED";
+      							}
+      							var l=''; 
+                            	l += " <ul class='icons-list' style='list-style: none'>";
+    							l += "<li class='dropdown'>"
+    							l += "  <a href='datatable_basic.htm#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-bars'></i></a>";
+    							l += " <ul class='dropdown-menu dropdown-menu-right'>";
+    							if(p.p.memberStatus=='INPROGRESS'){
+    								 l+="<li><a data-toggle='tooltip'  title='cancel this membership application' href='javascript:void(0)' class='cancel' id='/memberships/cancel/'"+p.uuid +"'><i class='zmdi zmdi-block'></i> cancel application</a></li>";     	
+    							}
+    							l+="<li class='divider'></li><li><a data-toggle='tooltip'  title='view details of this membership' href='membershipDetails_"+p.uuid +"_"+ p.applicant.uuid +"'><i class='zmdi zmdi-eye'></i> view details</a></li>";
+		                         l+= " </ul>";
+								l+= " </li>";
+								l+= " </ul>";  
+								tables.row.add(
+									[
+										i+1,
+										formatDate(p.applicationDate,'dd-MM-yyyy'),
+										p.applicant.names,
+										p.casetype,
+										p.memberStatus,
+										stage,
+										l
+									]
+								).draw();
+								
+							});
+                            $("#pending").removeClass("spinner");
+                        } else {
+                            $.alert('Error Occurred ' + result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+                    }
+                });
+            }
+            
+             //The Method To retrieved All Refered Membership By Registrant
+             
+             function listRefferedById() {
+            	var tables=$('#tableReferred').DataTable().clear().draw();
+                var res;
+                $.ajax({
+                    url: olhs_url() + '/memberships/referred/registrant/'+registrantId,
+                    type: "GET", // type of action POST || GET
+                    data: {}, // post data || get data
+                    headers: {
+                        'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                    },
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+                            pending = result.OBJECT;
+                           console.log(pending);
+                           $.each(pending, function (i, p) {
+                        	   var stage="";
+      							if(p.membershipStage=='001'){
+      								stage="SUBMISSION";
+      							}else if(p.membershipStage=='002'){
+      								stage="ACCEPT SUBMISSION"
+      							}else if(p.membershipStage=='003'){
+      								stage="REVISION"
+      							}else if(p.membershipStage=='003'){
+      								stage="LEGAL";
+      							}else{
+      								stage="ISSUED";
+      							}
+      							var l=''; 
+                            	l += " <ul class='icons-list' style='list-style: none'>";
+    							l += "<li class='dropdown'>"
+    							l += "  <a href='datatable_basic.htm#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-bars'></i></a>";
+    							l += " <ul class='dropdown-menu dropdown-menu-right'>";
+    							if(p.memberStatus=='REFERRAL'){
+    								 l+="<li><a data-toggle='tooltip'  title='cancel this membership application' href='javascript:void(0)' class='cancel' id='/memberships/cancel/'"+p.uuid +"'><i class='zmdi zmdi-block'></i> cancel application</a></li>";       
+    								 l+="<li><a data-toggle='tooltip'  title='edit this membership application' href='membershipUpdate_"+p.uuid +"_"+ p.applicant.uuid +"' class='edit'><i class='zmdi zmdi-edit'></i> Edit Application</a></li>";
+    							}
+    							l+="<li class='divider'></li><li><a data-toggle='tooltip'  title='view details of this membership' href='membershipDetails_"+p.uuid +"_"+ p.applicant.uuid +"'><i class='zmdi zmdi-eye'></i> view details</a></li>";
+		                         l+= " </ul>";
+								l+= " </li>";
+								l+= " </ul>";  
+								tables.row.add(
+									[
+										i+1,
+										formatDate(p.applicationDate,'dd-MM-yyyy'),
+										p.applicant.names,
+										p.casetype,
+										p.memberStatus,
+										stage,
+										l
+									]
+								).draw();
+								
+							});
+                            $("#pending").removeClass("spinner");
+                        } else {
+                            $.alert('Error Occurred ' + result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+                    }
+                });
+            }
+            
+             var path;
+             $(document).on('click', '.cancel', function () {
+                 path = $(this).attr('id');
+                 
+                 console.log(path);
+                 $('#cancel_modal').modal();
+             });
+             var index;
+             $(document).on('click', '.confirm', function () {
+                 path = $(this).attr('id');
+                 
+                 index = $(this).data("index");
+                 console.log(index);
+                 $('#confirm_modal').modal();
+             });
+             
+             
+             $("#cancel").on('click', function () {
+            	 MembershipActionRequest(path);
+             });
+          
+            // The Method To Cancel Membership
+             function MembershipActionRequest(path) {
+                 var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+                 $.ajax({
+                     headers: {
+                    	 'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                         'doneBy': username
+                     },
+                     url: olhs_url() + path,
+                     type: "PUT", // type of action POST || GET
+                     //dataType : 'json', // data type
+                     contentType: 'application/json',
+                     success: function (result, textStatus, jQxhr) {
+                         if (result.CODE == 200) {
+                             // console.log(result)
+                             $.alert(result.DESCRIPTION, {
+                                 type: "success",
+                                 position: ['top-right',
+                                     [-0.42, 0]
+                                 ],
+                             });
+                             listLoans();
+                             SendSms(path.split("/")[3]);
+
+                         } else {
+                             $.alert(result.DESCRIPTION, {
+                                 type: "danger",
+                                 position: ['top-right',
+                                     [-0.42, 0]
+                                 ],
+                             });
+                         }
+
+
+                     },
+                     error: function (xhr, resp, text) {
+                         console.log(xhr, resp, text);
+                         $("#e_save").removeClass('disabled');
+                         $.alert('Error Occurred' + xhr.responseText, {
+                             type: "danger",
+                             position: ['top-right',
+                                 [-0.42, 0]
+                             ],
+                         });
+
+                     }
+                 });
+             }
+
+            
+
+          
+            
+
+          
+            // DataTable Export
+            $("#tablePending").DataTable({
+                "createdRow": function( row, data, dataIndex ) {
+
+                $(row).addClass( 'client' );
+                },
+                dom: 'Bfrtip',
+                dom: 'lBfrtip',
+
+                buttons: [
+                {
+                    className: 'btn-primary outline-right',
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0,1,2,3,4,5]
+                    },
+                    text: function ( dt, button, config ) {
+                        return dt.i18n( 'buttons.print', 'Print Excel File' );
+                    },
+                    messageTop:'List of Pending Memberships'
+
+                },
+                {
+                    extend: 'pdfHtml5',
+                    className: 'btn-primary outline-left',
+                    exportOptions: {
+                        columns: [0,1,2,3,4,5]
+                    },
+                    text: function ( dt, button, config ) {
+                        return dt.i18n( 'buttons.print', 'Print Pdf File' );
+                    },
+                    messageTop:'List of Pending Memberships'
+                },
+
+                // 'colvis'
+                ],
+
+            }).clear().draw();
+
+            $("#tableInProgress").DataTable({
+                "createdRow": function( row, data, dataIndex ) {
+
+                    $(row).addClass( 'client' );
+                    },
+                    dom: 'Bfrtip',
+                    dom: 'lBfrtip',
+
+                    buttons: [
+                    {
+                        className: 'btn-primary outline-right',
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Excel File' );
+                        },
+                        messageTop:'List of Memberships in Progress'
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn-primary outline-left',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Pdf File' );
+                        },
+                        messageTop:'List of Memberships in Progress'
+                    },
+
+                    // 'colvis'
+                    ],
+
+            });
+            $("#tableCompleted").DataTable({
+                "createdRow": function( row, data, dataIndex ) {
+                $(row).addClass( 'client' );
+                    },
+                    dom: 'Bfrtip',
+                    dom: 'lBfrtip',
+
+                    buttons: [
+                    {
+                        className: 'btn-primary outline-right',
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Excel File' );
+                        },
+                        messageTop:'List of Completed Memberships'
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn-primary outline-left',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Pdf File' );
+                        },
+                        messageTop:'List of Completed Memberships'
+                    },
+
+                    // 'colvis'
+                    ],
+
+
+            });
+            $("#tableRejected").DataTable({
+                "createdRow": function( row, data, dataIndex ) {
+                $(row).addClass( 'client' );
+                    },
+                    dom: 'Bfrtip',
+                    dom: 'lBfrtip',
+
+                    buttons: [
+                    {
+                        className: 'btn-primary outline-right',
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Excel File' );
+                        },
+                        messageTop:'List of Rejected Memberships'
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn-primary outline-left',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Pdf File' );
+                        },
+                        messageTop:'List of Rejected Memberships'
+                    },
+
+                    // 'colvis'
+                    ],
+
+
+            });
+            $("#tableReferred").DataTable({
+                "createdRow": function( row, data, dataIndex ) {
+                $(row).addClass( 'client' );
+                    },
+                    dom: 'Bfrtip',
+                    dom: 'lBfrtip',
+
+                    buttons: [
+                    {
+                        className: 'btn-primary outline-right',
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Excel File' );
+                        },
+                        messageTop:'List of Referred Memberships'
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn-primary outline-left',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Pdf File' );
+                        },
+                        messageTop:'List of Referred Memberships'
+                    },
+
+                    // 'colvis'
+                    ],
+
+
+            });
+            $("#tableResubmitted").DataTable({
+                "createdRow": function( row, data, dataIndex ) {
+                $(row).addClass( 'client' );
+                    },
+                    dom: 'Bfrtip',
+                    dom: 'lBfrtip',
+
+                    buttons: [
+                    {
+                        className: 'btn-primary outline-right',
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Excel File' );
+                        },
+                        messageTop:'List of Resubmitted Memberships'
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn-primary outline-left',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Pdf File' );
+                        },
+                        messageTop:'List of Resubmitted Memberships'
+                    },
+
+                    // 'colvis'
+                    ],
+
+
+            });
+             $("#tableAll").DataTable({
+                "createdRow": function( row, data, dataIndex ) {
+                $(row).addClass( 'client' );
+                    },
+                    dom: 'Bfrtip',
+                    dom: 'lBfrtip',
+
+                    buttons: [
+                    {
+                        className: 'btn-primary outline-right',
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Excel File' );
+                        },
+                        messageTop:'List of All Memberships'
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn-primary outline-left',
+                        exportOptions: {
+                            columns: [0,1,2,3,4,5]
+                        },
+                        text: function ( dt, button, config ) {
+                            return dt.i18n( 'buttons.print', 'Print Pdf File' );
+                        },
+                        messageTop:'List of All Memberships'
+                    },
+
+                    // 'colvis'
+                    ],
+
+
+            });
+        </script>
+    </section>
+</body>
+
+</html>

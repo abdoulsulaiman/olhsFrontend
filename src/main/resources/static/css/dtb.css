@@ -1,0 +1,22 @@
+@media screen and (min-width: 1200px) {
+    .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+      position: absolute;
+      margin-left: 50vw;
+      margin-top: 0.3vh;
+    }
+
+    .btn-group>.btn:last-child:not(:first-child),
+    .btn-group>.dropdown-toggle:not(:first-child) {
+      position: absolute;
+      margin-left: 60vw;
+      margin-top: 0.3vh;
+    }
+
+    div.dataTables_wrapper div.dataTables_length label {
+      position: absolute;
+      margin-left: 30vw;
+      margin-top: 4.5vh;
+    }
+
+
+  }

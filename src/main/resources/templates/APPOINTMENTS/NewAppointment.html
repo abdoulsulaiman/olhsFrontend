@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OLHS -Appointment Request</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+
+
+
+    
+     <style>
+
+      .land-table td{
+             width: 5%;
+         }
+         .land-table .td-header{
+               background-color: #eceff1;
+         }
+         .land-table,.profile-table{
+             width: 100%;
+             border-spacing: 8px;
+         }
+         .land-table td,.profile-table td{
+            padding-left: 7px;
+             height: 30px;
+             margin: 20px;
+             border: 1px solid silver;
+         }
+         .profile-table .td-header{
+             width:20%;
+             background-color: #eceff1;
+         }
+         #w_header{
+             padding-bottom: 5px;
+         }
+         #w_wrap{
+             padding-top: 10px;
+             padding-bottom: 5px;
+             width:550px;
+                    }
+
+     </style>
+  </head>
+
+  <body class="leftbar-view">
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+      <div class="container-fluid">
+        <div>
+          <div class="page-header filled full-block light">
+            <div class="row">
+              <div class="col-md-6">
+                <h2 data-localize="new quotation">NEW Appointment</h2>
+              </div>
+              <div class="col-md-6">
+                <ul class="list-page-breadcrumb">
+                  <li data-localize="menu">Menu <i class="zmdi zmdi-chevron-right"></i></li>
+                  <li data-localize="quotations">Appointment <i class="zmdi zmdi-chevron-right"></i></li>
+                  <li class="active-page" data-localize="quotations">New Appointment Request</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget-wrap">
+                <div  class="widget-header block-header margin-bottom-0 clearfix" id="w_header">
+                    <div class="pull-left">
+                        <a class="btn btn-sm btn-primary" href="appointment"> <i class="zmdi zmdi-arrow-back"></i> <span data-localize="back"> Back</span></a>
+                    </div>
+                </div>
+                <div class="widget-container">
+                  <div class="widget-content">
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <span class="label label-warning" id="default_password_info"></span>
+                      </div>
+                      <div class="col-md-12">
+                        <input type="hidden"  th:value="${session.a_reg.getNames()}" id="buyerNames">
+                        <legend data-localize="quotation request">Appointment Request</legend>
+                        <form class="form-horizontal material-form" id="q_form"> 
+                       
+                            <div class="row col-md-8 col-md-offset-2">
+                                
+                                <div class="row">
+                                <div class="col-md-4">
+                                 <div class="form-group">
+                                  <label class="control-label col-md-4"
+                                                                for="p_category"><span
+                                                                    data-localize="labour amount">CaseType</span><span
+                                                                    
+                                                                    class="text-danger">*</span></label>
+                                                                    
+                                             <div class="col-md-8">
+                                            <select id="case_category" class="form-control" required>
+                                              <option selected disabled>--Select CaseType--</option>
+                                              <option value="ALL">All</option>
+                                               <option value="PENAL">PENAL</option>
+                                                                <option value="DIVORCE">DIVORCE</option>
+                                                                <option value="WILL">WILL</option>
+                                                                <option value="BUSINESS">BUSINESS</option>
+                                            </select>
+                                          </div>
+                                          </div>
+                                                                                    </div>
+                                            <div class="col-md-4">
+                                            <div class="form-group">
+                                                            <label class="control-label col-md-4"
+                                                                for="District"><span
+                                                                    data-localize="labour amount">Office District</span><span
+                                                                    
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                               <select class="form-control" required="required" id="m_district" name="district">
+                                                              <option selected disabled>-Select District-</option>
+                                                                
+                                                            </select>
+                                                            </div>`
+                                                        </div>
+                                </div>
+                                  <div class="col-md-4">
+                                 <div class="form-group">
+                                  <label class="control-label col-md-4"
+                                                                for="p_category"><span
+                                                                    data-localize="labour amount">Year of Experience</span><span
+                                                                    
+                                                                    class="text-danger">*</span></label>
+                                                                    
+                                             <div class="col-md-8">
+                                            <input type="text" id="experience" class="form-control" required>
+                                              
+                                          </div>
+                                          </div>
+                                                                                    </div>
+                               
+                           <div class="card card-profile shadow mt--300">
+          <div class="px-4">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image" id="profilePic">
+
+                </div>
+              </div>
+            </div>
+          
+              <div class="mt-2 py-3  m-2">
+                <div class="row justify-content-center" style="margin-bottom: 15px;">
+                  <h4 style="color: #6cb33e"><i class="zmdi zmdi-account"></i> Lawyers</h4>
+                  <!-- <a href="#">Show more</a> -->
+                </div>
+                <div class="my-2 py-2">
+               
+                  <div class="row lm-5" id="products">
+
+                  </div>
+            
+                 </div>
+              </div>
+            
+           
+
+          </div>
+        </div>
+                                  
+                                </div>
+                                <div class="row">
+               					<div style="margin-bottom:50px;" ></div>
+                                </div>
+                              
+                            </div>      
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="list_users"></div>
+
+          <div class="row">
+            <div data-th-replace="/Layout/Footer :: myFooter"></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-th-replace="/Link/Script :: myScript"></div>
+      
+         <!--Modal for Viewing Details  items-->
+
+                <div class="modal fade" id="detail_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-md ">
+			<div class="modal-content">
+				<div class="modal-header modal-primary" style="background: rgb(0,123,167)">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+					<h4 class="modal-title" style="text-align: center;color: white;">Lawyer</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+					    <div class="col-md-9 col-sm-4">
+                    <div class="widget-wrap" id="w_wrap">
+                      
+                        <div class="widget-container margin-top-0">
+                            <div class="widget-content">
+                                <div class="row">
+                                  <table class="profile-table">
+                                      <tr>
+                                          <td class="td-header">ID</td>
+                                          <td id="e_identity"></td>
+                                        <td class="td-header">Gender</td>
+                                        <td id="e_gender"></td>
+                                      </tr>
+                                      <tr>
+                                          <td class="td-header" data-localize="name">Name</td>
+                                          <td id="e_names"></td>
+                                          <td class="td-header" data-localize="start year">Email</td>
+                                          <td id="e_email"></td>
+                                      </tr>
+                                      
+                                      <tr>
+                                          <td class="td-header" data-localize="phone">Phone</td>
+                                          <td id="e_phone"></td>
+                                        <td class="td-header" data-localize="entity category">Career</td>
+                                        <td id="e_category"></td>
+                                      </tr>
+                                      <tr>
+                                          <td class="td-header" data-localize="address">Address</td>
+                                          <td id="e_address"></td>
+                                          <td class="td-header" data-localize="about">Martal Status</td>
+                                          <td id="e_mstatus"></td>
+                                       </tr>
+                                       
+                                       <tr>
+                                          <td class="td-header" data-localize="address">CaseType</td>
+                                          <td id="e_case"></td>
+                                          <td class="td-header" data-localize="about">Work Status</td>
+                                          <td id="e_wstatus"></td>
+                                       </tr>
+                                  </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+						</div>
+	
+					</div>
+				</div>
+	
+			</div>
+	
+		</div>
+	</div>
+	
+	
+	
+<div class="modal fade" id="appointment_modal" tabindex="-1"  role="dialog"  aria-labelledby="myModalLabel"  aria-hidden="true">
+                        <div class="modal-dialog modal-md ">
+                            <div class="modal-content">
+                                <div class="modal-header modal-primary" style="background: rgb(0,123,167)" >
+                                    <button  type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                                    <h4 class="modal-title" style="text-align: center;color: white;">New Appointment</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <form class="form-horizontal material-form" id="ra_form">
+
+                                                <div class="col-md-12">
+                                                    <fieldset>
+                                                        <legend data-localize="new product">Case Description</legend>
+														
+											<div class="col-md-6"> 			 
+                                        <div class="form-group ">
+                                            <label class="col-md-4 control-label"><span  data-localize="product">Description</span>
+                                            <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <textarea rows="4" cols="36" id="description"></textarea>
+                                            </div>
+                                        </div>
+                                        </div>
+                                                   </fieldset>
+                                                </div>
+
+
+                                              
+                                                <div class="form-group col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-actions">
+                                                            <a  class="btn btn-primary pull-right" id="ra_save"> <i class="zmdi zmdi-save"></i><span data-localize="save">Save</span></a>
+                                                            <a href="#" class="btn btn-default pull-left" data-dismiss="modal" data-localize="cancel"> Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer hidden">
+                                <button class="btn btn-danger" type="button">Save</button>
+                            </div>
+                        </div>
+                    </div>
+	
+	
+
+      <script>
+  
+        function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+
+            var object = {};
+            var lawyers = [];
+            var lawyer1 = [];
+        $(function (){
+        	RetrieveDistrict();
+            // alert(sessionStorage.getItem('a_registrant'));
+                 
+            $.ajax({
+              url: olhs_url() + "/lawyers/",
+              type: "GET", // type of action POST || GET
+              headers: {
+            	  'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+              },
+              success: function (result, textStatus, jQxhr) {
+                if (result.CODE == 200) {
+                  object=result.OBJECT;
+                  console.log(result.OBJECT)
+                  populatelawyers(result.OBJECT);
+                } else {
+                  $.alert('Error Occurred ' + result.DESCRIPTION, {
+                    type: "danger",
+                    position: ['top-right',
+                      [-0.42, 0]
+                    ],
+                  });
+                }
+              },
+              error: function (xhr, resp, text) {
+                console.log(xhr, resp, text);
+
+                $.alert('Error Occurred' + xhr.responseText, {
+                  type: "danger",
+                  position: ['top-right',
+                    [-0.42, 0]
+                  ],
+                });
+              }
+            });
+            
+        });
+        var defaultImg = "'images/default.jpg'"; 
+        // THE METHOD TO POPULATE LAWYER
+         function unique(list) {
+    var result = [];
+    $.each(list, function (i, e) {
+
+      var count = 0;
+
+      result.forEach(rs => {
+        if (e.uuid === rs.uuid)
+          count++;
+      });
+      if (count === 0) {
+        result.push(e);
+      }
+    });
+    return result;
+  }
+        function populatelawyers(lawyers) {
+        	
+    if (lawyers.length > 0) {
+    	var ul = unique(lawyers);
+    	$("#products").empty();
+    	ul.forEach(lawyer => {
+        var imgUrl = olhs_url() + "/pictures/registrant/" + lawyer.registrant.uuid;
+        $("#products").append(
+                '<div class="panel panel-primary col-md-4" style="width: 18rem;" id="pa"><img width="350px;" height="100px;" style="margin-bottom:5px;" class="card-img-top col-md-12 img-thumbnail" src="' +
+                imgUrl + '" onerror="this.onerror=null;this.src='+defaultImg+';"><div class="panel-body" style="margin-top:60px;"><h5 style="margin-bottom:8px;">'+
+                lawyer.registrant.names +
+                '</h5><a  href="lawyerDetails_'+lawyer.uuid+' style="margin-top:20px;" class="label label-primary btn-sm">Details</a><a href="#" data-id='+lawyer.uuid+ ' id="request" style="margin-right:20px; margin-left:5px; margin-top:20px;" class="label label-primary btn-xs">Send Request</a></div></div>'
+              )
+            });
+    } else {
+     // $("#products").append(' <div class="card shadow p-3"> Lawyers not yet available</div>');
+    }
+  }
+
+        
+        $(document).on('click','#detail',function (){
+            var id=$(this).data('id');
+            populateLawyerInfo(id);
+          
+   		 $('#detail_modal').modal();
+   	 });
+        
+        $(document).on('click','#request',function (){
+            var luuid=$(this).data('id');
+             var ruuid = $.parseJSON(sessionStorage.getItem('a_registrant')).uuid;
+            
+   		 $('#appointment_modal').modal();
+   		 
+   		$(document).on('click','#ra_save',function (){
+   			createAppointment(luuid,ruuid);
+   		});
+   	 });
+ 
+        
+        
+        function populateLawyerInfo(uuid) {
+           
+             // tables.clear();
+             $.ajax({
+                 headers: {
+
+                	 'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                 },
+                 type: "GET",
+                 url: olhs_url()+"/lawyers/"+uuid,
+
+                 success: function (result) {
+                     if (result.CODE == 200) { 
+                         var entity=result.OBJECT;
+                         
+                         entity=result.OBJECT;
+                         console.log(entity);
+                         $("#e_identity").text(entity.registrant.identity);
+                         $("#e_names").text(entity.names);
+                         $("#e_address").text(entity.registrant.address);
+                         $("#e_gender").text(entity.registrant.gender);
+                         $("#e_email").text(entity.registrant.email); 
+                         $("#e_phone").text(entity.registrant.phone);
+                         $("#e_category").text(entity.registrant.registrantCategory);
+                          $("#e_case").text(entity.casetype);
+                          $("#e_wstatus").text(entity.workstatus);
+                         $("#e_email").text(entity.email);
+                         $("#e_mstatus").text(entity.registrant.martalStatus);
+                         
+                         
+                     } else {
+                         console.log("fail get", resurt)
+                     }
+                 },
+                 error: function () {
+                     //  console.log("ERROR", e);
+                 }
+             })
+         }
+         
+
+
+
+        
+            
+       
+
+    
+    var check;
+       $(document).ready(function(){
+             
+             //Check if product category is selected and choose all the produt in it
+         $("#case_category").change(function () {
+           var casetype = $('#case_category :selected').val();
+           
+           if (casetype === "ALL") {
+        	   lawyers=[];
+             $.each(object, function (i, item) {
+            	 $("#pa").remove();
+                 
+            //   lawyers.push(item);
+               check=item;
+         		  lawyers.push(item);  
+         	  
+             })
+           } else {
+        	   lawyers=[];
+             $.each(object, function (i, item) {
+            	 $("#pa").remove();
+            	
+               if (item.casetype === casetype) {
+            	  
+            	   if(item!=check || check==null){
+              		  lawyers.push(item);  
+              	  }
+                      //lawyers.push(item);
+            	   check=item; 
+                }
+             })
+           }
+           console.log(lawyers);
+          populatelawyers(lawyers);
+         });
+          
+       })
+       
+       
+       
+       $(document).ready(function(){
+             
+             //Check if product category is selected and choose all the produt in it
+         $("#m_district").change(function () {
+        	 $("#pa").remove();
+        	 
+           var district = $('#m_district :selected').val();
+            //   lawyers=[];
+             $.each(object, function (i, item) {
+                 if(item.district.name === district){
+                	 
+                	 $("la").remove();
+                	// lawyers.empty();
+                	  
+                	 
+                		  lawyers.push(item);  
+                	 
+                 }   
+             })
+           console.log(lawyers);
+           populatelawyers(lawyers);
+         });
+          
+       })
+       
+         $(document).ready(function(){
+             
+             //Check if product category is selected and choose all the produt in it
+         $("#experience").keyup(function () {
+        	 $("#pa").remove();
+           var success = $('#experience').val();
+          /// alert(success);
+             $.each(object, function (i, item) {
+                 if(item.yearofexperience==success){
+                	 $("#pa").remove();
+                	
+               		lawyers.push(item);
+               	  
+                 }
+             })
+           
+           console.log(lawyers);
+           populatelawyers(lawyers);
+         });
+          
+       })
+       
+       
+       
+       function createAppointment(luuid,ruuid){
+    	     if($("#ra_form").valid()){ 
+					$("#ra_save").addClass('disabled');
+					
+					var user={
+			        description:$("#description").val(),
+			        luuid:luuid,
+			        ruuid:ruuid
+					
+			        }	
+					console.log(user);	
+					var username=$.parseJSON(sessionStorage.getItem('a_registrant')).names;
+					$.ajax({ 
+				        
+						headers: {
+					        
+		                   'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+					        'doneBy':username
+					    },
+						url:olhs_url()+'/appointments/save', 
+				        type : "POST", // type of action POST || GET
+				        dataType : 'json', // data type
+				        data : JSON.stringify(user), // post data || get data
+				        contentType: 'application/json',
+				        success : function(result, textStatus, jQxhr) {
+				        	$("#ra_save").removeClass('disabled');
+				        	if(result.CODE==200){
+				     
+				        		$.alert(result.DESCRIPTION,
+										{
+											type : "success",
+											position : [ 'top-right',
+													[ -0.42, 0 ] ],
+										}); 
+					        	
+					        	$("#ra_form").each(
+										function() {
+											this.reset();
+										});
+					        	$('#appointment_modal').modal('hide');
+					        	}else{
+					        		 $.alert(result.DESCRIPTION,
+											{
+												type : "danger",
+												position : [ 'top-right',
+														[ -0.42, 0 ] ],
+											}); 
+					        	}
+					        		
+				        	
+
+								
+
+							},
+							error: function (xhr, resp, text) {
+								console.log(xhr, resp, text);
+								$("#ra_save").removeClass('disabled');
+								$.alert('Error Occurred' + xhr.responseText, {
+									type: "danger",
+									position: ['top-right',
+										[-0.42, 0]
+									],
+								});
+
+							}
+						});
+
+				}
+					
+			
+
+       }
+       
+     //The Method to retrieve District
+       function RetrieveDistrict() {
+			var tables=$('#table').DataTable().clear().draw();
+			$.ajax({
+				url: olhs_url() + '/districts',
+				type: "GET", // type of action POST || GET
+				dataType: 'json', // data type
+				headers: {
+					'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+				},
+				data: {}, // post data || get data
+				contentType: 'application/json',
+				success: function (result, textStatus, jQxhr) {
+					if (result.CODE == 200) {
+						
+					var provinces=result.OBJECT;
+					 console.log(provinces);
+						
+						//  $('#m_district').children('option').remove();
+							$.each(provinces, function (i, item) {
+								$('#m_district').append($('<option></option>', {
+									value: item.name,
+									text: item.name
+								}));
+							});
+			        		
+							
+					
+					} else {
+						$.alert(result.DESCRIPTION, {
+							type: "danger",
+							position: ['center',
+								[-0.42, 0]
+							],
+						});
+					}
+				},
+				error: function (xhr, resp, text) {
+					console.log(xhr, resp, text);
+					$.alert('Error Occurred', {
+						type: "danger",
+						position: ['center',
+							[-0.42, 0]
+						],
+					});
+
+				}
+			})
+
+		}
+      </script>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OLHS -APPOINTMENTS</title>
+
+<div data-th-replace="Link/CSS :: myCss"></div>
+
+
+</head>
+
+<body class="leftbar-view">
+
+	<div data-th-replace="/Layout/Navbar :: myHeader"></div>
+	<div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+	<section class="main-container">
+		<div class="container-fluid">
+			<div>
+			
+			 <div class="page-header filled full-block light">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 data-localize="seasons">APPOINTMENTS</h2>
+                    
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-page-breadcrumb">
+                        <li>Menu<i class="zmdi zmdi-chevron-right"></i></li>
+                        <li>Appointment<i class="zmdi zmdi-chevron-right"></i></li>
+                        <li data-localize="seasons" class="active-page"> APPOINTMENTS</li> 
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+              <div class="row">
+            <div class="col-md-12">
+                <div class="widget-wrap">
+                    <div class="widget-header margin-bottom-0 block-header clearfix">
+                        <div class="pull-left" th:if=" ${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('CITIZEN'))}">
+                          <span>  <a  class="btn btn-primary" href="new_appointment" > <i class="zmdi zmdi-plus" ></i>NEW</a></span>                             
+                        </div>
+                        
+                    </div>
+                    <div class="widget-container">
+                        <div class="widget-content">
+                            
+
+                            <div class="row">
+							 <div class="col-md-12">
+                <div class="widget-wrap">
+                    <div class="widget-header block-header clearfix">
+                        <h2 data-localize="seasons list">APPOINTMENTS LIST </h2>
+                    </div>
+                    <div class="widget-container">
+                        <div class="widget-content">
+                            <table id="stable" class="table table-hover">
+                                <thead>
+                                <tr>
+                                	<th>#</th>
+                                    <th>DATE</th>
+                                    <th>CITIZEN</th>
+                                    <th>LAWYER</th>
+                                    <th>APPOINTMENT STATUS</th>
+                                     <th>ACTIONS</th>
+                                    
+                                      
+                                </tr>
+                                </thead>
+                                <tbody id="stbody">
+                              
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                     <input type="hidden" th:value="${session.a_reg.getRegistrantCategory()}" id="reg_category">
+                </div>
+            </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
+				
+				<div id="list_users"></div>
+
+
+				<div class="row">
+					<div data-th-replace="/Layout/Footer :: myFooter"></div>
+				</div>
+
+			</div>
+		</div>
+		
+		<div class="modal fade" id="appointment_modal" tabindex="-1"  role="dialog"  aria-labelledby="myModalLabel"  aria-hidden="true">
+                        <div class="modal-dialog modal-md ">
+                            <div class="modal-content">
+                                <div class="modal-header modal-primary" style="background: rgb(0,123,167)" >
+                                    <button  type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                                    <h4 class="modal-title" style="text-align: center;color: white;"> Appointment</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <form class="form-horizontal material-form" id="ra_form">
+
+                                                <div class="col-md-12">
+                                                    <fieldset>
+                                                        <legend data-localize="new product">Appointment Schedule</legend>
+														
+											<div class="col-md-6"> 			 
+                                        <div class="form-group ">
+                                            <label class="col-md-4 control-label"><span  data-localize="product">Schedule Date</span>
+                                            <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-md-8">
+                                               <input type="date" class="form-control"  id="schedule_date">
+                                            </div>
+                                        </div>
+                                        </div>
+                                        
+                                        	<div class="col-md-6"> 			 
+                                        <div class="form-group ">
+                                            <label class="col-md-4 control-label"><span  data-localize="product">Schedule Time</span>
+                                            <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-md-8">
+                                               <input type="text" class="form-control timepicker" id="schedule_time">
+                                            </div>
+                                        </div>
+                                        </div>
+                                        
+                                                   </fieldset>
+                                                </div>
+
+
+                                              
+                                                <div class="form-group col-md-12">
+                                                    <div class="col-md-12">
+                                                        <div class="form-actions">
+                                                            <a  class="btn btn-primary pull-right" id="ra_save"> <i class="zmdi zmdi-save"></i><span data-localize="save">Save</span></a>
+                                                            <a href="#" class="btn btn-default pull-left" data-dismiss="modal" data-localize="cancel"> Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer hidden">
+                                <button class="btn btn-danger" type="button">Save</button>
+                            </div>
+                        </div>
+                    </div>
+	
+	
+		
+
+		<div data-th-replace="/Link/Script :: myScript"></div>
+		
+		<script>
+		//	// the Method to retrieve all season 
+		
+		
+        function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+		  $(function (){
+			  listAppointment();
+        });
+		//The Method To retrieved All Refered Membership By Registrant
+          
+          function listAppointment() {
+        	  var ruuid = $.parseJSON(sessionStorage.getItem('a_registrant')).uuid;
+            var all=[];
+         	var tables=$('#stable').DataTable().clear().draw();
+             var res;
+             var l="";
+             $.ajax({
+                 url: olhs_url() +'/appointments',
+                 type: "GET", // type of action POST || GET
+                 data: {}, // post data || get data
+                 headers: {
+                     'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                 },
+                 success: function (result, textStatus, jQxhr) {
+                     if (result.CODE == 200) {
+                         pending = result.OBJECT;
+                        console.log(pending);
+                        $.each(pending, function (i, p) {
+                        	if(p.lawyer.registrant.uuid===ruuid){
+                        		all.push(p);
+                        	}
+                        })
+                        $.each(all, function (i, p) {
+                        	var l=''; 
+                        	l += " <ul class='icons-list' style='list-style: none'>";
+							l += "<li class='dropdown'>"
+							l += "  <a href='datatable_basic.htm#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-bars'></i></a>";
+							l += " <ul class='dropdown-menu dropdown-menu-right'>";
+							if(p.appointmentStatus=='OPEN'){
+								l+="<li><a data-toggle='tooltip'  title='Approve' href='#' data-id='"+p.uuid+"' class='edit'><i class='zmdi zmdi-edit'></i>Approval</a></li>";
+								l+="<li><a data-toggle='tooltip'  title='cancel this Appointment' href='javascript:void(0)' class='cancel' data-id='"+p.uuid+"'><i class='zmdi zmdi-block'></i> cancel appointments</a></li>";
+							}
+							 l+= "<li class='divider'></li><li><a data-toggle='tooltip'  title='View details of this Appointment' href='appointmentDetails_"+p.uuid+"'><i class='zmdi zmdi-eye'></i> view details</a></li></ul>";
+								l+= " </ul>";
+								l+= " </li>";
+								l+= " </ul>";
+								tables.row.add(
+									[
+										i+1,
+										formatDate(p.appointmentDate,'dd-MM-yyyy'),
+										p.registrant.names,
+										p.lawyer.registrant.names,
+										p.appointmentStatus,
+									    l
+										
+									]
+								).draw();
+								
+							});
+                         $("#pending").removeClass("spinner");
+                     } else {
+                         $.alert('Error Occurred ' + result.DESCRIPTION, {
+                             type: "danger",
+                             position: ['top-right',
+                                 [-0.42, 0]
+                             ],
+                         });
+                     }
+                 },
+                 error: function (xhr, resp, text) {
+                     console.log(xhr, resp, text);
+
+                     $.alert('Error Occurred' + xhr.responseText, {
+                         type: "danger",
+                         position: ['top-right',
+                             [-0.42, 0]
+                         ],
+                     });
+                 }
+             });
+         }
+          $(document).ready(function(){
+        	    $('input.timepicker').timepicker({});
+        	});
+		
+          $(document).on('click','.edit',function (){
+              var id=$(this).data('id');
+              $('#appointment_modal').modal();
+              $(document).on('click','#ra_save',function (){
+            	  appointApproval(id);
+         		});
+             
+     	 });
+          
+          
+          function appointApproval(id){
+        	  
+        	  console.log(id);
+        	     if($("#ra_form").valid()){ 
+ 					$("#ra_save").addClass('disabled');
+ 					
+ 					var app={
+ 							
+ 							scheduledate:$("#schedule_date").val(),
+ 							scheduleTime:$("#schedule_time").val()
+ 			    
+ 					
+ 			        }	
+ 					console.log(app);	
+ 					var username=$.parseJSON(sessionStorage.getItem('a_registrant')).names;
+ 					$.ajax({ 
+ 				        
+ 						headers: {
+ 					        
+ 		                   'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+ 					        'doneBy':username
+ 					    },
+ 						url:olhs_url()+'/appointments/approve/'+id, 
+ 				        type : "PUT", // type of action POST || GET
+ 				        dataType : 'json', // data type
+ 				        data : JSON.stringify(app), // post data || get data
+ 				        contentType: 'application/json',
+ 				        success : function(result, textStatus, jQxhr) {
+ 				        	$("#ra_save").removeClass('disabled');
+ 				        	if(result.CODE==200){
+ 				        		$.alert(result.DESCRIPTION,
+ 										{
+ 											type : "success",
+ 											position : [ 'top-right',
+ 													[ -0.42, 0 ] ],
+ 										}); 
+ 				        		$('#appointment_modal').modal('hide');
+ 				        		listAppointment();
+ 					        	$("#ra_form").each(
+ 										function() {
+ 											this.reset();
+ 										});
+ 					        	 
+ 					        	}else{
+ 					        		 $.alert(result.DESCRIPTION,
+ 											{
+ 												type : "danger",
+ 												position : [ 'top-right',
+ 														[ -0.42, 0 ] ],
+ 											}); 
+ 					        	}
+ 					        		
+ 				        	
+
+ 								
+
+ 							},
+ 							error: function (xhr, resp, text) {
+ 								console.log(xhr, resp, text);
+ 								$("#ra_save").removeClass('disabled');
+ 								$.alert('Error Occurred' + xhr.responseText, {
+ 									type: "danger",
+ 									position: ['top-right',
+ 										[-0.42, 0]
+ 									],
+ 								});
+
+ 							}
+ 						});
+
+ 				}
+ 					
+          }
+           
+          // The Method to cancel an Appointment
+          $(document).on('click','.cancel',function (){
+        	  
+        	  var path=$(this).data('id');
+        	 
+        	  var username=$.parseJSON(sessionStorage.getItem('a_registrant')).names;
+        	  $.ajax({ 
+			        
+					headers: {
+				        
+	                   'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+				        'doneBy':username
+				    },
+					url:olhs_url()+'/appointments/cancel/'+path,
+			        type : "PUT", // type of action POST || GET
+			        dataType : 'json', // data type
+			        data :{}, // post data || get data
+			        contentType: 'application/json',
+			        success : function(result, textStatus, jQxhr) {
+			        	$("#ra_save").removeClass('disabled');
+			        	if(result.CODE==200){
+			        		$.alert(result.DESCRIPTION,
+									{
+										type : "success",
+										position : [ 'top-right',
+												[ -0.42, 0 ] ],
+									}); 
+			        		listAppointment();
+			        		
+				        	
+				        	$("#ra_form").each(
+									function() {
+										this.reset();
+									});
+				        	 
+				        	}else{
+				        		 $.alert(result.DESCRIPTION,
+										{
+											type : "danger",
+											position : [ 'top-right',
+													[ -0.42, 0 ] ],
+										}); 
+				        	}
+				        		
+			        	
+
+							
+
+						},
+						error: function (xhr, resp, text) {
+							console.log(xhr, resp, text);
+							$("#ra_save").removeClass('disabled');
+							$.alert('Error Occurred' + xhr.responseText, {
+								type: "danger",
+								position: ['top-right',
+									[-0.42, 0]
+								],
+							});
+
+						}
+					});
+
+			
+    
+          });
+          
+	
+		</script>
+	</section>
+</body>
+</html>

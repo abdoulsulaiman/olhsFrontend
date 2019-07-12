@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OLHS -CONTRACT DETAILS</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+
+    <style>
+                
+       
+         .content_table,.details-table{
+             width: 100%;
+             border-spacing: 8px;
+             border-collapse: separate;
+          }
+            
+            .content_table td{
+                 width: 20%;
+                 padding-left: 7px;
+                 border: 1px solid silver;
+            }
+        .details-table td{
+             padding-left: 7px;
+             height: 30px;
+             margin: 20px;
+             border: 1px solid silver;
+         }
+        
+         .content_table .td-header,.details-table .td-header{
+             width:15%;
+             background-color: #eceff1;
+         }
+
+        #w_header {
+            padding-bottom: 5px;
+        }
+
+        #w_wrap {
+            /* padding-top: 10px; */
+            /* padding-bottom: 5px; */
+        }
+        .shadow {
+            -webkit-box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+            -moz-box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+            box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+        }
+        .productTable td{
+          padding-bottom: 15px; 
+        }
+        /* .contents{
+          color: rgb(5, 85, 34)
+        } */
+          .titles{
+             font-weight:900;
+          }
+    </style>
+</head>
+
+<body class="leftbar-view">
+
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+        <div class="container-fluid">
+            <div>
+
+                <div class="page-header filled full-block light">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 data-localize="contract details">Contract Details</h2>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-page-breadcrumb">
+                                <li> <span data-localize="menu">Menu</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li> <span data-localize="contracts">Contracts</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li class="active-page" data-localize="contract details">Details</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <input type="hidden" th:value="${contractUuid}" id="contract_uuid">
+                    <input type="hidden" th:value="${session.a_reg.getRegistrantCategory()}" id="registrantCategory">
+                     <input type="hidden" th:value="${session.a_reg.getUuid()}" id="reg_uuid">
+                    <input type="hidden" th:value="${session.a_reg.getNames()}" id="reg_name">
+                    <div class="col-md-12">
+                        <div class="widget-wrap" id="w_wrap">
+                            <div class="widget-header block-header margin-bottom-0 clearfix" id="w_header">
+                                <div class="pull-left">
+                                    <a class="btn btn-sm btn-primary" href="/contracts"> <i
+                                            class="zmdi zmdi-arrow-back"></i> <span data-localize="back">Back</span></a>
+                                </div>
+                                <div class="pull-right">
+                                    <!-- <a class="btn btn-sm btn-primary" id="c_amend" href="javascript:void(0)"> <i class="zmdi zmdi-edit"></i> <span data-localize="amend">Amend</span></a> -->
+                                    <!-- <a class="btn btn-sm btn-primary" id="c_print" href="javascript:void(0)"> <i class="zmdi zmdi-print"></i> <span data-localize="print">Print</span></a> -->
+                                </div>
+                            </div>
+                            <div class="widget-container">
+                                <div class="widget-content">
+                                        <div class="row">
+                                                <div class="col-md-8">
+                                                   <div class="row">
+                                                     <div class="widget-wrap shadow" style="padding-top:10px; padding-bottom: 10px;">
+                                                         <div class="widget-container"style="padding-top: 0vh;margin-top:10px;">
+                                                             <div class="row">
+                                                                 <div class="btn-group pull-right">
+                                                                     <button type="button"
+                                                                         class="btn btn-sm btn-primary dropdown-toggle"
+                                                                         data-toggle="dropdown" aria-haspopup="true"
+                                                                         id="act" aria-expanded="true">
+                                                                         Action <span class="caret"></span>
+                                                                     </button>
+                                                                     <ul class="dropdown-menu dropdown-menu-left"
+                                                                         aria-labelledby="act">
+                                                                         <li class="c_confirm hidden">
+                                                                             <a href='javascript:void(0)'
+                                                                                 id='c_confirm'
+                                                                                 class='dropdown-toggle order-status'><i
+                                                                                     class='zmdi zmdi-check'></i>
+                                                                                 Confirm</a>
+                                                                         </li>
+                                                                         <li class="c_terminate hidden">
+                                                                             <a href='javascript:void(0)'
+                                                                                 id='c_terminate'
+                                                                                 class='dropdown-toggle order-status'><i
+                                                                                     class='zmdi zmdi-close'></i>
+                                                                                 Terminate</a>
+                                                                         </li>
+                                                                         <li class="c_attach">
+                                                                             <a href='javascript:void(0)'
+                                                                                 data-coAtach='" + contract.uuid + "'
+                                                                                 id='c_atach'
+                                                                                 class='dropdown-toggle order-status'><i
+                                                                                     class='zmdi zmdi-file'></i> Add
+                                                                                 Atachment</a>
+                                                                         </li>
+                                                                         <li role="separator" class="divider"></li>
+                                                                         <li class="c_amend">
+                                                                             <a class="dropdown-toggle" id="c_amend"
+                                                                                 href="javascript:void(0)"> <i
+                                                                                     class="zmdi zmdi-edit"></i> <span
+                                                                                     data-localize="amend">Amend</span></a>
+                                                                         </li>
+                                                                         <li><a class="dropdown-toggle" id="c_print"
+                                                                                 href="javascript:void(0)" target='blank'> <i
+                                                                                     class="zmdi zmdi-print"></i>
+                                                                                 <span
+                                                                                     data-localize="print">Print</span></a>
+                                                                         </li>
+                                                                     </ul>
+                                                                 </div>
+                                                             </div>
+                                                            <div class="row">
+                                                                
+                                                                <div class="col-md-6">
+                                                                         <div>
+                                                                             <h4 style="margin-bottom:0px; margin-top:5px">LAWYER</h4>
+                                                                             <hr>
+                                                                         </div>
+                                                                         <table class="display table table-striped">
+                                                                           <tr>
+                                                                               <td class="titles">NAME</td>
+                                                                               <td class="c_seller contents"></td>
+                                                                           </tr>
+                                                                           <tr>
+                                                                             <td class="titles">PHONE</td>
+                                                                             <td class="c_sellerphone contents"></td>
+                                                                         </tr>
+                                                                         </table>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                     <div>
+                                                                             <h4 style="margin-bottom:0px;  margin-top:5px">CITIZEN</h4>
+                                                                             <hr>
+                                                                         </div>
+                                                                         <table class="display table table-striped">
+                                                                           <tr>
+                                                                               <td class="titles">NAME</td>
+                                                                               <td class="c_buyer contents"></td>
+                                                                           </tr>
+                                                                           <tr>
+                                                                             <td class="titles">PHONE</td>
+                                                                             <td class="c_buyerphone contents"></td>
+                                                                           </tr>
+                                                                         </table> 
+                                                                 </div>
+                                                                </div>
+                                                                <hr>
+                                                                
+                                                         </div>
+                                                     </div>    
+                                                   </div>
+                                                   <div class="row">
+                                                     <div class="widget-wrap shadow" style="padding-top:10px; padding-bottom: 10px;">
+                                                         <div class="widget-container"style="padding-top: 0vh;  margin-top:5px">
+                                                             <div class="row"><h4>OTHER DETAILS</h4><hr></div>
+                                                             <div>
+                                                                 <div>
+                                                                     <h4>Contract No: <span class="c_number contents"></span></h4>
+                                                                 </div>
+                                                                 <table class="content_table">
+                                                                     <tr>
+                                                                            <td class="td-header titles">Payment Date
+                                                                            </td>
+                                                                            <td class="c_paymentDate contents"></td> 
+                                                                            <td class="td-header titles">Payment Terms
+                                                                            </td>
+                                                                            <td class="c_paymentTerm contents"></td> 
+                                                                     </tr>
+                                                                     <tr>
+                                                                            <td class="td-header titles">Bank Name</td>
+                                                                            <td class="c_bank contents"></td> 
+                                                                            <td class="td-header titles">Bank Account
+                                                                            </td>
+                                                                            <td class="c_account contents"></td> 
+                                                                     </tr>
+                                                                    
+                                                                     <tr>
+                                                                            <td class="td-header titles">Creation Date
+                                                                            </td>
+                                                                            <td class="contents c_doneAt contents"></td> 
+                                                                            <td class="td-header titles">Status</td>
+                                                                            <td class="contents c_status contents"></td> 
+                                                                     </tr>
+                                                                      <tr id="atc">
+                                                                            <td class="td-header titles">Print
+                                                                                Attachment</td>
+                                                                            <td class="atachment"></td>   
+                                                                     </tr>
+                                                                     
+                                                                 </table>
+                                                                 <table class="content_table">
+                                                                        <tr>
+                                                                          <td class="td-header titles"
+                                                                              data-localize="coment">Comment</td>
+                                                                         
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td class="c_content" style="border:0px">
+                                                                              <div class="form-group ">
+                                                                                  <div>
+                                                                                      <textarea  style="border:0px"  class="form-control" rows="7" id="cc_comment"></textarea>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </td>
+                                                                        </tr>
+                                                                  </table>
+                                                             </div>
+                                                         </div>
+                                                     </div>    
+                                                   </div>    
+                                                </div>
+                                                <div class="col-md-4">
+                                                     <div class="widget-wrap shadow">    
+                                                         <div class="widget-header block-header margin-bottom-0 clearfix" >
+                                                               <h4>CONTRACT HISTORY</h4>
+                                                         </div>
+                                                         <div class="widget-container"style="padding-top: 0vh;">
+                                                                 <div class="activities-container">
+                                                                         <ul class="activities-list"
+                                                                             id="historyList">
+         
+                                                                         </ul>
+                                                                         
+                                                                      
+                                                                  </div>
+                                                         </div>
+                                                     </div>    
+                                                </div>
+                                            </div> 
+         
+         
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+                   
+
+                    <div class="row">
+                        <div data-th-replace="/Layout/Footer :: myFooter"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- Modal Ataching Contract -->
+<div class="modal fade" id="c_atach_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-ms">
+		<div class="modal-content">
+			<div class="modal-header modal-danger" style="background: rgb(108,179,62)">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+				<h4 class="modal-title">Warning</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						Attach Contract Related File
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<form class="form-horizontal material-form" id="atachter_form">
+							<input type="hidden" id="coA_contractUuid">
+							<div class="form-group ">
+								<label class="col-md-4 control-label">Attach</label>
+								<div class=" col-md-8">
+									<input type="file" name="attachement" class="form-control file" id="c_fAtach"
+										placeholder="Atach" required="required">
+
+								</div>
+							</div>
+								<div class="col-md-12">
+									<div class="textComment">
+								
+									</div>
+								</div>
+						<div class="form-group col-md-12">
+							<div class="col-md-12">
+								<div class="form-actions">
+									<a class="btn btn-primary pull-right" id="saveAtach"> <i class="zmdi zmdi-save"></i> Send</a>
+									<a href="#" class="btn btn-default pull-left" data-dismiss="modal"> Cancel</a>
+								</div>
+							</div>
+						</div>
+						</form>
+
+					</div>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+        
+
+
+<!-- Modal to Edit Contract Information -->
+<div class="modal fade" id="contract_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header modal-danger" style="background: rgb(108,179,62)">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+				<h4 class="modal-title text-center " style="color:white;">You are about to change contract information</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+							<form class="form-horizontal material-form" id="c_form">
+								<div class="col-md-6">
+									<fieldset>
+										<legend>Contract</legend>
+										
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Payment Term</label>
+											<div class=" col-md-8">
+												<input type="text" name="c_paymentTerm" class="form-control" id="c_paymentTerm" placeholder="terms"
+													required="required">
+											</div>
+										</div>
+										<div class="form-group sellerField">
+											<label class="col-md-4 control-label">Bank Name</label>
+											<div class=" col-md-8">
+											  <input type="text" id="c_bank" name="c_bank" class="form-control sellerInput" required>
+											   
+											</div>
+										</div>
+										<div class="form-group sellerField">
+											<label class="col-md-4 control-label ">Bank Account</label>
+											<div class=" col-md-8">
+													<input type="text" id="c_account" name="c_account" class="form-control sellerInput" required>
+														
+
+											</div>
+										</div>
+									</fieldset>
+								</div>
+								<div class="col-md-6">
+									<fieldset>
+										<legend>&nbsp;&nbsp;</legend>
+									
+				
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Payment Date</label>
+											<div class=" col-md-8">
+												<input type="text" name="eDate" class="form-control cs_date " id="c_Pdate" placeholder="2019-03-11"
+													required="required">
+											</div>
+										</div>
+										
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Comment</label>
+											<div class=" col-md-8">
+												<textarea class="form-control" rows="3" id="c_comment"></textarea>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+								<div class="form-group col-md-12">
+									<div class="col-md-12">
+										<div class="form-actions">
+											<a class="btn btn-primary pull-right" id="saveContract"> <i class="zmdi zmdi-save"></i> Amend</a>
+											<a href="#" class="btn btn-default pull-left" data-dismiss="modal"> Cancel</a>
+										</div>
+									</div>
+								</div>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+        <div data-th-replace="/Link/Script :: myScript"></div>
+
+
+        <script>
+        
+        function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+            var contract_status;
+             var banks=[];
+              var accounts={};
+           $('input[name="dates"]').daterangepicker({
+                    singleDatePicker: true,
+                    locale: {
+                        format: 'YYYY-MM-DD '
+                    }
+                });
+
+                /* $('input[name="eDate"]').daterangepicker({
+                    singleDatePicker: true,
+                    minDate: new Date(),
+
+                    locale: {
+                        format: 'YYYY-MM-DD '
+                    }
+
+                }); */
+
+              
+            var registrantUuid = $("#reg_uuid").val();
+              
+             var registrantCategory=$("#registrantCategory").val();
+            var contract={};
+            $(function () {
+               
+                 if(registrantCategory==="CITIZEN"){
+                  $(".sellerField").addClass('hidden');
+                  $(".sellerInput").removeAttr("required");
+                 }else{
+                    $(".sellerField").removeClass('hidden'); 
+                 }
+                 viewContract();
+                 var contractUuid=$("#contract_uuid").val();
+                 $(".c_printDetails").attr("href",olhs_url() + "/contracts/"+ contractUuid+"/report");
+                 contractHistory()
+                //  viewBankAccounts();
+            });
+
+            /***
+             * Viewing all contacts of the entity by it uuuid
+             *
+             * */
+            function viewContract() {
+                var tables = $("#list_contacts").DataTable().clear().draw();
+                 var contractUuid=$("#contract_uuid").val();
+                // tables.clear();
+                $.ajax({
+                    headers: {
+
+                    	 'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+
+                    },
+                    type: "GET",
+                    url: olhs_url() + "/contracts/"+ contractUuid,
+
+                    success: function (resurt) {
+                        if (resurt.CODE == 200) {
+                            console.log(resurt)
+                            contract=resurt.OBJECT;
+                            var filePath= olhs_url()+"/contracts/Download/"+ resurt.OBJECT.uuid;
+                       
+                             $(".c_number").text(resurt.OBJECT.contractNumber);        
+                              $(".c_buyer").text(resurt.OBJECT.appointment.registrant.names);
+                              $(".c_seller").text(resurt.OBJECT.appointment.lawyer.names);
+                              $("#cc_comment").val(resurt.OBJECT.comment).attr("readonly",true);
+         
+                               $(".c_account").text(resurt.OBJECT.bankAccount);
+                               $(".c_bank").text(resurt.OBJECT.bankname);
+                               $(".c_paymentDate").text(resurt.OBJECT.paymentDate);
+                               $(".c_paymentTerm").text(resurt.OBJECT.paymentTerms);
+                               $(".c_status").text(resurt.OBJECT.contractStatus);
+                               $(".c_doneAt").text(formatDate(resurt.OBJECT.doneAt, "dd-MM-yyyy"));
+                               $(".c_sellerphone").text(resurt.OBJECT.appointment.lawyer.registrant.phone);
+                               $(".c_buyerphone").text(resurt.OBJECT.appointment.registrant.phone);
+                               $("#c_print").attr('href',olhs_url()+"/contracts/"+resurt.OBJECT.uuid+"/report");
+                                
+                               $("#c_confirm").attr("data-s_confirm",resurt.OBJECT.uuid);
+                               //quotationId=resurt.OBJECT.quotationRequest.uuid;
+                               contract_status=resurt.OBJECT.contractStatus;
+                              
+
+                            //    Showing Termination Comment if Contract Was Terminated
+                                if(resurt.OBJECT.contractStatus!="BOTH_TERMINATED"){
+                                   $(".terminate").addClass('hidden');
+                                   $(".c_tcomment").addClass('hidden');
+                                 }else{
+                                    
+                                    $(".statusComment").removeClass('hidden') 
+                                    $(".c_tcomment").text(resurt.OBJECT.terminationComment); 
+                                 }
+                               
+
+                                //  Hidding And showing Amend and Attach Button
+                               if(resurt.OBJECT.contractStatus==='CLOSED'||resurt.OBJECT.contractStatus==='TERMINATED'||resurt.OBJECT.contractStatus==="BOTH_TERMINATED"){
+                                   $("#c_amend").addClass('hidden');
+                                    $(".c_attach").addClass("hidden");
+                               }else{
+                                $("#c_amend").removeClass('hidden');
+                                 $(".c_attach").removeClass("hidden");
+                               }
+
+                               if(resurt.OBJECT.contractStatus != "BOTH_TERMINATED" && resurt.OBJECT.contractStatus!="CLOSED" && resurt.OBJECT.contractStatus!="TERMINATED"){
+                                  if(registrantCategory ==="LAWYER"){
+                                     if(resurt.OBJECT.contractStatus != "LAWYER_CONFIRMED"){
+                                        if(!resurt.OBJECT.contractStatus.match("TERMINATED")){
+                                            $(".c_confirm").removeClass("hidden");
+                                        }
+                                     }else{
+                                          $(".c_confirm").addClass("hidden");
+                                     }
+                                   }else{
+                                        if(!resurt.OBJECT.contractStatus.match("TERMINATED")){
+                                            if (contract.contractStatus != "CITIZEN_CONFIRMED") {
+                                                 $(".c_confirm").removeClass("hidden");
+                                            }else{
+                                                 $(".c_confirm").addClass("hidden");
+                                            }
+                                        }else{
+                                             $(".c_confirm").addClass("hidden");
+                                        }
+                                   }
+                                    if(registrantCategory == "CITIZEN"){
+                                        if(contract.contractStatus != "CITIZEN_TERMINATED"){
+                                           $(".c_terminate").removeClass("hidden");
+                                        }
+                                    }else if(registrantCategory == "COOPERATIVE" || registrantCategory==="INDIVIDUAL_FARMER"){
+                                        if (contract.contractStatus != "SELLER_TERMINATED") {
+                                            $(".c_terminate").removeClass("hidden");
+                                        }
+                                    }
+                               }else{
+                                   $(".c_terminate").addClass("hidden");
+                                    $(".c_confirm").addClass("hidden");
+                               }
+                               
+                               if(resurt.OBJECT.attachement!=null){
+                                    if(resurt.OBJECT.attachement.length!=0){
+                                        $(".atachment").html("<a href='"+ filePath+"' class='label label-primary' target='blank'>Print Attachment <i class='zmdi zmdi-print'></i></a>")
+                                    }else{
+                                        $(".atachment").html("<span>Not Available</span>")
+                                    }
+                               }
+                               
+                        } else {
+                            console.log("fail get", resurt)
+                        }
+                    },
+                    error: function () {
+                        //  console.log("ERROR", e);
+                    }
+                })
+            }
+
+
+           
+                    $(document).on('click', '#c_amend', function () {
+                         $('#contract_modal').modal();
+                          
+                           $("#c_bank").val(contract.bankname);
+                           $("#c_account").val(contract.bankAccount);
+                        //    $("#c_comment").val(contract.comment);
+                            $("#c_comment").val(contract.comment);
+                           $("#c_uuid").val(contract.uuid);
+                           $("#c_Pdate").val(contract.paymentDate);
+                           $("#c_paymentTerm").val(contract.paymentTerms);
+                            
+                    });
+                    
+                    $(document).on('click', '#saveContract', function () {
+
+                            var username= $.parseJSON(sessionStorage.getItem('a_user')).username;
+                            var enttityCategory=$("#registrantCategory").val();
+                            var registrantUuid=$("#reg_uuid").val();
+                            console.log($("#c_paymentTerm").val());
+                            if ($("#c_form").valid()) {
+                                $("#saveContract").addClass('disabled');
+                                var updatedContract = {
+                       
+                                     bankname: $("#c_bank").val(),
+                                     bankAccount: $("#c_account").val(),
+                                     paymentTerms: $("#c_paymentTerm").val(),
+                                     paymentDate:$("#c_Pdate").val(),
+                                     uuid:contract.uuid,
+                                     contractNumber:contract.contractNumber,
+                                     appointment:contract.appointment,
+                                     lawyeruuid:contract.lawyeruuid,
+                                     citizenuuid:contract.citizenuuid,
+                                     comment: $("#c_comment").val()
+                                     
+                                }
+                                $.ajax({
+
+                                    headers: {
+
+                                    	'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                                        "registrantUuid": registrantUuid,
+                                        "doneBy":username
+                                    },
+                                    url: olhs_url() + '/contracts/update',
+                                    type: "PUT", // type of action POST || GET
+                                    dataType: 'json', // data type
+                                    data: JSON.stringify(updatedContract), // post data || get data
+                                    contentType: 'application/json',
+                                    success: function (result, textStatus, jQxhr) {
+                                        $("#e_save").removeClass('disabled');
+                                        if (result.CODE == 200) {
+                                            // show default password to admin
+                                            $.alert(result.DESCRIPTION, {
+                                                type: "success",
+                                                position: ['top-right',
+                                                    [-0.42, 0]
+                                                ],
+                                            });
+                                            $("#u_form").each(
+                                                function () {
+                                                    this.reset();
+                                                });  
+                                                $("#saveContract").removeClass('disabled');
+                                                  $('#contract_modal').modal('hide');
+                                                viewContract() ;
+                                               
+                                                 contractHistory();
+                                        } else {
+                                            $.alert(result.DESCRIPTION, {
+                                                type: "danger",
+                                                position: ['top-right',
+                                                    [-0.42, 0]
+                                                ],
+                                            });
+                                        }
+
+
+                                    },
+                                    error: function (xhr, resp, text) {
+                                        console.log(xhr, resp, text);
+                                        $("#e_save").removeClass('disabled');
+                                        $.alert('Error Occurred' + xhr.responseText, {
+                                            type: "danger",
+                                            position: ['top-right',
+                                                [-0.42, 0]
+                                        ],
+                               });
+                             }
+                           });
+                        }
+                     });
+                     
+  function contractHistory(){
+    var contractUuid=$("#contract_uuid").val();
+            $.ajax({
+                    headers: {
+                    	'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+
+                    },
+                    type: "GET",
+                    url: olhs_url() + "/contracts/progress/"+contractUuid,
+
+                    success: function (resurt) {
+                        if (resurt.CODE == 200) {
+                            console.log(resurt)
+                            var history=resurt.OBJECT.contractHistory;
+                         //   var salesHistory=resurt.OBJECT.salesOrderHistory;
+                             /*  if(salesHistory.length!=0){
+                                $(".slStage").removeClass("hidden");
+                              }else{
+                                $(".slStage").addClass("hidden");
+                              } */
+
+                            history.forEach(history => {
+                                l="";
+                                            l+='<li>'
+                                            l+='<div class="activities-badge">'
+                                            l+='<span style="background-color:#6cb33e">'
+                                            l+='<i class="fa fa-clock-o"></i>'
+                                            l+='</span>'
+                                            l+='</div>'
+                                            l+='<div class="activities-details">'
+                                            l+='<h3 class="activities-header">'
+                                            l+='<a href="javascript:void(0)">' + history.action + '</a>'
+                                            l+='</h3>'
+                                            l+='<div class="activities-meta">'
+                                            l+='<span>'
+                                            l+='<i class="fa fa-clock-o"></i> ' +formatDate(history.doneAt, "dd-MM-yyyy HH:mm:ss") +'</span><br>'
+                                            l+='<span> <i class="fa fa-user"></i> '+history.doneBy+'</span>'
+                                            l+='</div>'
+                                            l+='<div class="activities-post">'
+                                            l+='<ul class="new-comments-lists">'
+                                            if(history.comment!=null){
+                                                l+='<li><span>comment: ' + history.comment + '</span></li>'
+                                            }
+                                          
+                                            l+='</ul>'
+                                            l+='</div>'
+                                            l+='</div>'
+                                            l+='</li>'
+                                    $('#historyList').append(
+                                       l
+                                    )
+
+                                });
+                                /* salesHistory.forEach(salesHistory=>{
+                                    l="";
+                                            l+='<li>'
+                                            l+='<div class="activities-badge">'
+                                            l+='<span style="background-color:#6cb33e">'
+                                            l+='<i class="fa fa-clock-o"></i>'
+                                            l+='</span>'
+                                            l+='</div>'
+                                            l+='<div class="activities-details">'
+                                            l+='<h3 class="activities-header">'
+                                            l+='<a href="javascript:void(0)">' + salesHistory.action + '</a>'
+                                            l+='</h3>'
+                                            l+='<div class="activities-meta">'
+                                            l+='<span>'
+                                            l+='<i class="fa fa-clock-o"></i> ' +formatDate(salesHistory.doneAt, "dd-MM-yyyy HH:mm:ss") +'</span><br>'
+                                            l+='<span> <i class="fa fa-user"></i> '+salesHistory.doneBy+'</span>'
+                                            l+='</div>'
+                                            l+='<div class="activities-post">'
+                                            l+='<ul class="new-comments-lists">'
+                                            if(salesHistory.comment!=null){
+                                                l+='<li><span>comment: ' + salesHistory.comment + '</span></li>'
+                                            }
+                                          
+                                            l+='</ul>'
+                                            l+='</div>'
+                                            l+='</div>'
+                                            l+='</li>'
+                                    $('#salesOrder').append(
+                                      
+                                       l
+                                    )
+
+                                });
+                                                 */
+                        } else {
+                            console.log("fail get", resurt)
+                        }
+                    },
+                    error: function () {
+                        //  console.log("ERROR", e);
+                    }
+                })
+         }
+
+
+        //  Manage Action On Contract
+             
+            $(document).on('click', '#c_confirm', function () {
+
+                 $("#c_contractUuid").val($(this).data("s_confirm"));
+                 $("#c_confirm_modal").modal();
+            });
+
+             $(document).on('click','#co_confirm',function(){
+               changeStatus("confirm",$("#c_contractUuid").val());
+             })
+
+
+             
+// // Terminating Contract
+             $(document).on('click', '#c_terminate', function () {
+
+                    $("#co_contractUuid").val($("#contract_uuid").val());
+                   
+                    if(contract_status.match("TERMINATED")){
+                       $("#co_content").attr("required", "false");
+                       $(".comment").addClass("hidden");
+                    }else {
+                        $("#co_content").attr("required", "true");
+                       $(".comment").removeClass("hidden");
+                    }
+                    $("#c_terminate_modal").modal();
+            });
+
+             $(document).on('click', '#co_terminate', function () {
+                    changeStatus("terminate", $("#co_contractUuid").val());
+              })
+
+
+
+          function changeStatus(c_status,c_uuid){  
+            var username=$.parseJSON(sessionStorage.getItem('a_user')).username;
+              var path="";
+            
+              if(c_status==="confirm"){
+                 path=olhs_url() + "/contracts/confirm/registrants/" + registrantUuid
+                 $("#co_content").removeAttr("required");
+              }else{
+                  path=olhs_url() + "/contracts/terminate/registrants/" + registrantUuid
+              }
+              if($("#ter_form").valid()){
+                //    $("#co_terminate").addClass("disabled")
+              var Agreement = {
+                  contractUuid: $("#contract_uuid").val(),
+                  comment: $("#co_content").val(),
+              };
+
+              $.ajax({
+                  headers: {
+                	  'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                      'doneBy': username
+                  },
+                  type: "PUT", // type of action POST || GET
+                  dataType: "json", // data type
+                  data: JSON.stringify(Agreement), // post data || get data
+                  contentType: "application/json",
+                  url:path,
+                  success: function (resurt) {
+                      if (resurt.CODE == 200) {
+
+                          $.alert(resurt.DESCRIPTION, {
+                              type: "success",
+                              position: ["top-right", [-0.42, 0]]
+                          });
+                        //   $("#c_terminate_modal").modal('false');
+                          viewContract();
+                           contractHistory();
+                           
+                      } else {
+                         $.alert(resurt.DESCRIPTION, {
+                              type: "danger",
+                              position: ["top-right", [-0.42, 0]]
+                          });
+                      }
+                  },
+                  error: function () {
+                      //  console.log("ERROR", e);
+                  }
+              })
+            }
+
+          }
+           
+
+           // Attaching file
+            var data = new FormData();
+          $(document).on('click','#c_atach',function(){
+               var cuuid = $("#contract_uuid").val();
+              
+               if(status!="OPEN"){
+                    $(".textComment").html("<p class='text text-info'>After Attaching the file contract will be Open again</p>")
+               }
+              $("#coA_contractUuid").val(cuuid)
+              $("#c_atach_modal").modal();
+             
+          })
+          $(document).on('click','#saveAtach',function(){
+            var username=$.parseJSON(sessionStorage.getItem('a_user')).username;
+               data = new FormData();
+             
+            
+               file = $("#c_fAtach").prop('files')[0];
+               data.append("attachement-0", file);
+
+
+              $.ajax({
+
+                  headers: {
+
+                	  'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                      'doneBy':username
+                  },
+                  url: olhs_url() + '/contracts/attachment/'+ $("#coA_contractUuid").val(),
+                  type: "PUT", // type of action POST || GET
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                //   method: 'POST',
+                  data: data,
+                  success: function (result, textStatus, jQxhr) {
+                    //   $("#newLoanSubmit").removeClass('disabled');
+                      if (result.CODE == 200) {
+                          // show default password to admin
+                          // $("#default_password_info").text('Default password for ' + firstName + ' is : ' +
+                          // password);
+                          $.alert(result.DESCRIPTION, {
+                              type: "success",
+                              position: ['top-right',
+                                  [-0.42, 0]
+                              ],
+                          });
+
+                          $("#newLoanForm").each(
+                              function () {
+                                  this.reset();
+                              });
+                               viewContract();
+                            contractHistory();
+                            $("#c_atach_modal").modal('false');
+                          // send SMS
+                          // SendSMS(user.phone, user.names, user.nationalId, user.password);
+                      } else {
+                          $.alert(result.DESCRIPTION, {
+                              type: "danger",
+                              position: ['top-right',
+                                  [-0.42, 0]
+                              ],
+                          });
+                      }
+
+
+                  },
+                  error: function (xhr, resp, text) {
+                      console.log(xhr, resp, text);
+                      $("#newLoanSubmit").removeClass('disabled');
+                      $.alert('Error Occurred' + xhr.responseText, {
+                          type: "danger",
+                          position: ['top-right',
+                              [-0.42, 0]
+                          ],
+                      });
+
+                  }
+              });
+          })
+
+
+
+// Bank Account Information
+    function viewBankAccounts(){
+             $.ajax({
+                    url: olhs_url() +"/bankaccounts/registrants/"+registrantUuid,
+                    type: "GET", // type of action POST || GET
+                    data: {}, // post data || get data
+                    headers: {
+                        'bfw_token': token(),
+                    },
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+                            console.log(result);
+                            accounts=result.OBJECT;
+                            // var arr=false;
+                            result.OBJECT.forEach(entity => {
+                               banks.push(entity.bank);
+                            })
+                            // console.log(entities);
+                            removeDuplicate();
+                        } else {
+                            $.alert('Error Occurred ' + result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+
+                    }
+                });
+    }
+
+function removeDuplicate(){
+    filtered=[];
+    var a="";
+     $.each(banks, function(key, value) {
+        var exists = false;
+        $.each(filtered, function(k, val2) {
+          if(value.uuid === val2.uuid){ exists = true }; 
+        });
+        if(exists == false && value.uuid != "") { filtered.push(value); a=value.name }
+      });
+      
+       filtered.forEach(entity => {
+       $('#c_bank').append($('<option>', {
+           value: entity.name,
+           text:entity.name
+           }));
+       })
+       
+
+}
+
+   $(document).on("change","#c_bank",function(){
+        $("#c_account option").remove();
+       accounts.forEach(entity => {
+           
+           if(entity.bank.name===$(this).val()){  
+             $('#c_account').append($('<option>', {
+                 value: entity.accountNumber+" "+entity.currency,
+                 text:entity.accountNumber
+               }));
+           }
+       })
+   })
+
+              </script>
+    </section>
+</body>
+
+</html>

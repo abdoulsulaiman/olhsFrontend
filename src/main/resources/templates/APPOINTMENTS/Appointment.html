@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OLHS -APPOINTMENTS</title>
+
+<div data-th-replace="Link/CSS :: myCss"></div>
+
+
+</style>
+
+</head>
+
+<body class="leftbar-view">
+
+	<div data-th-replace="/Layout/Navbar :: myHeader"></div>
+	<div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+	<section class="main-container">
+		<div class="container-fluid">
+			<div>
+			
+			 <div class="page-header filled full-block light">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 data-localize="seasons">APPOINTMENTS</h2>
+                    
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-page-breadcrumb">
+                        <li>Menu<i class="zmdi zmdi-chevron-right"></i></li>
+                        <li>Appointment<i class="zmdi zmdi-chevron-right"></i></li>
+                        <li data-localize="seasons" class="active-page"> APPOINTMENTS</li> 
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+              <div class="row">
+            <div class="col-md-12">
+                <div class="widget-wrap">
+                    <div class="widget-header margin-bottom-0 block-header clearfix">
+                        <div class="pull-left" th:if=" ${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('CITIZEN'))}">
+                          <span>  <a  class="btn btn-primary" href="new_appointment" > <i class="zmdi zmdi-plus" ></i>NEW</a></span>                             
+                        </div>
+                        
+                    </div>
+                    <div class="widget-container">
+                        <div class="widget-content">
+                            
+
+                            <div class="row">
+							 <div class="col-md-12">
+                <div class="widget-wrap">
+                    <div class="widget-header block-header clearfix">
+                        <h2 data-localize="seasons list">APPOINTMENTS LIST </h2>
+                    </div>
+                    <div class="widget-container">
+                        <div class="widget-content">
+                            <table id="stable" class="table table-hover">
+                                <thead>
+                                <tr>
+                                	<th>#</th>
+                                    <th>DATE</th>
+                                    <th>CITIZEN</th>
+                                    <th>LAWYER</th>
+                                    <th>APPOINTMENT STATUS</th>
+                                     <th>ACTIONS</th>
+                                    
+                                      
+                                </tr>
+                                </thead>
+                                <tbody id="stbody">
+                              
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
+				
+				<div id="list_users"></div>
+
+
+				<div class="row">
+					<div data-th-replace="/Layout/Footer :: myFooter"></div>
+				</div>
+
+			</div>
+		</div>
+		
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labeledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-body">
+        <p class="alert alert-danger">Are Sure You Want Delete it</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <a href="" class="btn btn-danger" id="delRef">Deletes</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+		
+
+		<div data-th-replace="/Link/Script :: myScript"></div>
+		
+		<script>
+		//	// the Method to retrieve all season 
+		
+		
+        function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+        var ruuid = $.parseJSON(sessionStorage.getItem('a_registrant')).uuid;
+		  $(function (){
+			  listAppointment();
+        });
+
+		  
+		     function listAppointment() {
+		         	var tables=$('#stable').DataTable().clear().draw();
+		             var res;
+		             $.ajax({
+		                 url: olhs_url() + '/appointments/registrant/'+ruuid,
+		                 type: "GET", // type of action POST || GET
+		                 data: {}, // post data || get data
+		                 headers: {
+		                     'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+		                 },
+		                 success: function (result, textStatus, jQxhr) {
+		                     if (result.CODE == 200) {
+		                         pending = result.OBJECT;
+		                        console.log(pending);
+		                        $.each(pending, function (i, p) {
+		                        	var l=''; 
+		                        	l += " <ul class='icons-list' style='list-style: none'>";
+									l += "<li class='dropdown'>"
+									l += "  <a href='datatable_basic.htm#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-bars'></i></a>";
+									l += " <ul class='dropdown-menu dropdown-menu-right'>";
+									
+									if(p.appointmentStatus=='OPEN'){
+										l+="<li><a data-toggle='tooltip'  title='cancel this Appointment' href='javascript:void(0)' class='cancel' data-id='/appointments/cancel/"+p.uuid+"'><i class='zmdi zmdi-block'></i> cancel appointments</a></li>";
+									}
+									
+									 l+= "<li class='divider'></li><li><a data-toggle='tooltip'  title='View details of this Appointment' href='appointmentDetails_"+p.uuid+"'><i class='zmdi zmdi-eye'></i> view details</a></li></ul>";
+										l+= " </ul>";
+										l+= " </li>";
+										l+= " </ul>";
+										tables.row.add(
+											[
+												i+1,
+												formatDate(p.appointmentDate,'dd-MM-yyyy'),
+												p.registrant.names,
+												p.lawyer.registrant.names,
+												p.appointmentStatus,
+											    l
+											]
+										).draw();
+										
+									});
+		                         $("#pending").removeClass("spinner");
+		                     } else {
+		                         $.alert('Error Occurred ' + result.DESCRIPTION, {
+		                             type: "danger",
+		                             position: ['top-right',
+		                                 [-0.42, 0]
+		                             ],
+		                         });
+		                     }
+		                 },
+		                 error: function (xhr, resp, text) {
+		                     console.log(xhr, resp, text);
+
+		                     $.alert('Error Occurred' + xhr.responseText, {
+		                         type: "danger",
+		                         position: ['top-right',
+		                             [-0.42, 0]
+		                         ],
+		                     });
+		                 }
+		             });
+		         }
+		     
+
+		        $(document).on('click','.cancel',function (){
+		            var url=$(this).data('id');
+		            var username=$.parseJSON(sessionStorage.getItem('a_registrant')).names;
+		            alert(url);
+$. 						ajax({ 
+				        
+						headers: {
+					        
+		                   'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+					        'doneBy':username
+					    },
+						url:olhs_url()+url, 
+				        type : "PUT", // type of action POST || GET
+				        dataType : 'json', // data type
+				        data : {}, // post data || get data
+				        contentType: 'application/json',
+				        success : function(result, textStatus, jQxhr) {
+				        
+				        	if(result.CODE==200){
+				     
+				        		$.alert(result.DESCRIPTION,
+										{
+											type : "success",
+											position : [ 'top-right',
+													[ -0.42, 0 ] ],
+										}); 
+					        	
+					        	$("#ra_form").each(
+										function() {
+											this.reset();
+										});
+					        
+					        	}else{
+					        		 $.alert(result.DESCRIPTION,
+											{
+												type : "danger",
+												position : [ 'top-right',
+														[ -0.42, 0 ] ],
+											}); 
+					        	}
+					        		
+				        	
+
+								
+
+							},
+							error: function (xhr, resp, text) {
+								console.log(xhr, resp, text);
+								$("#ra_save").removeClass('disabled');
+								$.alert('Error Occurred' + xhr.responseText, {
+									type: "danger",
+									position: ['top-right',
+										[-0.42, 0]
+									],
+								});
+
+							}
+						});
+		            
+		   		
+		   	 });
+		 
+	
+		</script>
+	</section>
+</body>
+</html>

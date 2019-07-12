@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>OLHS - DASHBOARD</title>
+
+<div data-th-replace="Link/CSS :: myCss"></div>
+
+<!-- /global stylesheets -->
+
+<!-- Core JS files -->
+
+
+</head>
+
+<body class="leftbar-view">
+
+	<div data-th-replace="/Layout/Navbar :: myHeader"></div>
+	<div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+	<section class="main-container">
+		   <!-- <input type="hidden" id="userRole" th:value="${session.a_user.getRole()}"> -->
+		  <!--  <input type="hidden" id="reg_uuid" th:if="${session.a_reg!=null}" th:value="${session.a_reg.getUuid()}"> -->
+		<div class="container-fluid">
+			<div>			
+				<div class="row">
+					<div class="col-md-12">
+						<div class="widget-wrap">
+							<div class="widget-header block-header margin-bottom-0 clearfix">
+								<div class="pull-left">
+									<div class=""></div>
+									<div class="members"></div>
+								</div>
+								<div class="pull-right">
+									<div class="female"></div>
+									<div class="male"></div>
+								</div>
+							</div>
+							<div class="widget-container margin-top-0">
+								<div class="widget-content">
+											<div id="memberpieChart">
+											</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+<!-- 					<div class="col-md-7" th:if="${session.a_reg!=null}">
+						<div class="widget-wrap">
+							<div class="widget-header block-header margin-bottom-0 clearfix">
+								<div class="pull-left">
+									<div class="">Expected Harvest</div>
+									<div class=""></div>
+								</div>
+								<div class="pull-right">
+									<div class=""></div>
+									<div class=""></div>
+								</div>
+							</div>
+							<div class="widget-container margin-top-0">
+								<div class="widget-content">
+											<table id="stable" class="table table-hover">
+                                <thead>
+                                <tr>
+                                	
+                                    <th>SEASON</th>
+                                    <th>PRODUCT</th>
+                                     <th>EXPECT HARVEST</th>
+                                      
+                                </tr>
+                                </thead>
+                                <tbody id="stbody">
+                              
+
+                                </tbody>
+                            </table>
+								</div>
+							</div>
+						</div>
+						
+					</div> -->
+				</div>
+				<div class="row">
+					<div data-th-replace="/Layout/Footer :: myFooter"></div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- <div th:if="${session.a_reg!=null}">
+		<input type="hidden" th:value="${session.a_reg.getRegistrantCategory()}" id="entityType" hidden=""/>
+		 <input type="hidden" id="registrant" th:value="${session.a_reg.getUuid()}" hidden="" />
+		</div> -->
+		<div data-th-replace="/Link/Script :: myScript"></div>
+
+
+
+		   <script>
+			     
+		   </script>
+
+	</section>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>OLHS -Complain</title>
+
+<div data-th-replace="Link/CSS :: myCss"></div>
+
+
+
+</head>
+
+<body class="leftbar-view">
+
+	<div data-th-replace="/Layout/Navbar :: myHeader"></div>
+	<div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+	<section class="main-container">
+		<div class="container-fluid">
+			<div>
+			
+			 <div class="page-header filled full-block light">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 data-localize="new season">NEW COMPLAINT</h2>
+                    
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-page-breadcrumb">
+                        <li data-localize="menu">Menu <i class="zmdi zmdi-chevron-right"></i></li>
+                        <li data-localize="production">Complains<i class="zmdi zmdi-chevron-right"></i></li>
+                        <li class="active-page"> New Complaint</li> 
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+              <div class="row">
+            <div class="col-md-12">
+                <div class="widget-wrap">
+                     <input type="hidden" th:value="${apuuid}" id="appointment_uuid">
+                    <div class="widget-container">
+                        <div class="widget-content">
+
+                            <div class="row">
+								<div class="col-md-12 text-center"> <span class="label label-warning" id="default_password_info"></span></div>
+							<div class="col-md-12">
+                                    <form class="form-horizontal material-form" id="u_form">
+                                 	 <legend data-localize="season">Complaint</legend>
+                                 	<div class="col-md-6">
+                                    <fieldset>
+                                   
+                                    
+                                    <div class="form-group ">
+                                            <label class="col-md-4 control-label" data-localize="name">Description</label> <span class="text-danger">*</span>
+                                            <div class=" col-md-8">
+                                            <textarea rows="4" cols="48" id="description"></textarea>
+                                               
+                                            </div>
+                                        </div>
+                                        
+                                    </fieldset>
+                                    </div>
+                                    	<input type="hidden" hidden="" id="e_role" value="admin"/>
+                                        <div class="form-group col-md-12">
+                                            
+                                            <div class="col-md-12">
+                                                <div class="form-actions">
+                                                    <a  class="btn btn-primary pull-right" id="s_save"> <i class="zmdi zmdi-save"></i><span data-localize="save"> Save</span></a>
+                                                    <a href="appointment" class="btn btn-danger pull-left" data-localize="cancel">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
+				
+				<div id="list_users"></div>
+
+
+				<div class="row">
+					<div data-th-replace="/Layout/Footer :: myFooter"></div>
+				</div>
+
+			</div>
+		</div>
+
+
+		
+
+		<div data-th-replace="/Link/Script :: myScript"></div>
+		
+		<script>
+		
+		function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+	  
+		
+		$(document).on('click','#s_save',function (){
+			
+			var username=$.parseJSON(sessionStorage.getItem('a_user')).username;
+			var loggedinrole=$.parseJSON(sessionStorage.getItem('a_user')).role;
+			
+			if($("#u_form").valid()){ 
+				$("#s_save").addClass('disabled');
+				
+				var InerComplain={
+				appuuid:$("#appointment_uuid").val(),
+				description:$("#description").val()
+		        
+		       
+		        }	
+				console.log(InerComplain);
+				$.ajax({ 
+			        
+					headers: {
+				        
+	                   'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+				        'doneBy':username
+				    },
+					url: olhs_url()+'/complains/save', 
+			        type : "POST", // type of action POST || GET
+			        dataType : 'json', // data type
+			        data : JSON.stringify(InerComplain), // post data || get data
+			        contentType: 'application/json',
+			        success : function(result, textStatus, jQxhr) {
+			        	$("#s_save").removeClass('disabled');	
+			        	if(result.CODE==200){
+			          
+			        	 $.alert(result.DESCRIPTION,
+								{
+									type : "success",
+									position : [ 'top-right',
+											[ -0.42, 0 ] ],
+								}); 
+			        	
+			        	$("#u_form").each(
+								function() {
+									this.reset();
+								});
+			        	   window.location.href="appointment";
+			        	
+			        	}else{
+			        		 $.alert(result.DESCRIPTION,
+									{
+										type : "danger",
+										position : [ 'top-right',
+												[ -0.42, 0 ] ],
+									}); 
+			        	}
+			        	
+			        	
+			        },
+			        error: function(xhr, resp, text) {
+			            console.log(xhr, resp, text);
+			            $("#s_save").removeClass('disabled');
+			            $.alert('Error Occurred'+xhr.responseText,
+								{
+									type : "danger",
+									position : [ 'top-right',
+											[ -0.42, 0 ] ],
+								});
+			            
+			        }
+			    });
+		
+				
+			}
+		});
+		
+		
+		
+		
+		</script>
+	</section>
+</body>
+</html>

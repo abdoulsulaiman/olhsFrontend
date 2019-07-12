@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OLHS -COMPLAINS DETAILS</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+
+    <style>
+                
+       
+         .content_table,.details-table{
+             width: 100%;
+             border-spacing: 8px;
+             border-collapse: separate;
+          }
+            
+            .content_table td{
+                 width: 20%;
+                 padding-left: 7px;
+                 border: 1px solid silver;
+            }
+        .details-table td{
+             padding-left: 7px;
+             height: 30px;
+             margin: 20px;
+             border: 1px solid silver;
+         }
+        
+         .content_table .td-header,.details-table .td-header{
+             width:15%;
+             background-color: #eceff1;
+         }
+
+        #w_header {
+            padding-bottom: 5px;
+        }
+
+        #w_wrap {
+            /* padding-top: 10px; */
+            /* padding-bottom: 5px; */
+        }
+        .shadow {
+            -webkit-box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+            -moz-box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+            box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+        }
+        .productTable td{
+          padding-bottom: 15px; 
+        }
+        /* .contents{
+          
+        } */
+
+       .titles{
+           font-weight:900;
+       }
+    </style>
+</head>
+
+<body class="leftbar-view">
+
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+        <div class="container-fluid">
+            <div>
+
+                <div class="page-header filled full-block light">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 data-localize="quotationdetails">Complain Details</h2>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-page-breadcrumb">
+                                <li><span data-localize="menu">Menu</span>  <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li><span data-localize="contract">Complains</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li class="active-page"data-localize="details">Details</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <input type="hidden" th:value="${cuuid}" id="complain_uuid">
+                    <input type="hidden" th:value="${session.a_reg.getRegistrantCategory()}" id="registrantCategory">
+                     <input type="hidden" th:value="${session.a_reg.getUuid()}" id="reg_uuid">
+                    <input type="hidden" th:value="${session.a_reg.getNames()}" id="reg_name">
+                    <div class="col-md-12">
+                        <div class="widget-wrap" id="w_wrap">
+                            <div class="widget-header block-header margin-bottom-0 clearfix" id="w_header">
+                                <div class="pull-left">
+                                    <a class="btn btn-sm btn-primary" href="complains"> <i class="zmdi zmdi-arrow-back"></i> <span data-localize="back"> Back</span></a>
+                                </div>
+                                <div class="pull-right">
+                                    <!-- <a class="btn btn-sm btn-primary" id="c_print" href="#"> <i class="zmdi zmdi-print"></i> <span data-localize="print"> PRINT DETAILS</span></a> -->
+                                </div>
+                            </div>
+                            <div class="widget-container">
+                                <div class="widget-content">
+                                   <div class="row">
+                                       <div class="col-md-8">
+                                          <div class="row">
+                                            <div class="widget-wrap shadow" style="padding-top:10px; padding-bottom: 10px;">
+                                                <div class="widget-container"style="padding-top: 0vh;margin-top:10px;">
+                                                    <div class="row">
+                                                       <div class="btn-group pull-right">
+                                                           <button type="button"
+                                                               class="btn btn-sm btn-primary dropdown-toggle"
+                                                               data-toggle="dropdown" aria-haspopup="true" id="act"
+                                                               aria-expanded="true">
+                                                               Action <span class="caret"></span>
+                                                           </button>
+                                                           <ul class="dropdown-menu dropdown-menu-left"
+                                                               aria-labelledby="act">
+                                                              
+                                                               <li role="separator" class="divider"></li>
+                                                               <li> <a id="c_print" href="#" target='blank'> <i
+                                                                           class="zmdi zmdi-print"></i> <span
+                                                                           data-localize="print"> PRINT
+                                                                           DETAILS</span></a></li>
+                                                           </ul>
+                                                       </div>
+                                                    </div>
+                                                    <div class="row">
+                                                       <div class="col-md-6">
+                                                                <div>
+                                                                    <h4 style="margin-bottom:0px; margin-top:5px">Citizen</h4>
+                                                                    <hr>
+                                                                </div>
+                                                                <table class="display table">
+                                                                  <tr>
+                                                                      <td class="titles">Citizen</td>
+                                                                      <td class="c_citizen contents"></td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                    <td class="titles">Phone</td>
+                                                                    <td class="c_citizenphone contents"></td>
+                                                                </tr>
+                                                                </table>
+                                                       </div>
+                                                       <div class="col-md-6">
+                                                            <div>
+                                                                    <h4 style="margin-bottom:0px;  margin-top:5px">Lawyer</h4>
+                                                                    <hr>
+                                                                </div>
+                                                                <table class="display table">
+                                                                  <tr>
+                                                                      <td class="titles">Lawyer</td>
+                                                                      <td class="c_lawyer contents"></td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                    <td class="titles">Phone</td>
+                                                                    <td class="c_lawyerphone contents"></td>
+                                                                  </tr>
+                                                                </table> 
+                                                        </div>
+                                                       </div>
+                                                       <hr>
+                                                      
+                                                </div>
+                                            </div>    
+                                          </div>
+                                          <div class="row">
+                                            <div class="widget-wrap shadow" style="padding-top:10px; padding-bottom: 10px;">
+                                                <div class="widget-container"style="padding-top: 0vh;  margin-top:5px">
+                                                    <div class="row"><h4>OTHER DETAILS</h4><hr></div>
+                                                    <div>
+                                                        <table class="content_table">
+                                                            <tr>
+                                                               <td class="td-header titles">Creation Date</td>
+                                                               <td class="contents c_doneAt"></td> 
+                                                              
+                                                            </tr>
+                                                            <tr>
+                                                               
+                                                               <td class="td-header titles">Status</td>
+                                                               <td class="contents c_status"></td> 
+                                                            </tr>
+                                                           
+                                                        </table>
+                                                        <table class="content_table">
+                                                                <tr>
+                                                                  <td class="td-header titles" data-localize="content">
+                                                                      Description</td>
+                                                                </tr>
+                                                                <tr>
+                                                                      <td class="c_description"></td>
+                                                                </tr>
+                                                       </table>
+                                                    </div>
+                                                </div>
+                                            </div>    
+                                          </div>    
+                                       </div>
+                                       <div class="col-md-4">
+                                            <div class="widget-wrap shadow">    
+                                                <div class="widget-header block-header margin-bottom-0 clearfix" >
+                                                      <h4>COMPLAIN COMMENT</h4>
+                                                </div>
+                                                <div class="widget-container"style="padding-top: 0vh;">
+                                                        <div class="activities-container">
+                                                                <ul class="activities-list"
+                                                                    id="historyList">
+
+                                                                </ul>
+                                                                
+                                                                <hr>
+                                                                
+                                                                <ul class="activities-list"id="salesOrder">
+
+                                                                 </ul>
+                                                             
+                                                         </div>
+                                                </div>
+                                            </div>    
+                                       </div>
+                                   </div> 
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+                   
+
+                    <div class="row">
+                        <div data-th-replace="/Layout/Footer :: myFooter"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div data-th-replace="/Link/Script :: myScript"></div>
+
+
+        <script>
+          	$('input[name="dates"]').daterangepicker({
+                    singleDatePicker: true,
+                   
+
+                    locale: {
+                        format: 'YYYY-MM-DD '
+                    }
+
+                });
+
+          	function olhs_url() {
+  		      var olhs_url = "http://localhost:8003";
+
+  		      return olhs_url;
+  		    }
+
+
+            var registrantUuid = $("#reg_uuid").val();
+           var Status="";
+            
+            var contract={};
+            $(function () {
+                 ViewComplain();
+                 history();
+            });
+
+            /***
+             * Viewing all contacts of the entity by it uuuid
+             *
+             * */
+            function ViewComplain() {
+                var tables = $("#list_contacts").DataTable().clear().draw();
+                var quotationUuid=$("#complain_uuid").val();
+                // tables.clear();
+                $.ajax({
+                    headers: {
+
+                    	'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+
+                    },
+                    type: "GET",
+                    url: olhs_url() + "/complains/"+ quotationUuid,
+
+                    success: function (resurt) {
+                        if (resurt.CODE == 200) {
+                            console.log(resurt)
+                            contract=resurt.OBJECT;
+                              $(".c_lawyer").text(resurt.OBJECT.appointment.lawyer.names);
+                              $(".c_citizen").text(resurt.OBJECT.appointment.registrant.names);
+                              $(".c_citizenphone").text(resurt.OBJECT.appointment.registrant.phone);
+                              $(".c_lawyerphone").text(resurt.OBJECT.appointment.lawyer.registrant.phone);
+                            
+                              $(".c_description").html("<p> "+resurt.OBJECT.description+"</p>");
+                               
+                               $(".c_status").text(resurt.OBJECT.complainstatus);
+                               $(".c_doneAt").text(formatDate(resurt.OBJECT.creationDate, "dd-MM-yyyy"));
+                               $("#q_confirm").attr("data-status",resurt.OBJECT.uuid+"_APPROVED");
+                               $("#q_cancel").attr("data-status",resurt.OBJECT.uuid+"_CANCELLED");
+                                $("#q_reject").attr("data-status",resurt.OBJECT.uuid+"_REJECTED");
+                               
+                              $("#c_print").attr('href',olhs_url()+"/complains/"+resurt.OBJECT.uuid+"/report");
+                               
+                        } else {
+                            console.log("fail get", resurt)
+                        }
+                    },
+                    error: function () {
+                        //  console.log("ERROR", e);
+                    }
+                })
+            }
+
+        
+         function history(){
+            var complainuuid=$("#complain_uuid").val();
+            $.ajax({
+                    headers: {
+
+                    	'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+
+                    },
+                    type: "GET",
+                    url: olhs_url() + "/complains/comments/"+ complainuuid,
+
+                    success: function (resurt) {
+                        if (resurt.CODE == 200) {
+                            console.log(resurt)
+                            history=resurt.OBJECT;
+                            
+                           
+                            history.forEach(history => {
+                                l="";
+                                            l+='<li>'
+                                            l+='<div class="activities-badge">'
+                                            l+='<span style="background-color:#6cb33e">'
+                                            l+='<i class="fa fa-clock-o"></i>'
+                                            l+='</span>'
+                                            l+='</div>'
+                                            l+='<div class="activities-details">'
+                                            l+='<h3 class="activities-header">'
+                                            l+='<a href="javascript:void(0)">' + history.action + '</a>'
+                                            l+='</h3>'
+                                            l+='<div class="activities-meta">'
+                                            l+='<span>'
+                                            l+='<i class="fa fa-clock-o"></i> ' +formatDate(history.doneAt, "dd-MM-yyyy HH:mm:ss") +'</span><br>'
+                                            l+='<span> <i class="fa fa-user"></i> '+history.complain.doneBy+'</span>'
+                                            l+='</div>'
+                                            l+='<div class="activities-post">'
+                                            l+='<ul class="new-comments-lists">'
+                                           
+                                            l+='<li><span>comment: ' + history.comment + '</span></li>'
+                                            l+='</ul>'
+                                            l+='</div>'
+                                            l+='</div>'
+                                            l+='</li>'
+                                    $('#historyList').append(
+                                       l
+                                    )
+                                });
+
+
+                               
+                                                
+                        } else {
+                            console.log("fail get", resurt)
+                        }
+                    },
+                    error: function () {
+                        //  console.log("ERROR", e);
+                    }
+                })
+         }
+
+
+
+        //  Action On Quotation Details
+    $(document).on('click','.order-status',function(){
+          $("#quo_status").val($(this).data('status'));
+          $("#c_quotation_modal").modal();
+      })
+
+      $(document).on('click','#quo_confirm',function(){
+          changeStatus($("#quo_status").val()); 
+      });
+           function changeStatus(orderStatus){
+                //  var username =$.parseJSON(sessionStorage.getItem('a_user')).username;
+                // var loggedinrole =$.parseJSON(sessionStorage.getItem('a_user')).role;
+                // var objectId =$.parseJSON(sessionStorage.getItem('a_user')).objectId;
+                // var firstName = $("#e_fname").val();
+                var username=$("#username").val();
+                $.ajax({
+                    headers: {
+                        'bfw_token': token(),
+                        'doneBy': username
+                    },
+                    url: bfw_url() + "/quotations/updatestatus/"+ orderStatus,
+                    type: "PUT", // type of action POST || GET
+                    //dataType : 'json', // data type
+                    contentType: 'application/json',
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+
+                            // console.log(result)
+                            $.alert(result.DESCRIPTION,
+                                {
+                                    type: "success",
+                                    position: ['top-right',
+                                        [-0.42, 0]],
+                                });
+                           ViewComplain();
+                        } else {
+                            $.alert(result.DESCRIPTION,
+                                {
+                                    type: "danger",
+                                    position: ['top-right',
+                                        [-0.42, 0]],
+                                });
+                        }
+
+
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                        $("#e_save").removeClass('disabled');
+                        $.alert('Error Occurred' + xhr.responseText,
+                            {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]],
+                            });
+
+                    }
+                });
+            }
+
+
+
+              </script>
+    </section>
+</body>
+
+</html>

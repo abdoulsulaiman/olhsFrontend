@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OLHS -UPDATE PROFILE</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+
+
+
+</head>
+
+<body class="leftbar-view">
+
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+        <div class="container-fluid">
+            <div>
+                
+                <input type="hidden"  th:value="${session.a_reg.getRegistrantCategory()}" id="regCategory">
+                <input type="hidden" th:value="${session.a_reg.getUuid()}" id="uuid">
+               
+               
+                <div class="page-header filled full-block light">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 data-localize="update entity">UPDATE REGISTRANT</h2>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-page-breadcrumb">
+                                <li> <span data-localize="menu">Menu</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li> <span data-localize="entities">Registrants</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li class="active-page" data-localize="update entity" > Update Registrant</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget-wrap">
+                            <div class="widget-header margin-bottom-0 block-header clearfix">
+                                <div class="pull-left">
+                                           <a class="btn btn-sm btn-primary" id="back" href="profile"> <i class="zmdi zmdi-chevron-left"></i> <span data-localize="back">Back</span></a>
+    
+                                </div>
+                            </div>
+                            <div class="widget-container">
+                                <div class="widget-content">
+
+                                    <div class="row">
+                                        <div class="col-md-12 text-center"> <span class="label label-warning"
+                                                id="default_password_info"></span></div>
+                                        <div class="col-md-12">
+                                            <form class="form-horizontal material-form" id="u_form">
+
+                                                <div class="col-md-6">
+                                                    <fieldset>
+                                                        <legend data-localize="entity">Registrant</legend>
+
+
+
+                                                        <div class="form-group ">
+                                                            <label class="col-md-4 control-label input_label"> <span data-localize="names">Names</span>
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class=" col-md-8">
+                                                                <input type="text" name="names"  class="form-control"
+                                                                    id="e_names" placeholder="Names"
+                                                                    required="required">
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group ">
+                                                            <label class="col-md-4 control-label input_label">Identity
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class=" col-md-8">
+                                                                <input type="text" name="identity" class="form-control"
+                                                                    id="e_identity" placeholder="ID"
+                                                                    required="required">
+
+                                                            </div>
+                                                        </div>
+                                                      
+                                                         <div class="form-group  hidden">
+                                            <label class="col-md-4 control-label">Category</label>
+                                            <div class="col-md-8">
+                                                <select class="form-control" required="required" id="e_category" name="category">
+                                                    <option value="CITIZEN">CITIZEN</option>
+                                                    <option value="UPCOMING_LAWYER">UPCOMING LAWYER</option>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div> 
+                                                        <div class="form-group ">
+                                                            <label class="col-md-4 control-label input_label">Phone
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class=" col-md-8">
+                                                                <input type="text" name="phone" maxlength="10" minlength="10" onblur="checkNumber()" class="form-control telephone" id="e_phone" placeholder="2507xxxxxxxx"
+                                                                    required="required">
+                                                            </div>
+                                                        </div>
+                                                       
+                                                     
+                                                        <div class="form-group">
+                                                                <label class="col-md-4 control-label input_label" data-localize="address">Address</label>
+                                                                <div class=" col-md-8">
+                                                                    <input type="text" name="address" id="e_address" class="form-control" placeholder="Address">
+                                                                </div>
+                                                         </div>
+                                                    </fieldset>
+                                                </div>
+
+
+                                                <div class="col-md-6">
+                                                    <fieldset>
+                                                        <legend>&nbsp;&nbsp;</legend>
+                                                       
+                                                        <div class="form-group inline-group ">
+                                                            <label class="col-md-4 control-label " style="font-size:14px"> <span data-localize="province">Gender</span>
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="col-md-8">
+                                                                <select class="form-control" required="required" id="e_gender" name="province" style="font-size:14px">
+                                                                <option value="MALE">MALE</option>
+                                                                 <option value="FEMALE">FEMALE</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group ">
+                                                        <label class="col-md-4 control-label">Marital Status</label>
+                                                        <div class="col-md-8">
+                                                            <select class="form-control" required="required" id="e_maritalstatus" name="martalstatus">
+                                                                <option value="SINGLE">SINGLE</option>
+                                                                <option value="MARRIED">MARRIED</option>
+                                                                <option value="DIVORCED">DIVORCED</option>
+                                                                <option value="WIDOWED">WIDOWED</option>
+                                                                <option value="NOT_APPLICABLE">NOT_APPLICABLE</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                     <div class="form-group">
+                                                            <label class="col-md-4 control-label input_label" data-localize="email">Email</label>
+                                                            <div class=" col-md-8">
+                                                                <input type="email" name="emailAddress" id="e_email" class="form-control" placeholder="Email">
+                                                            </div>
+                                                        </div>
+														<div class="form-group sellerField">
+                                                            <label class="col-md-4 control-label input_label" data-localize="email">Years of Experience</label>
+                                                            <div class=" col-md-8">
+                                                                <input type="number" min='0' name=yearofexperience id="e_year" class="form-control" >
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                
+                                                
+                                                     
+
+                                                    </fieldset>
+                                                </div>
+
+                                                <input type="hidden" hidden="" id="e_role" value="admin" />
+                                                <div class="form-group col-md-12">
+
+                                                    <div class="col-md-12">
+                                                        <div class="form-actions">
+                                                            <a class="btn btn-primary pull-right" id="e_update"> <i
+                                                                    class="zmdi zmdi-save"></i> <span data-localize="update">Update</span></a>
+                                                            <a href="profile"
+                                                                class="btn btn-default pull-left" id="cancel" data-localize="cancel">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="list_users"></div>
+
+
+                <div class="row">
+                    <div data-th-replace="/Layout/Footer :: myFooter"></div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+        <div data-th-replace="/Link/Script :: myScript"></div>
+
+        <script>
+        
+        function olhs_url() {
+  	      var olhs_url = "http://localhost:8003";
+
+  	      return olhs_url;
+  	    }
+            var sectorInfo={};
+            $(function(){
+                var reg = $.parseJSON(sessionStorage.getItem('a_registrant'));
+                populateRegistrantInfo()
+                $("#e_about").text(reg.about);
+               var category=$('#regCategory').val();
+               
+                if(category==="CITIZEN"){
+                  $('#e_category option[value=CITIZEN]').attr('selected', 'selected');
+                  $('.sellerField').addClass('hidden');
+                }else if(category==="UPCOMING_LAWYER"){
+                      $('#e_category option[value=UPCOMING_LAWYER]').attr('selected', 'selected');
+                      $('.sellerField').addClass('hidden');
+               }else if(category==="COUNCIL"){
+            	   $('#e_category option[value=COUNCIL]').attr('selected', 'selected');
+            	   $('.sellerField').addClass('hidden');
+               }
+                
+            })
+            $(document).on('click', '#e_update', function () {
+            	 var category=$('#regCategory').val();
+                var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+                var url="";
+                 var uuid=$("#uuid").val();
+                 var year=$("#e_year").val();
+                if ($("#u_form").valid()) {
+                    $("#e_save").addClass('disabled');
+                        
+                    var registrant = {
+                        phone: $("#e_phone").val(),
+                        applicationName: 'BFW',
+                        names: $("#e_names").val(),
+                        identity: $("#e_identity").val(),
+                        registrantCategory: $("#e_category").val(),
+                        address:$("#e_address").val(),
+                        gender:$("#e_gender").val(),
+                        email:$("#e_email").val(),
+                        martalStatus:$("#e_maritalstatus").val()
+                    }
+                    if(category==="LAWYER"){
+                    	url= olhs_url() + '/registrants/update/'+uuid+'/'+year;
+                    }else{
+                    	url= olhs_url() + '/registrants/update/'+uuid;
+                    }
+                    $.ajax({
+                        headers: {
+                        	'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                            'doneBy': username
+                        },
+                        url:url,
+                        type: "PUT", // type of action POST || GET
+                        dataType: 'json', // data type
+                        data: JSON.stringify(registrant), // post data || get data
+                        contentType: 'application/json',
+                        success: function (result, textStatus, jQxhr) {
+                            $("#e_save").removeClass('disabled');
+                            if (result.CODE == 200) {
+                                // show default password to admin
+                                // $("#default_password_info").text('Default password for ' + firstName + ' is : ' + password);
+                                $.alert(result.DESCRIPTION,
+                                    {
+                                        type: "success",
+                                        position: ['top-right',
+                                            [-0.42, 0]],
+                                    });
+
+                                $("#u_form").each(
+                                    function () {
+                                        this.reset();
+                                    });
+                                    //   viewByUUidAndUpdateSession();
+                                       $("#cancel").trigger("click");
+                                        location.href = 'profile';
+                                 // send SMS
+                                // SendSMS(user.phone, user.names, user.nationalId, user.password);
+                            } else {
+                                $.alert(result.DESCRIPTION,
+                                    {
+                                        type: "danger",
+                                        position: ['top-right',
+                                            [-0.42, 0]],
+                                    });
+                            }
+
+
+                        },
+                        error: function (xhr, resp, text) {
+                            console.log(xhr, resp, text);
+                            $("#e_save").removeClass('disabled');
+                            $.alert('Error Occurred' + xhr.responseText,
+                                {
+                                    type: "danger",
+                                    position: ['top-right',
+                                        [-0.42, 0]],
+                                });
+
+                        }
+                    });
+
+
+                }
+            });
+
+
+         
+         function viewByUUidAndUpdateSession() {
+              
+                  var uuid = $("#uuid").val();
+                $.ajax({
+                    headers: {
+
+                    	'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+
+                    },
+                    type: "GET",
+                    url: olhs_url() + "/registrants/" + uuid,
+
+                    success: function (resurt) {
+                        if (resurt.CODE == 200) {
+                            
+                             add_registrant_in_session(resurt.OBJECT)
+                           
+
+                        } else {
+                            console.log("fail get", resurt)
+                        }
+                    },
+                    error: function () {
+                        //  console.log("ERROR", e);
+                    }
+                })
+            }
+        
+
+            
+
+                function add_registrant_in_session(reg) {
+                 sessionStorage.setItem('a_registrant', JSON.stringify(reg));
+               
+                    var user = {
+                        names: reg.names,
+                        email: reg.email,
+                        phone: reg.phone,
+                        identity: reg.identity,
+                        uuid: reg.uuid,
+                        address: reg.address,
+                        gender: reg.gender,
+                        registrantCategory: reg.registrantCategory,
+                        martalStatus:reg.martalStatus
+                    }
+
+                    $.ajax({
+
+                        headers: {
+
+                        	'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+
+                        },
+                        url: 'add_registrant/session',
+                        type: "POST", // type of action POST || GET
+                        dataType: 'json', // data type
+                        data: JSON.stringify(user), // post data || get data
+                        contentType: 'application/json',
+                        success: function (result, textStatus, jQxhr) {
+
+                           
+                        },
+                        error: function (xhr, resp, text) {
+                            console.log(xhr, resp, text);
+
+                        }
+                    });
+
+
+                }
+            
+
+
+
+
+ /* 
+//   Method to check if the number start with +250
+function checkNumber(){
+	   var number=$("#e_phone").val();
+	 
+	    if(!number.startsWith("+250")){
+			$("#errorPhone").remove();
+			$("#e_phone").after("<span id='errorPhone'>Invalid phone Number</span>")
+             $("#errorPhone").css("color","red");
+			$("#e_update").addClass('disabled');
+	    }else if(phonenumber(number)==false){
+            $("#errorPhone").remove();
+			$("#e_phone").after("<span id='errorPhone'>Invalid phone Number</span>")
+            $("#errorPhone").css("color","red");
+			$("#e_update").addClass('disabled');
+        }else{
+		    $("#errorPhone").remove();
+			$("#e_update").removeClass('disabled');
+		}
+}             
+*/
+
+
+
+  
+    
+
+
+     
+
+//Retrieve Old information
+
+      function populateRegistrantInfo() {
+                var reg_uuid=$("#uuid").val();
+    
+                 // tables.clear();
+                 $.ajax({
+                     headers: {
+    
+                    	 'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                     },
+                     type: "GET",
+                     url: olhs_url()+"/registrants/"+reg_uuid,
+    
+                     success: function (result) {
+                         if (result.CODE == 200) { 
+                             var entity=result.OBJECT;
+                              entity=result.OBJECT;
+           						console.log(entity);
+                             $("#e_identity").val(entity.reg.identity);
+                             $("#e_names").val(entity.reg.names);
+                             $("#e_address").val(entity.reg.address);
+                             $("#l_sector").val(entity.reg.sector);
+                             $("#e_email").val(entity.email); 
+                             $("#e_year").val(entity.la.yearofexperience); 
+                             $("#e_phone").val(entity.reg.phone);
+                             $("#e_category").val(entity.reg.registrantCategory);
+                             $("#startYear").val(entity.reg.startingYear);
+                             $("#about").val(entity.reg.about);
+                                                
+                         } else {
+                             console.log("fail get", resurt)
+                         }
+                     },
+                     error: function () {
+                         //  console.log("ERROR", e);
+                     }
+                 })
+             }
+             
+
+
+        </script>
+    </section>
+</body>
+
+</html>

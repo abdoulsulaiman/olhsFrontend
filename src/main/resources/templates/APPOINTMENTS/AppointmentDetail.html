@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OLHS -APPOINTMENTS DETAILS</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+
+    <style>
+                
+       
+         .content_table,.details-table{
+             width: 100%;
+             border-spacing: 8px;
+             border-collapse: separate;
+          }
+            
+            .content_table td{
+                 width: 20%;
+                 padding-left: 7px;
+                 border: 1px solid silver;
+            }
+        .details-table td{
+             padding-left: 7px;
+             height: 30px;
+             margin: 20px;
+             border: 1px solid silver;
+         }
+        
+         .content_table .td-header,.details-table .td-header{
+             width:15%;
+             background-color: #eceff1;
+         }
+
+        #w_header {
+            padding-bottom: 5px;
+        }
+
+       
+        .shadow {
+            -webkit-box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+            -moz-box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+            box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+        }
+        .productTable td{
+          padding-bottom: 15px; 
+        }
+        /* .contents{
+        color: rgb(54, 85, 34)
+        } */
+          .titles{
+             font-weight:900;
+          }
+      
+    </style>
+</head>
+
+<body class="leftbar-view">
+
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+        <div class="container-fluid">
+            <div>
+
+                <div class="page-header filled full-block light">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 data-localize="salesOrder details">Appointment Details</h2>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-page-breadcrumb">
+                                <li data-localize="menu">Menu <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li><span >Appointment</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li class="active-page">Details</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <input type="hidden" th:value="${apuuid}" id="appointment_uuid">
+                    <input type="hidden" th:value="${session.a_reg.getRegistrantCategory()}" id="registrantCategory">
+                     <input type="hidden" th:value="${session.a_reg.getUuid()}" id="reg_uuid">
+                    <input type="hidden" th:value="${session.a_reg.getNames()}" id="reg_name">
+                    <input type="hidden"  id="contract_uuid">
+                    <div class="col-md-12">
+                        <div class="widget-wrap" id="w_wrap">
+                            <div class="widget-header block-header margin-bottom-0 clearfix" id="w_header">
+                                <div class="pull-left" th:if=" ${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('LAWYER'))}">
+                                    <a class="btn btn-sm btn-primary" href="/appointments"> <i
+                                            class="zmdi zmdi-arrow-back"></i>
+                                        <span>Back</span> </a>
+                                </div>
+                                
+                                 <div class="pull-left" th:if=" ${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('CITIZEN'))}">
+                                    <a class="btn btn-sm btn-primary" href="/appointment"> <i
+                                            class="zmdi zmdi-arrow-back"></i>
+                                        <span>Back</span> </a>
+                                </div>
+                                <div class="pull-right">
+                                    <!-- <a class="btn btn-primary" id="s_amend" href="javascript:void(0)"> <i class="zmdi zmdi-edit"></i> <span data-localize="amend" >Amend</span></a> -->
+                                    <!-- <a class="btn btn-primary" id="s_print" href="javascript:void(0)"> <i class="zmdi zmdi-edit"></i> <span data-localize="print" >Print</span></a> -->
+                                </div>
+                            </div>
+                            <div class="widget-container">
+                                <div class="widget-content">
+                                    <div class="row">
+                                            <div class="row">
+                                                    <div class="col-md-12">
+                                                       <div class="row">
+                                                         <div class="widget-wrap shadow" style="padding-top:10px; padding-bottom: 10px;">
+                                                             <div class="widget-container"style="padding-top: 0vh;margin-top:10px;">
+                                                                <div class="row">
+                                                                    <div class="btn-group pull-right">
+                                                                        <button type="button"
+                                                                            class="btn btn-sm btn-primary dropdown-toggle"
+                                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                                            id="act" aria-expanded="true">
+                                                                            Action <span class="caret"></span>
+                                                                        </button>
+                                                                        <ul class="dropdown-menu dropdown-menu-left"
+                                                                            aria-labelledby="act">
+                                                                            <li class="s_confirm hidden">
+                                                                                <a href='javascript:void(0)'
+                                                                                        
+                                                                                        id='s_confirm'
+                                                                                        class='dropdown-toggle order-status'><i
+                                                                                            class='zmdi zmdi-check'></i>
+                                                                                        Confirm</a>
+                                                                            </li>
+                                                                            <li class="s_terminate hidden">
+                                                                                <a href='javascript:void(0)'
+                                                                                    id='s_terminate'
+                                                                                    class='dropdown-toggle order-status'><i
+                                                                                        class='zmdi zmdi-close'></i>
+                                                                                    Terminate</a>
+                                                                            </li>
+                                                                            <li class="p_confirm hidden">
+                                                                                <a href='javascript:void(0)'
+                                                                                    id='p_confirm'
+                                                                                    class='dropdown-toggle order-status'><i
+                                                                                        class='zmdi zmdi-edit'></i>
+                                                                                    Confirm Payment</a>
+                                                                            </li>
+                                                                            <li class="d_confirm hidden">
+                                                                                <a href='javascript:void(0)'
+                                                                                   
+                                                                                    id='d_confirm'
+                                                                                    class='dropdown-toggle order-status'><i
+                                                                                        class='zmdi zmdi-edit'></i>
+                                                                                    Confirm delivery</a>
+                                                                            </li>
+                                                                            <li class="s_attach">
+                                                                                <a href='javascript:void(0)'
+                                                                                    data-saAtach='" + sales.uuid + "'
+                                                                                    id='s_atach'
+                                                                                    class='dropdown-toggle order-status'><i
+                                                                                        class='zmdi zmdi-file'></i> Add
+                                                                                    Attachment</a>
+                                                                            </li>
+                                                                            <li role="separator" class="divider"></li>
+                                                                            <li class="s_amend">
+                                                                                 <a class="dropdown-toggle" id="s_amend"
+                                                                                     href="javascript:void(0)"> <i
+                                                                                         class="zmdi zmdi-edit"></i>
+                                                                                     <span
+                                                                                         data-localize="amend">Amend</span></a>
+                                                                            </li>
+                                                                           
+                                                                             <li>
+                                                                                 <a class="dropdown-toggle" id="s_print"
+                                                                                     href="javascript:void(0)"
+                                                                                     target='blank'> <i
+                                                                                         class="zmdi zmdi-print"></i>
+                                                                                     <span>Print Details</span></a>
+                                                                             </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                <div class="col-xs-12 col-md-3" id="aImg"></div>
+                                                                    <div class="col-md-9">
+                                                                             <div>
+                                                                                 <h4 style="margin-bottom:0px; margin-top:5px">CITIZEN</h4>
+                                                                                 <hr>
+                                                                             </div>
+                                                                             
+                                                                             <table class="display table table-striped">
+                                                                               <tr>
+                                                                                   <td class="titles">NAME</td>
+                                                                                   <td class="s_citizen contents"></td>
+                                                                               </tr>
+                                                                               <tr>
+                                                                                 <td class="titles">PHONE</td>
+                                                                                 <td class="s_citizenphone contents"></td>
+                                                                             </tr>
+                                                                             </table>
+                                                                    </div>
+                                                                     <div class="col-xs-12 col-md-3" id="lImg"></div>
+                                                                    <div class="col-md-9">
+                                                                         <div>
+                                                                                 <h4 style="margin-bottom:0px;  margin-top:5px">LAWYER</h4>
+                                                                                 <hr>
+                                                                             </div>
+                                                                             
+                                                                             <table class="display table table-striped">
+                                                                               <tr>
+                                                                                   <td class="titles">NAME</td>
+                                                                                   <td class="a_lawyer contents"></td>
+                                                                               </tr>
+                                                                               <tr>
+                                                                                 <td class="titles">PHONE</td>
+                                                                                 <td class="s_lawyerphone contents"></td>
+                                                                               </tr>
+                                                                             </table> 
+                                                                     </div>
+                                                                    </div>
+                                                                    <hr>
+                                                     
+                                                             </div>
+                                                         </div>    
+                                                       </div>
+                                                       <div class="row">
+                                                         <div class="widget-wrap shadow" style="padding-top:10px; padding-bottom: 10px;">
+                                                             <div class="widget-container"style="padding-top: 0vh;  margin-top:5px">
+                                                                 <div class="row"><h4>OTHER DETAILS</h4><hr></div>
+                                                                 <div>
+                                                                     <div>
+                                                                         <h4>Appointment No: <span class="c_number contents"></span></h4>
+                                                                     </div>
+                                                                     <table class="content_table">
+                                                                        
+                                                                     
+                                                                         <tr>
+                                                                                <td class="td-header titles">Schedule
+                                                                                    Date</td>
+                                                                                <td class="s_scheduleDate contents"></td> 
+                                                                                <td class="td-header titles">Schedule
+                                                                                    Time</td>
+                                                                                <td class="s_scheduleTime contents"></td> 
+                                                                         </tr>
+                                                                         
+                                                                         
+                                                                         <tr>
+                                                                                <td class="td-header titles">Creation
+                                                                                    Date</td>
+                                                                                <td class="contents s_doneAt contents"></td> 
+                                                                                <td class="td-header titles">Status</td>
+                                                                                <td class="contents s_status contents"></td> 
+                                                                         </tr>
+                                                                          <tr id="atc">
+                                                                              <td class="td-header titles">Print
+                                                                                  Attachment
+                                                                              </td>
+                                                                              <td class="atachment"></td>
+                                                                          </tr>
+                                                                          
+                                                                         
+                                                                     </table>
+                                                                   
+                                                                 </div>
+                                                             </div>
+                                                         </div>    
+                                                       </div>    
+                                                    </div>
+                                       
+                                                </div>     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+                   
+
+                    <div class="row">
+                        <div data-th-replace="/Layout/Footer :: myFooter"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div data-th-replace="/Link/Script :: myScript"></div>
+
+
+        <script>
+
+        function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+           
+
+               
+
+            var registrantUuid = $.parseJSON(sessionStorage.getItem('a_registrant')).uuid;
+            var role = $.parseJSON(sessionStorage.getItem('a_user')).role;
+            
+            var contract={};
+             var registrantCategory=$("#registrantCategory").val();
+           
+            $(function () {
+                viewAppointment();
+               
+            });
+
+            /***
+             * Viewing all SalesOrder of t  he entity by it uuuid
+             *
+             * */
+            function viewAppointment() {
+                var tables = $("#list_salesOrder").DataTable().clear().draw();
+                var appointmentuuid=$("#appointment_uuid").val();
+                // tables.clear();
+                $.ajax({
+                    headers: {
+
+                    	'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+
+                    },
+                    type: "GET",
+                    url: olhs_url() + "/appointments/"+ appointmentuuid,
+
+                    success: function (resurt) {
+                        if (resurt.CODE == 200) {
+                            console.log(resurt)
+                            sales=resurt.OBJECT;
+                            populateApplicant(resurt.OBJECT.registrant,resurt.OBJECT.lawyer.registrant.uuid);
+                            var filePath= olhs_url()+"/appointments/Download/"+ resurt.OBJECT.uuid;
+                            var printPath= olhs_url()+"/appointments/"+ resurt.OBJECT.uuid+"/report";
+                             $(".ap_service").text(resurt.OBJECT.confirmService);
+                             $(".s_number").text(resurt.OBJECT.salesOrderNumber);
+                              
+                              $(".a_lawyer").text(resurt.OBJECT.lawyer.registrant.names);
+                              $(".s_citizen").text(resurt.OBJECT.registrant.names);
+                            $('.s_status').text(resurt.OBJECT.appointmentStatus)
+                               $(".s_scheduleDate").text(resurt.OBJECT.scheduledate);
+                               $(".s_scheduleTime").text(resurt.OBJECT.scheduleTime);
+                               $(".s_citizenphone").text(resurt.OBJECT.registrant.phone);
+                               $(".s_lawyerphone").text(resurt.OBJECT.lawyer.registrant.phone);
+                               $(".s_atach").html("<a href='"+ filePath+"'class='label label-primary'>Downlod Attachment<i class='zmdi zmdi-download'></a>")
+                               $(".s_purchase").html("<a href='"+printPath+"'target='blank'  class='label label-primary'>Print PurchaseOrder<i class='zmdi zmdi-print'></i></a>")
+                               $(".s_doneAt").text(formatDate(resurt.OBJECT.appointmentDate,'dd-MM-yyyy'));
+                                
+                                $("#s_print").attr('href',olhs_url()+"/appointments/"+resurt.OBJECT.uuid+"/report");     
+                                $("#s_confirm").attr("data-s_confirm",resurt.OBJECT.uuid),
+                                  
+                                      salesOrderStatus=resurt.OBJECT.contractStatus;
+                                      weight=resurt.OBJECT.weight;
+                                      unitPrice=resurt.OBJECT.unitPrice
+                               
+                                if(resurt.OBJECT.attachement!=null){
+                                    if(resurt.OBJECT.attachement.length!=0){
+                                    $(".atachment").html("<a href='"+ filePath+"' class='label label-primary' target='blank'>PrintAttachment <iclass='zmdi zmdi-print'></i></a>");
+                                    }else{
+                                    $(".atachment").html("<span>Not Available</span>");
+                                    }
+                                }
+                                
+                              
+
+                        } else {
+                            console.log("fail get", resurt)
+                        }
+                    },
+                    error: function () {
+                        //  console.log("ERROR", e);
+                    }
+                })
+            }
+            
+            // The Method to generate Citizen Image
+            function populateApplicant(applicant,luuid){
+               
+                 var imgUrl = olhs_url() + "/pictures/registrant/" + applicant.uuid;
+                 var lmgUrl = olhs_url() + "/pictures/registrant/" + luuid;
+                $("#aImg").append('<div class="user-thumb"><a href="javascript:void(0)"><img style="width:75px; height:75px;" class="thumbnail" src="'+imgUrl+'" alt="user"></a></div>') 
+                $("#lImg").append('<div class="user-thumb"><a href="javascript:void(0)"><img style="width:100px; height:100px;" class="thumbnail" src="'+lmgUrl+'" alt="user"></a></div>') 
+            }
+
+
+
+           
+                    $(document).on('click', '#s_amend', function () {
+                         $('#salesOrder_modal').modal();
+                           $("#s_pName").val(sales.contract.quotationRequest.registrantProduct.product.name);
+                           $("#s_quantity").val(sales.weight);
+                           $("#s_unityPrice").val(sales.unitPrice);
+                           $("#s_Ddate").val(formatDate(sales.deliveryDate,'yyyy-MM-dd'));
+                           $("#s_bank").val(sales.bankname);
+                           $("#s_account").val(sales.bankAccount);
+                           $("#s_comment").val(sales.comment);
+                           $("#s_content").val(sales.content);
+                           $("#s_p_Term").val(sales.paymentTerms);
+                           $("#s_mechanism").val(sales.deliveryMechanism);
+                           $("#s_startDate").val(formatDate(sales.startDate,'yyyy-MM-dd'));
+                           $("#s_Edate").val(formatDate(sales.endDate,'yyyy-MM-dd'));
+                           $("#s_uuid").val(sales.uuid);
+                           $("#s_Pdate").val(formatDate(sales.paymentDate,'yyyy-MM-dd'));
+                          
+    
+                    });
+                    
+                    $(document).on('click', '#saveSalesOrder', function () {
+
+                            var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+                            var enttityCategory=$("#registrantCategory").val();
+                            var registrantUuid=$("#reg_uuid").val();
+                            console.log($("#s_paymentTerm").val());
+                            if ($("#sales_form").valid()) {
+                                $("#saveContract").addClass('disabled');
+                                var updatedSalesOrder = {
+                                     weight:$("#s_quantity").val(),
+                                     unitPrice: $("#s_unityPrice").val(),
+                                     bankname: $("#s_bank").val(),
+                                     bankAccount: $("#s_account").val(),
+                                     paymentTerms: $("#s_p_Term").val(),
+                                     paymentDate:$("#s_Pdate").val(),
+                                     startDate: $("#s_startDate").val(),
+                                     endDate:$("#s_Edate").val(),
+                                     uuid:sales.uuid,
+                                     buyeruuid:sales.buyeruuid,
+                                     salesOrderNumber:sales.salesOrderNumber,
+                                     //contract:sales.contract,
+                                     attachement:sales.attachement,
+                                     amountChangeReason:sales.amountChangeReason,
+                                     weightChangeReason:sales.weightChangeReason,
+                                     selleruuid:sales.selleruuid,
+                                     deliveryMechanism:$("#s_mechanism :selected").val(),
+                                     deliveryDate: $("#s_Ddate").val(),
+                                     comment: $("#s_comment").val(),
+                                     content:$("#s_content").val()
+                                }
+                                $.ajax({
+
+                                    headers: {
+
+                                        'bfw_token': token(),
+                                        "registrantUuid": registrantUuid,
+                                        "doneBy":username 
+                                    },
+                                    url: bfw_url() + '/salesOrders/update',
+                                    type: "PUT", // type of action POST || GET
+                                    dataType: 'json', // data type
+                                    data: JSON.stringify(updatedSalesOrder), // post data || get data
+                                    contentType: 'application/json',
+                                    success: function (result, textStatus, jQxhr) {
+                                        $("#saveSalesOrder").removeClass('disabled');
+                                        if (result.CODE == 200) {
+                                            // show default password to admin
+                                            $('#salesOrder_modal').modal('hide');
+                                            $.alert(result.DESCRIPTION, {
+                                                type: "success",
+                                                position: ['top-right',
+                                                    [-0.42, 0]
+                                                ],
+                                            });
+                                            
+
+                                            $("#u_form").each(
+                                                function () {
+                                                    this.reset();
+                                                });  
+                                            location.reload();
+                                        } else {
+                                            $.alert(result.DESCRIPTION, {
+                                                type: "danger",
+                                                position: ['top-right',
+                                                    [-0.42, 0]
+                                                ],
+                                            });
+                                        }
+
+
+                                    },
+                                    error: function (xhr, resp, text) {
+                                        console.log(xhr, resp, text);
+                                        $("#saveSalesOrder").removeClass('disabled');
+                                        $.alert('Error Occurred' + xhr.responseText, {
+                                            type: "danger",
+                                            position: ['top-right',
+                                                [-0.42, 0]
+                                            ],
+                                        });
+
+                                    }
+                                });
+
+
+                            }
+                        });
+              
+         // SalesOrder Action
+
+// Confirm SalesOrder
+
+            $(document).on('click', '#s_confirm', function () {
+                 $("#s_salesUuid").val($("#salesOrder_uuid").val());
+                 $("#s_confirm_modal").modal();
+            });
+
+             $(document).on('click','#sa_confirm',function(){
+                changeStatusa("confirm",$("#s_salesUuid").val());
+             })
+
+           
+             $(document).on('click','#sad_confirm',function(){
+                 if($('#del_weight').val()!=$('#late_weight').val()){
+                    $('#del_comment').attr("required", "true");
+                    $('#dchage_count').val(1);
+                 }else{
+                    
+                    $('#dchage_count').val(0);
+                 }
+                changeDelivery("confirmdelivery",$("#d_salesUuid").val(),$('#del_weight').val(),$('#del_comment').val(),$('#dchage_count').val());
+             })
+
+      
+// Terminating SalesOrder
+             $(document).on('click', '#s_terminate', function () {
+                    $("#sa_salesUuid").val($("#salesOrder_uuid").val());
+                    var status=salesOrderStatus;
+                    if(status!="SELLER_TERMINATED" || status!= "BUYER_TERMINATED"){
+                      $("#sa_content").attr("required", "true");
+                    }else {
+                       $("#sa_content").addCalss("hidden");
+                    }
+                    $("#s_terminate_modal").modal();
+            });
+            
+             $(document).on('click', '#sa_terminate', function () {
+                    changeStatusa("terminate", $("#salesOrder_uuid").val());
+              })
+
+
+
+       /// confirm delivery
+
+       function changeDelivery(c_status,c_uuid,s_amount,s_comment,s_change){  
+        var username=$.parseJSON(sessionStorage.getItem('a_user')).username;
+              var path="";
+              if(c_status==="confirmpayment"){
+                 path= bfw_url() + "/salesOrders/confirmpayment"
+              }else{
+                  path= bfw_url() + "/salesOrders/confirmDelivery"
+              }
+              if($("#pay_form").valid()){
+                //    $("#co_terminate").addClass("disabled")
+                
+                
+              var Agreement = {
+                salesuuid: c_uuid,
+                  weight:$('#del_weight').val(),
+                  change:s_change,
+                  comment: s_comment
+              }
+              $.ajax({
+                  headers: {
+                      'bfw_token': token(),
+                      'doneBy': username
+                  },
+                  type: "PUT", // type of action POST || GET
+                  dataType: "json", // data type
+                  data: JSON.stringify(Agreement), // post data || get data
+                  contentType: "application/json",
+                  url:path,
+                  success: function (resurt) {
+                      if (resurt.CODE == 200) {
+
+                          $.alert(resurt.DESCRIPTION, {
+                              type: "success",
+                              position: ["top-right", [-0.42, 0]]
+                          });
+                          viewSalesOrder();
+                           salesorderHistory();
+                      } else {
+                         $.alert(resurt.DESCRIPTION, {
+                              type: "danger",
+                              position: ["top-right", [-0.42, 0]]
+                          });
+                      }
+                  },
+                  error: function () {
+                      //  console.log("ERROR", e);
+                  }
+              })
+            }
+
+          }
+
+
+
+
+          // the function to confirm payment
+          function changeStatusa(c_status,c_uuid){  
+            var username=$.parseJSON(sessionStorage.getItem('a_user')).username;
+              var path="";
+              if(c_status==="confirm"){
+                 path= bfw_url() + "/salesOrders/confirm"
+                 $("#sa_content").removeAttr("required");
+              }else{
+                  path= bfw_url() + "/salesOrders/terminate"
+              }
+              
+              if($("#ster_form").valid()){
+                   //$("#sa_terminate").addClass("disabled")
+              var Agreement = {
+                salesuuid: c_uuid,
+                regCategory:$('#registrantCategory').val(),
+                comment: $("#sa_content").val(),
+              };
+
+              $.ajax({
+                  headers: {
+                      'bfw_token': token(),
+                      'doneBy': username
+                  },
+                  type: "PUT", // type of action POST || GET
+                  dataType: "json", // data type
+                  data: JSON.stringify(Agreement), // post data || get data
+                  contentType: "application/json",
+                  url:path,
+                  success: function (resurt) {
+                      if (resurt.CODE == 200) {
+
+                          $.alert(resurt.DESCRIPTION, {
+                              type: "success",
+                              position: ["top-right", [-0.42, 0]]
+                          });
+                        //   $("#s_terminate_modal").modal("false");
+                        viewSalesOrder();
+                         salesorderHistory();
+                      } else {
+                         $.alert(resurt.DESCRIPTION, {
+                              type: "danger",
+                              position: ["top-right", [-0.42, 0]]
+                          });
+                      }
+                  },
+                  error: function () {
+                      //  console.log("ERROR", e);
+                  }
+              })
+            }
+
+          }
+
+          
+           // The method to Attach File for SalesOrder
+          var data = new FormData();
+          $(document).on('click','#s_atach',function(){
+               var cuuid = $(this).closest('tr').find("#t_salesorderUuid").val();;
+              $("#sa_slesorderUuid").val(cuuid)
+              $("#Sales_atach_modal").modal();
+             
+          })
+          $(document).on('click','#savesAtach',function(){
+            var username=$.parseJSON(sessionStorage.getItem('a_user')).username;
+               data = new FormData();
+             
+            
+               file = $("#s_fAtach").prop('files')[0];
+               data.append("attachement-0", file);
+
+
+              $.ajax({
+
+                  headers: {
+
+                      'bfw_token': token(),
+                      'doneBy':username
+                  },
+                  url: bfw_url() + '/salesOrders/attachment/'+ $("#salesOrder_uuid").val(),
+                  type: "POST", // type of action POST || GET
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  method: 'PUT',
+                  data: data,
+                  success: function (result, textStatus, jQxhr) {
+                    //   $("#newLoanSubmit").removeClass('disabled');
+                      if (result.CODE == 200) {
+                        $("#Sales_atach_modal").modal('hide');
+                          // show default password to admin
+                          // $("#default_password_info").text('Default password for ' + firstName + ' is : ' +
+                          // password);
+                          $.alert(result.DESCRIPTION, {
+                              type: "success",
+                              position: ['top-right',
+                                  [-0.42, 0]
+                              ],
+                          });
+
+                          $("#newLoanForm").each(
+                              function () {
+                                  this.reset();
+                              });
+
+                               viewSalesOrder();
+                          // send SMS
+                          // SendSMS(user.phone, user.names, user.nationalId, user.password);
+                      } else {
+                          $.alert(result.DESCRIPTION, {
+                              type: "danger",
+                              position: ['top-right',
+                                  [-0.42, 0]
+                              ],
+                          });
+                      }
+
+
+                  },
+                  error: function (xhr, resp, text) {
+                      console.log(xhr, resp, text);
+                      $("#newLoanSubmit").removeClass('disabled');
+                      $.alert('Error Occurred' + xhr.responseText, {
+                          type: "danger",
+                          position: ['top-right',
+                              [-0.42, 0]
+                          ],
+                      });
+
+                  }
+              });
+          })
+
+
+          
+
+              </script>
+    </section>
+</body>
+
+</html>

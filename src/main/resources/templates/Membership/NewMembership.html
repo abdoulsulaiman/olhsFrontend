@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BFW -MEMBERSHIPS</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.5.2/css/fileinput.css">
+</head>
+
+<body class="leftbar-view">
+
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+        <div class="container-fluid">
+            <div>
+
+                <div class="page-header filled full-block light">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 data-localize="new loan application">New Membership Application</h2>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-page-breadcrumb">
+                                <li> <span data-localize="menu">Menu</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li> <span data-localize="loans">Memberships</span> <i class="zmdi zmdi-chevron-right"></i>
+                                </li>
+                                <li class="active-page" data-localize="new loan application"> New Membership Application</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget-wrap">
+                            <div class="widget-header margin-bottom-0 block-header clearfix">
+                                <div class="pull-left">
+                                    <a class="btn btn-primary" href="membership"> <i class="zmdi zmdi-arrow-left"></i> <span
+                                            data-localize="back">Back</span></a>
+                                </div>
+                            </div>
+                            <div class="widget-container">
+                                <div class="widget-content">
+                                    <div class="row">
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <div class="md-stepper-horizontal blue">
+                                                <div class="md-step active">
+                                                    <a href="javascript:void(0)" id="step1">
+                                                        <div class="md-step-circle"><span>1</span></div>
+                                                    </a>
+                                                    <div class="md-step-title"
+                                                        data-localize="choose financial institution">Read Requirements Carefully
+                                                        </div>
+                                                    <div class="md-step-bar-right"></div>
+                                                </div>
+                                                <div class="md-step">
+                                                    <a href="javascript:void(0)" id="step2">
+                                                        <div class="md-step-circle"><span>2</span></div>
+                                                    </a>
+                                                    <div class="md-step-title" data-localize="fill form">Fill Form</div>
+                                                    <div class="md-step-bar-left"></div>
+                                                    <div class="md-step-bar-right"></div>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- <div class="col-md-12"> -->
+                                        <form class="form-horizontal material-form" method="POST"
+                                             id="newMembershipForm">
+                                            <div id="form1">
+                                                <div class="row ">
+                                                   
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-offsett-1 col-md-10">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-10">
+                                                            <h5 class="text-center"><strong
+                                                                    data-localize="requirements">Requirements</strong>
+                                                            </h5>
+                                                            <hr>
+                                                            <table id="table" class="display table table-striped">
+                                                                <thead>
+                                                                    <th>Desciption</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <a href="membership" id="cancel" class="btn btn-default pull-left"
+                                                        style="margin-left: 1vw" data-localize="cancel">cancel</a>
+
+                                                    <a href="javascript:void(0)" id="next1"
+                                                        class="btn btn-primary pull-right" style="margin-right: 1vw"
+                                                        data-localize="next">Next</a>
+                                                </div>
+                                            </div>
+                                            <div id="form2" class="hidden row">
+                                                <div class="row">
+                                                    <div class=" col-md-offsett-1 col-md-10">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-4" for="loanTitle"><span
+                                                                    data-localize="title">Comment</span><span
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" name="comment" class="form-control"
+                                                                    id="comment" required="required">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-4" for="description"><span
+                                                                    data-localize="title">Description</span><span
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                                <textarea type="text" class="form-control"
+                                                                    name="description" id="description" required></textarea>
+                                                            </div>
+                                                        </div>
+                                  
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-4"
+                                                                for="CaseType"><span
+                                                                    data-localize="labour amount">CaseType</span><span
+                                                                    
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                               <select class="form-control" required="required" id="m_casetype" name="martalstatus">
+                                                                <option value="PENAL">PENAL</option>
+                                                                <option value="DIVORCE">DIVORCE</option>
+                                                                <option value="WILL">WILL</option>
+                                                                <option value="BUSINESS">BUSINESS</option>
+                                                                
+                                                            </select>
+                                                            </div>
+                                                        </div> 
+                                                         <div class="form-group">
+                                                            <label class="control-label col-md-4"
+                                                                for="District"><span
+                                                                    data-localize="labour amount">Province</span><span
+                                                                    
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                               <select class="form-control" required="required" id="m_province" name="district">
+                                                              
+                                                                
+                                                            </select>
+                                                            </div>
+                                                        </div>                      
+                                                         <div class="form-group">
+                                                            <label class="control-label col-md-4"
+                                                                for="District"><span
+                                                                    data-localize="labour amount">District</span><span
+                                                                    
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                               <select class="form-control" required="required" id="m_district" name="district">
+                                                              
+                                                                
+                                                            </select>
+                                                            </div>
+                                                        </div>
+
+                                                   <div class="form-group">
+                                                            <label class="control-label col-md-4" for="files"> <span data-localize="files">Files</span> <span
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                                <input type="file" class="file" id="files" multiple
+                                                                    required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-offset-1 col-md-10">
+                                                        <div
+                                                            th:if="${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('UPCOMMING_LAWYER'))}">
+                                                            <a
+                                                                class="btn btn-md  btn-default pull-left previous1" data-localize="previous">Previous</a>
+                                                            <a class="btn btn-md  btn-primary pull-right"
+                                                                id="next2" data-localize="next">Next</a>
+                                                        </div>
+                                                        <div
+                                                            th:if="${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('UPCOMING_LAWYER'))}">
+                                                            <a
+                                                                class="btn btn-md  btn-default pull-left previous1" data-localize="previous">Previous</a>
+                                                            <a class="btn btn-md - btn-primary pull-right" type="submit"
+                                                                id="newMembershipSubmit" data-localize="submit">Submit</a><br><br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                        </form>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+
+        <div id="list_users"></div>
+
+        <div class="row">
+            <div data-th-replace="/Layout/Footer :: myFooter"></div>
+        </div>
+
+        </div>
+        </div>
+
+
+
+
+        <div data-th-replace="/Link/Script :: myScript"></div>
+
+        <script>
+        var sectorInfo = {}
+	     
+		   function olhs_url() {
+			      var olhs_url = "http://localhost:8003";
+
+			      return olhs_url;
+			    }
+         
+			$('input[name="dates"]').daterangepicker({
+				singleDatePicker: true,
+			   
+			    
+				locale: {
+	                format: 'YYYY-MM-DD '
+	              }
+			
+			});
+			
+             
+            
+            var financials;
+            var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+            var applicantId = $.parseJSON(sessionStorage.getItem('a_registrant')).uuid;
+            var pType = "";
+
+            var table, allPages;
+            $(function () {
+            	 getMembershipRequirements();
+            	 findAllLocation();
+
+            });
+            
+            
+           
+        
+
+            // The Method To Catch all files in a form
+            
+            var data = new FormData();
+            var fileList = [];
+            $("#files").on('change', function () {
+                console.log("change listened")
+                fileList = [];
+                files = this.files;
+                for (var i = 0; i < files.length; i++) {
+                    fileList.push(files[i]);
+                }
+                console.log(files.length);
+                console.log(fileList);
+            });
+            
+            
+            // The Method to Create Membership
+
+            function createMembership() {
+                data = new FormData();
+                // console.log(form);
+                data.append("rguuid", applicantId);
+                data.append("comment", $("#comment").val());
+                data.append("username", username);
+                data.append("description", $("#description").val());
+                data.append("districtuuid", $("#m_district").val());
+                data.append("casetype", $("#m_casetype").val());
+                data.append("membership_date", $("#applicationDate").val());
+                console.log(fileList.length);
+                fileList.forEach(file => {
+                    data.append("files", file, file.name);
+                });
+ 
+                $.ajax({
+
+                    headers: {
+
+                    	 'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                    },
+                    url: olhs_url() + "/memberships/save",
+                    type: "POST", // type of action POST || GET
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: 'POST',
+                    data: data,
+                    success: function (result, textStatus, jQxhr) {
+                        $("#newMembershipSubmit").removeClass('disabled');
+                        if (result.CODE == 200) {
+                            console.log(result.OBJECT);
+         
+                            $.alert(result.DESCRIPTION, {
+                                type: "success",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+
+                            $("#newMembershipForm").each(
+                                function () {
+                                    this.reset();
+                                });
+
+                            $("#step1").parent().addClass("active");
+                            $("#step1").parent().removeClass("done");
+                            $("#step2").parent().removeClass("done");
+                            $("#step2").parent().removeClass("active");
+                            $("#step3").parent().removeClass("active");
+                            $("#form1").removeClass("hidden");
+                            $("#form2").addClass("hidden");
+                            $("#form3").addClass("hidden");
+                            
+                        } else {
+                            $.alert(result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                        $("#newMembershipSubmit").removeClass('disabled');
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+
+                    }
+                });
+            }
+
+
+            $("#newMembershipSubmit").on('click', function (event) {
+                event.preventDefault();
+                if ($("#newMembershipForm").valid()) {
+                    	createMembership(); 
+                }
+            });
+
+           
+
+            // The Method to Retrieve all Membership Requirements
+            var requirements;
+
+            function getMembershipRequirements() {
+                $.ajax({
+                    headers: {
+                    	 'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                    },
+                    url: olhs_url() + "/membrshiprequirements",
+                    type: "GET", // type of action POST || GET
+                    dataType: 'json', // data type
+                    contentType: 'application/json',
+                    data: {},
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+                            requirements = result.OBJECT;
+                            console.log(requirements);
+                            addToTable();
+                        } else {
+                            $.alert(result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                        $("#e_save").removeClass('disabled');
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+
+                    }
+                });
+            }
+
+
+          
+            function addToTable() {
+                var table = $("#table").DataTable();
+                table.clear().draw();
+                if (table)
+                    console.log('table available');
+                requirements.forEach(rq => {
+                    console.log(rq);
+                    table.row.add(
+                        [
+                            rq.description
+                        ]
+                    ).draw();
+
+                });
+            }
+
+            $("#next1").on('click', function () {
+                $("#step2").parent().addClass("active");
+                $("#step2").parent().removeClass("done");
+                $("#step1").parent().removeClass("active");
+                $("#step1").parent().addClass("done");
+                $("#step3").parent().removeClass("active");
+                $("#form2").removeClass("hidden");
+                $("#form1").addClass("hidden");
+                $("#form3").addClass("hidden");
+            });
+            $("#next2").on('click', function () {
+                if ($("#newMembershipForm").valid()) {
+                    $("#step3").parent().addClass("active");
+                    $("#step3").parent().removeClass("done");
+                    $("#step1").parent().removeClass("active");
+                    $("#step2").parent().removeClass("active");
+                    $("#step2").parent().addClass("done");
+                    $("#form3").removeClass("hidden");
+                    $("#form1").addClass("hidden");
+                    $("#form2").addClass("hidden");
+                }
+            });
+            $(".previous1").on('click', function () {
+                $("#step1").parent().addClass("active");
+                $("#step1").parent().removeClass("done");
+                $("#step2").parent().removeClass("active");
+                $("#step3").parent().removeClass("active");
+                $("#form1").removeClass("hidden");
+                $("#form2").addClass("hidden");
+                $("#form3").addClass("hidden");
+            });
+            $("#previous2").on('click', function () {
+                $("#step2").parent().addClass("active");
+                $("#step2").parent().removeClass("done");
+                $("#step1").parent().removeClass("active");
+                $("#step3").parent().removeClass("active");
+                $("#form2").removeClass("hidden");
+                $("#form1").addClass("hidden");
+                $("#form3").addClass("hidden");
+            });
+
+            //prevent from entering a character in input but decimal allowed
+
+            $('.numberRequired').keypress(function (event) {
+                var self = $(this);
+                self.val(self.val().replace(/[^0-9\.]/g, ''));
+                if ((event.which != 46 || self.val().indexOf('.') != -1) && (event.which < 48 || event.which >
+                        57)) {
+                    event.preventDefault();
+                }
+
+            });
+
+            $('.numberRequired').keyup(function () {
+                var total = 0;
+                var a;
+                $.each($(".amounts"), function () {
+                    if (isNaN(parseInt($(this).val()))) {
+                        a = 0;
+                    } else {
+                        a = parseInt($(this).val());
+                    }
+                    total += a;
+                });
+                $("#amount").val(total);
+            });
+
+           
+           
+       //   Location Handling
+            
+            function findAllLocation(){
+                   $.ajax({
+                      headers: {
+
+
+                     	 'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+
+                      },
+
+                      type: "GET",
+                      url: olhs_url() +'/provinces/locations',
+                      success: function (result, textStatus, jQxhr) {
+
+                          if (result.CODE == 200) {
+                            
+                             sectorInfo=result.OBJECT;
+                            //  console.log(sectorInfo);
+                              generateProvince();
+                          } else {
+                              console.log("fail get", result)
+                          }
+                      },
+                      error: function (e) {
+                          console.log("ERROR", e);
+                      }
+                  })
+                  
+              }
+
+        	function generateProvince() {
+				console.log(sectorInfo);
+				$.each(sectorInfo.provinces, function (i, item) {
+					if (item.id != null) {
+							$('#m_province').append($('<option>', {
+								value: item.id,
+								text: item.name
+							}));
+					}
+				})
+
+        	}
+        	
+        	 $(document).on("change", "#m_province" ,function(){
+        		 $('#m_district').children('option').remove();
+				   $.each(sectorInfo.districts, function(i,d){
+					  
+					   if(d.province.id==$("#m_province").val()){
+						   $('#m_district').append($('<option>', {
+							   value:d.id,
+							   text:d.name
+						   }));
+					   }
+				   })
+			   })
+    		
+        </script>
+    </section>
+</body>
+
+</html>

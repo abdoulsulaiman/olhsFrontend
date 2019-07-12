@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8"/>
+	
+	 <meta name="viewport" content="width=device-width, initial-scale=1"/> 
+	<title>OLHS -PROVINCES</title>
+
+	<div data-th-replace="Link/CSS :: myCss"></div>
+
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<style>
+ 
+	</style>
+<link type="text/css" rel="stylesheet" href="css/dtb.css">
+</head>
+
+<body class="leftbar-view">
+	<div  data-th-replace="/Layout/Navbar :: myHeader"></div>
+	<div  data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+	
+	<section class="main-container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="widget-wrap">
+							<div class="widget-header margin-bottom-0 block-header clearfix">
+								<div id="new" class="pull-left">
+									<a class="btn btn-primary" href="new_province"> <i class="zmdi zmdi-plus"></i> NEW</a>
+								</div>
+
+							</div>
+								</div>
+							</div>
+						</div>
+							
+								
+				 <div class="widget-wrap">
+                   
+                     <div class="widget-container">
+                        <div class="widget-content">
+	                                <table id="table" class="table table-hover">
+												<thead>
+													<th >#</th>
+													<th>Name</th>
+													<th>Action</th>
+													
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+										</div>
+										
+									</div>
+								 
+									
+									
+									
+					                
+							    
+
+				<div id="list_users"></div>
+
+
+				<div class="row">
+					<div data-th-replace="/Layout/Footer :: myFooter"></div>
+				</div>
+
+			
+
+
+
+
+		<div data-th-replace="/Link/Script :: myScript"></div>
+	</section>
+	
+		<script>
+		
+		function token(){
+			var token="kkdkshbsbsnmsbbndzmasbvzskdsjnfkn";
+			return token;
+		}
+		   function olhs_url() {
+			      var olhs_url = "http://localhost:8003";
+
+			      return olhs_url;
+			    }
+			
+		   // THE METHOD TO RETRIEVE ALL PROVINCES
+			
+			$(function () {
+				RetrieveProvinces();
+				 
+			})
+
+			function RetrieveProvinces() {
+				var tables=$('#table').DataTable().clear().draw();
+				$.ajax({
+					url: olhs_url() + '/provinces',
+					type: "GET", // type of action POST || GET
+					dataType: 'json', // data type
+					headers: {
+						'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+					},
+					data: {}, // post data || get data
+					contentType: 'application/json',
+					success: function (result, textStatus, jQxhr) {
+						if (result.CODE == 200) {
+							
+						var provinces=result.OBJECT;
+						 $.each(provinces, function (i, pro) {
+							
+								tables.row.add(
+									[
+										i+1,
+										pro.name,
+										" <ul class='icons-list' style='list-style: none'>"+"" +
+		                                "<li class='dropdown'>"+"" +
+		                                   "  <a href='datatable_basic.htm#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-bars'></i></a>"+"" +
+		                                 " <ul class='dropdown-menu dropdown-menu-right'>"+"" +
+		                                   "<li><a href='/districtupdate_" + pro.uuid + "' id='m_edit' class='dropdown-toggle' data-toggle='tooltip'  title='Edit This District'><i class='zmdi zmdi-edit'></i> Update</a></li>"+"" +
+		                                   "<li><a data-uuid='"+pro.uuid+"' href='javascript:void(0)' class='dropdown-toggle check pc_deleting' id='delete'  data-toggle='tooltip'  title='Delete This District' ><i class='zmdi zmdi-delete'></i> Delete<a></li>"+"" +
+		       
+		                                 " </ul>"+"" +
+		                                  " </li>"+"" +
+		                           " </ul>"
+		
+									]
+								).draw();
+								
+							});
+						} else {
+							$.alert(result.DESCRIPTION, {
+								type: "danger",
+								position: ['center',
+									[-0.42, 0]
+								],
+							});
+						}
+					},
+					error: function (xhr, resp, text) {
+						console.log(xhr, resp, text);
+						$.alert('Error Occurred', {
+							type: "danger",
+							position: ['center',
+								[-0.42, 0]
+							],
+						});
+
+					}
+				})
+
+			}
+			
+			 // DataTable Export
+			$("#table").DataTable({
+				"createdRow": function( row, data, dataIndex ) {
+
+				$(row).addClass( 'client' );
+				},
+				dom: 'Bfrtip',
+				dom: 'lBfrtip',
+
+				buttons: [
+				{
+					className: 'btn-primary',
+					extend: 'excelHtml5',
+					exportOptions: {
+						columns: [0,1]
+					},
+					text: function ( dt, button, config ) {
+						return dt.i18n( 'buttons.print', 'Print Excel File' );
+					},
+					messageTop:'LIST OF PROVINCES'
+
+				},
+				{
+					extend: 'pdfHtml5',
+					className: 'btn-primary',
+					exportOptions: {
+						columns: [0,1]
+					},
+					text: function ( dt, button, config ) {
+						return dt.i18n( 'buttons.print', 'Print Pdf File' );
+					},
+					messageTop:'List of Provinces'
+				},
+
+			// 'colvis'
+			],
+
+			}).clear().draw();
+			 
+			
+		
+			
+		
+		</script>
+
+</body>
+
+</html>

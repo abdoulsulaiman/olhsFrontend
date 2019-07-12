@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BFW -USERS</title>
+
+<div data-th-replace="Link/CSS :: myCss"></div>
+
+
+
+</head>
+
+<body class="leftbar-view">
+
+	<div data-th-replace="/Layout/Navbar :: myHeader"></div>
+	<div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+	<section class="main-container">
+		<div class="container-fluid">
+			<div>
+			
+			 <div class="page-header filled full-block light">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>NEW USER</h2>
+                    
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-page-breadcrumb">
+                        <li>Menu <i class="zmdi zmdi-chevron-right"></i></li>
+                        <li>User Management <i class="zmdi zmdi-chevron-right"></i></li>
+                        <li class="active-page"> NEW USER</li> 
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+              <div class="row">
+            <div class="col-md-12">
+                <div class="widget-wrap">
+                    <div class="widget-header margin-bottom-0 block-header clearfix">
+                        <div class="pull-left">
+                            <a class="btn btn-sm btn-primary" id="back" href="users"> <i
+                                    class="zmdi zmdi-chevron-left"></i> <span data-localize="back">Back</span></a>
+
+                        </div>
+                    </div>
+                    <div class="widget-container">
+                        <div class="widget-content">
+
+                            <div class="row">
+								<div class="col-md-12 text-center"> <span class="label label-warning" id="default_password_info"></span></div>
+							<div class="col-md-12">
+                                    <form class="form-horizontal material-form" id="r_form">
+                                        <div class="form-group col-md-6">
+                                            <label class="col-md-4 control-label">NAMES
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class=" col-md-8">
+                                                <input type="text" name="Names" class="form-control" id="r_names" placeholder="Names" required="required">
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group col-md-6">
+                                            <label class="col-md-4 control-label">EMAIL
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class=" col-md-8">
+                                                <input type="text" name="email" class="form-control" id="r_email" placeholder="Email" required="required">
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group col-md-6">
+                                            <label class="col-md-4 control-label">National ID</label>
+                                            <div class=" col-md-8">
+                                                <input type="text" maxlength="16" minlength="16" name="r_identity"   class="form-control u_nationalId" id="r_nationalId" placeholder="National ID" required="required">
+                                               
+                                            </div>
+                                        </div>
+                                         
+                                        <div class="form-group col-md-6">
+                                            <label class="col-md-4 control-label">Gender
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control" required="required" id="r_gender" name="gender">
+                                                    <option value="FEMALE">Female</option>
+                                                    <option value="MALE">Male</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label class="col-md-4 control-label">Username</label>
+                                            <div class=" col-md-8">
+                                                <input type="text" minlength="3" name="username"   class="form-control u_username" id="r_username" placeholder="username" required="required">
+                                                <p class="input-instruction">
+                                                    <i class="fa fa-question-circle"></i> This will be the username to be used for login
+                                                </p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group col-md-6">
+                                            <label class="col-md-4 control-label">Password</label>
+                                            <div class=" col-md-8">
+                                                <input type="password" name="password" id="r_password" class="form-control" placeholder="Password" >
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group col-md-6">
+                                            <label class="col-md-4 control-label">Phone
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class=" col-md-8">
+                                                <input type="text" maxlength="13" minlength="10" name="phone" class="form-control telephone" id="r_phone" placeholder="Phone" required="required">
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                         <div class="col-md-6">    
+                                   <div class="form-group ">
+                                            <label class="col-md-4 control-label">Category</label>
+                                            <div class="col-md-8">
+                                                <select class="form-control" required="required" id="r_category" name="category">
+                                                    <option value="COUNCIL">COUNCIL</option>
+                                                    <option value="LAWYER">LAWYER</option>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>     
+                                           
+                                        </div>
+                                        
+                                        
+                                        
+                                        
+                                        <div class="form-group col-md-6" th:if="${session.a_user.getRole().equalsIgnoreCase('SuperAdmin')}">
+                                            <label class="col-md-4 control-label">Role
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control" name="role" id="r_role" required="required">
+                                                    <option>Entity Manager</option> 
+                                                    <option>Admin</option>
+                                                                                                 
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            
+                                            <div class="col-md-12">
+                                                <div class="form-actions">
+                                                    <a  class="btn btn-primary pull-right" id="r_save"> <i class="zmdi zmdi-save"></i> Save</a>
+                                                    <a href="users" class="btn btn-default pull-left"> <i class="zmdi zmdi-close-circle"></i> Cancel</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
+				
+				<div id="list_users"></div>
+
+
+				<div class="row">
+					<div data-th-replace="/Layout/Footer :: myFooter"></div>
+				</div>
+
+			</div>
+		</div>
+
+
+		
+
+		<div data-th-replace="/Link/Script :: myScript"></div>
+		
+		<script>
+
+		function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+	  
+	   // The Method to Show Password
+	   function myfunction(){
+			var x=document.getElementById("r_password");
+			
+			if(x.type==="password"){
+				x.type="text";
+			}else{
+				x.type="password";
+			}
+		}
+	   $(document).ready(function(){
+		   $("#output1").hide();
+	   })
+		$(document).on('click','#r_save',function (){
+			
+			var username="User";
+			
+			var Names=$("#r_names").val();
+			 var username=$('#r_username').val();
+			var password=$("#r_password").val();
+			var role='User';
+			if($("#r_form").valid()){ 
+				$("#r_save").addClass('disabled');
+				
+				var user={
+		        Names:Names,
+		        username:username,
+		        phone:$("#r_phone").val(),
+		        email:$("#r_email").val(),
+		        gender:$("#r_gender").val(),
+		        applicationName:'OLHS',
+		        nationalId:$("#r_nationalId").val(),
+		        password:password,
+		        role:$("#r_role").val(),
+		        names:$("#r_names").val(),
+		        registrantCategory:$("#r_category").val(),
+		        martalStatus:$("#r_maritalstatus").val()
+				
+		        }	
+				console.log(user);		
+				$.ajax({ 
+			        
+					headers: {
+				        
+	                   'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+				        'doneBy':username
+				    },
+					url:olhs_url()+'/registrants/savewithadmin', 
+			        type : "POST", // type of action POST || GET
+			        dataType : 'json', // data type
+			        data : JSON.stringify(user), // post data || get data
+			        contentType: 'application/json',
+			        success : function(result, textStatus, jQxhr) {
+			        	$("#r_save").removeClass('disabled');
+			        	if(result.CODE==200){
+			     
+			        		$.alert(result.DESCRIPTION,
+									{
+										type : "success",
+										position : [ 'top-right',
+												[ -0.42, 0 ] ],
+									}); 
+				        	
+				        	$("#r_form").each(
+									function() {
+										this.reset();
+									});
+				        	 
+				        	}else{
+				        		 $.alert(result.DESCRIPTION,
+										{
+											type : "danger",
+											position : [ 'top-right',
+													[ -0.42, 0 ] ],
+										}); 
+				        	}
+				        		
+			        	
+
+							
+
+						},
+						error: function (xhr, resp, text) {
+							console.log(xhr, resp, text);
+							$("#r_save").removeClass('disabled');
+							$.alert('Error Occurred' + xhr.responseText, {
+								type: "danger",
+								position: ['top-right',
+									[-0.42, 0]
+								],
+							});
+
+						}
+					});
+
+			}
+				
+			});
+
+		
+		</script>
+	</section>
+</body>
+</html>

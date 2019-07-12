@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OLHS -LAWYER DETAIL</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+    
+    <style>
+    @media screen and (min-width: 1200px) {
+    .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+      position: absolute;
+      margin-left: 15vw;
+      margin-top: 0.3vh;
+    }
+
+    .btn-group>.btn:last-child:not(:first-child),
+    .btn-group>.dropdown-toggle:not(:first-child) {
+      position: absolute;
+      margin-left: 15vw;
+      margin-top: 0.3vh;
+    }
+
+    div.dataTables_wrapper div.dataTables_length label {
+      position: absolute;
+      margin-left: 10vw;
+      margin-top: 2.5vh;
+    }
+    
+        .content_table,
+        .details-table {
+            width: 100%;
+            border-spacing: 8px;
+            border-collapse: separate;
+        }
+
+        .content_table td {
+            width: 20%;
+            padding-left: 7px;
+            border: 1px solid silver;
+        }
+
+        .details-table {
+            padding-left: 7px;
+            height: 30px;
+            margin: 20px;
+            border: 1px solid silver;
+        }
+
+        .content_table .td-header,
+        .details-table .td-header {
+            width: 15%;
+            background-color: #eceff1;
+        }
+
+        #w_header {
+            padding-bottom: 5px;
+        }
+
+        .activities-list {
+            position: relative;
+            list-style: none;
+            padding: 15px 15px 0px 0px;
+            margin: 0px 0px 0px 15px;
+        }
+
+        .activities-list:after {
+            content: "";
+            height: 100%;
+            width: 2px;
+            background-color: #e5e5e5;
+            position: absolute;
+            left: 20px;
+            top: 0px;
+        }
+
+        .shadow {
+            -webkit-box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+            -moz-box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+            box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+        }
+    </style>
+
+</head>
+
+<body class="leftbar-view">
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+        <div class="container-fluid">
+            <div class="page-header filled full-block light">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 data-localize="loan details">Lawyer Details</h2>
+
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-page-breadcrumb">
+                            <li> <span data-localize="menu">Menu</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                            <li> <span data-localize="loans">Lawyer</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                            <li class="active-page" data-localize="loan details">Lawyer Details</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget-wrap">
+                        <div class="widget-header margin-bottom-0 block-header clearfix">
+                            <div class="pull-left">
+                               <div th:if="${session.a_reg.getRegistrantCategory().equalsIgnoreCase('COUNCIL')}"> <a  class="btn btn-default" href="memberships"> <i class="zmdi zmdi-arrow-left"></i> <span data-localize="back">Back</span></a></div>
+                                <div th:if=" !${session.a_reg.getRegistrantCategory().equalsIgnoreCase('COUNCIL')}"><a  class="btn btn-default" href="new_appointment"> <i class="zmdi zmdi-arrow-left"></i> <span data-localize="back">Back</span></a></div> 
+                            </div>
+                            <!-- <div class="pull-right" id="print2"> -->
+
+                            <!-- </div> -->
+                        </div>
+                        <div class="widget-container">
+                            <div class="widget-content">
+                                <div class="row">
+                                    <div class="panel">
+                                        <header class="panel-heading tab-bg-dark-navy-blue ">
+                                         
+                                        </header>
+                                        <div class="panel-body">
+                                            <div class="tab-content">
+                                                <div id="ListDocuments" class="tab-pane">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="widget-wrap">
+                                                                <div class="widget-container">
+                                                                    <div class="widget-content">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <table id="documentsTable"
+                                                                                    class="display table table-striped">
+                                                                                    <thead>
+                                                                                        <th>Name</th>
+                                                                                        <th>Action</th>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="membershipdetails" class="tab-pane active">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <div class="widget-wrap shadow">
+                                                                        <div class="widget-container"
+                                                                            style="padding-top: 0vh;">
+                                                                            <div class="widget-content row"
+                                                                                style="padding-top: 0vh;">
+                                                                                <h3 class="text-center" data-localize="applicant"
+                                                                                    style="margin-bottom: 4vh; margin-top: 0px;font-weight: 600">
+                                                                                    Lawyer</h3>
+                                                                                <div class="col-xs-12 col-md-4" id="aImg"></div>
+                                                                                <div class="col-xs-12 col-md-4" style="margin-top: 3vh">
+                                                                                    names: <span id="aNames"></span><br>
+                                                                                    Years of Experience: <span id="aType"></span><br>
+                                                                                   
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-md-4" style="margin-top: 3vh">
+                                                                                    WORKSTATUS: <span id="aId"></span><br>
+                                                                                    CaseType: <span id="aPhone"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12">
+                                                                    <div class="widget-wrap shadow">
+                                                                        <div class="widget-container">
+                                                                            <div class="widget-content">
+                                                                           <div class="widget-header block-header clearfix">
+                     														   <h2 >LAWYER OLD CASES LIST </h2>
+               																     </div>
+                                                                                <div class="row">
+                                                                                    <div class="row #w_header">
+                                                                                        <div class="col-md-6"
+                                                                                            id="applicant">
+                                                                                        </div>
+                                                                                        <div class="col-md-6"
+                                                                                            id="finance">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row page-header">
+                                                                                    </div>
+                                                                                  
+                                                                                    <div class="col-md-6">
+												
+										 </div>
+										 
+                                                               <table id="table" class="table table-hover">
+												<thead>
+													<th >#</th>
+													<th>TITLE</th>
+													<th>DESCRIPTION</th>	
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+                                                                                </div>
+                                                                                <!-- <div class="row" id="print">
+                                                                                </div> -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                              
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="luuid" th:value=${luuid} hidden>
+                            <input type="text" id="auuid" th:value=${auuid} hidden>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    </div>
+    <div class="row">
+        <div data-th-replace="/Layout/Footer :: myFooter"></div>
+    </div>
+
+    </div>
+    </div>
+
+
+
+    <div data-th-replace="/Link/Script :: myScript"></div>
+
+    <script>
+    var rguuid;
+        $(function () {
+            console.log($("#luuid").val());
+            console.log($("#auuid").val());
+            MembershipByuuid();
+           
+        })
+function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+    
+        function MembershipByuuid() {
+            var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+            var uuid = $("#luuid").val();
+        
+            $.ajax({
+                headers: {
+                'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                },
+                url: olhs_url() + "/lawyers/" + uuid,
+                type: "GET", // type of action POST || GET
+                //dataType : 'json', // data type
+                contentType: 'application/json',
+                success: function (result, textStatus, jQxhr) {
+                    if (result.CODE == 200) {
+                        console.log(result.OBJECT);
+                        rguuid=result.OBJECT.registrant.uuid;
+                        populateApplicant(result.OBJECT);
+                       
+                    } else {
+                        $.alert(result.DESCRIPTION, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+                    }
+
+
+                },
+                error: function (xhr, resp, text) {
+                    console.log(xhr, resp, text);
+                    $("#e_save").removeClass('disabled');
+                    $.alert('Error Occurred' + xhr.responseText, {
+                        type: "danger",
+                        position: ['top-right',
+                            [-0.42, 0]
+                        ],
+                    });
+
+                }
+            });
+        }
+
+        function populateApplicant(applicant){
+            $("#aNames").append(applicant.names);
+            $("#aId").append(applicant.workstatus);
+            $("#aType").append(applicant.yearofexperience);
+            $("#aPhone").append(applicant.casetype);
+           
+             var imgUrl = olhs_url() + "/pictures/registrant/" + applicant.registrant.uuid;
+            $("#aImg").append('<div class="user-thumb"><a href="javascript:void(0)"><img style="width:9vw" src="'+imgUrl+'" alt="user"></a></div>') 
+            RetrieveLawyerCases();
+        }
+
+       
+        function RetrieveLawyerCases() {
+			
+			var tables=$('#table').DataTable().clear().draw();
+			$.ajax({
+				url: olhs_url() + '/lawyerCases/lawyer/'+rguuid,
+				type: "GET", // type of action POST || GET
+				dataType: 'json', // data type
+				headers: {
+					'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+				},
+				data: {}, // post data || get data
+				contentType: 'application/json',
+				success: function (result, textStatus, jQxhr) {
+					if (result.CODE == 200) {
+						
+					var cases=result.OBJECT;
+					console.log(cases);
+					 $.each(cases, function (i, c) {
+						
+							tables.row.add(
+								[
+									i+1,
+									c.title,
+									c.description
+									
+								]
+							).draw();
+							
+						});
+					} else {
+						$.alert(result.DESCRIPTION, {
+							type: "danger",
+							position: ['center',
+								[-0.42, 0]
+							],
+						});
+					}
+				},
+				error: function (xhr, resp, text) {
+					console.log(xhr, resp, text);
+					$.alert('Error Occurred', {
+						type: "danger",
+						position: ['center',
+							[-0.42, 0]
+						],
+					});
+
+				}
+			})
+
+		}
+	   
+        $('#loan').on('click', function () {
+            $(".tab-pane").each(function () {
+                $(this).removeClass("active");
+            });
+            $('#membershipdetails').addClass("active");
+        })
+    </script>
+    </section>
+</body>
+
+</html>

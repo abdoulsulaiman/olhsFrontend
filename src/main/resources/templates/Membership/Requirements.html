@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OLHS -Requirements</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+
+
+</head>
+
+<body class="leftbar-view">
+
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+        <div class="container-fluid">
+            <div>
+
+                <div class="page-header filled full-block light">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 data-localize="requirements">Requirements</h2>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-page-breadcrumb">
+                                <li> <span data-localize="menu">Menu</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li>  <span data-localize="loans">Memberships</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li class="active-page" data-localize="requirements"> Requirements</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget-wrap">
+                            <div class="widget-header margin-bottom-0 block-header clearfix">
+                                <div class="pull-left">
+                                    <a class="btn btn-primary" id="newMembershipRequirement" href="javascript:void(0)"> <i
+                                            class="zmdi zmdi-plus"></i> NEW</a>
+                                </div>
+                            </div>
+                            <div class="widget-container">
+                                <div class="widget-content">
+                                    <table id="table" class="display table table-striped table-responsive">
+                                        <thead>
+                                            <th class="col-md-2">#</th>
+                                             <th class="col-md-8">Desciption</th>
+                                            <th class="col-md-2">Action</th>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div data-th-replace="/Layout/Footer :: myFooter"></div>
+        </div>
+
+        </div>
+        </div>
+
+        <!--Modal for Adding -loanRequirement -->
+
+        <div class="modal fade" id="requirement_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-ms">
+                <div class="modal-content">
+                    <div class="modal-header modal-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;
+                        </button>
+                        <h4 class="modal-title">New Requirement</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 material-form">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-12"><textarea placeholder="your requirement goes here" type="text"
+                                                class="form-control" id="membershipRequirement"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 1.3vh">
+                            <div class="col-md-12">
+                                <div class="form-actions">
+                                    <a class="btn btn-primary pull-right" data-dismiss="modal" id="membershipRequirementSubmit">
+                                        <i class="zmdi zmdi-check"></i> Submit</a>
+                                    <a href="#" class="btn btn-default pull-left" data-dismiss="modal"><i class="zmdi zmdi-close"></i>
+                                        Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal for Adding -loanRequirement -->
+
+        <div class="modal fade" id="update_requirement_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-ms">
+                <div class="modal-content">
+                    <div class="modal-header modal-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;
+                        </button>
+                        <h4 class="modal-title">Update Requirement</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 material-form">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-12"><textarea placeholder="your requirement goes here" type="text"
+                                                class="form-control" id="UpdatedLoanRequirement"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 1.3vh">
+                            <div class="col-md-12">
+                                <div class="form-actions">
+                                    <a class="btn btn-primary pull-right" data-dismiss="modal" id="updateRequirementSubmit">
+                                        <i class="zmdi zmdi-check"></i> Submit</a>
+                                    <a href="#" class="btn btn-default pull-left" data-dismiss="modal"><i class="zmdi zmdi-close"></i>
+                                        Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-th-replace="/Link/Script :: myScript"></div>
+
+        <script>
+        
+        function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+            var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+            var uuid = $.parseJSON(sessionStorage.getItem('a_registrant')).uuid;
+            $(function () {
+            	getMembershipRequirements();
+            })
+            $(document).on('click', '#newMembershipRequirement', function () {
+                $('#requirement_modal').modal();
+            });
+            var req, data;
+
+            $("#membershipRequirementSubmit").on('click', function () {
+                req = $("#membershipRequirement").val();
+                regRequirement = {
+                    description: req
+                }
+                createMembershipRequirement(regRequirement);
+                $("#LoanRequirement").val("");
+            })
+
+
+            function createMembershipRequirement(data) {
+                var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+                $.ajax({
+                    headers: {
+                    	 'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                        'username': username
+                    },
+                    url: olhs_url() + "/membrshiprequirements/save",
+                    type: "POST", // type of action POST || GET
+                    dataType: 'json', // data type
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+                            requirements.push(result.OBJECT);
+                            addToTable();
+                            $.alert(result.DESCRIPTION, {
+                                type: "success",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        } else {
+                            $.alert(result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                        $("#e_save").removeClass('disabled');
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+
+                    }
+                });
+            }
+            var requirements = [];
+
+            function getMembershipRequirements() {
+                $.ajax({
+                    headers: {
+                    	'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                    },
+                    url: olhs_url() + "/membrshiprequirements",
+                    type: "GET", // type of action POST || GET
+                    dataType: 'json', // data type
+                    contentType: 'application/json',
+                    data: {},
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+                            console.log(result)
+                            requirements = [];
+                            requirements = result.OBJECT;
+                            addToTable();
+
+                        } else {
+                            $.alert(result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                        $("#e_save").removeClass('disabled');
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+
+                    }
+                });
+            }
+
+            function addToTable() {
+                var table = $("#table").DataTable();
+                table.clear().draw();
+                if (table)
+                    console.log('table available');
+                    var i=-1;
+                requirements.forEach(rq => {
+                    i+=1;
+                    console.log(i);
+                    table.row.add(
+                        [
+                        	i+1,
+                            rq.description,
+                            '<ul  style="list-style: none;" class="icons-list" id="iconList"><li class="dropdown"><a  class="dropdown-toggle " data-toggle="dropdown"><i class="zmdi zmdi-menu"></i></a><ul class="dropdown-menu dropdown-menu-right"><li><a data-toggle="tooltip"  title="update this requirement" href="javascript:void(0)" data-content="'+rq.description+'" data-uuid="'+rq.IDENTIFIER+'" data-index="'+i+'" class="update"><i class="zmdi zmdi-edit"></i> update</a></li><li><a data-toggle="tooltip"  title="delete this requirement" href="javascript:void(0)" class="delete" id="/loans/requirements/delete/' +
+                            rq.IDENTIFIER +
+                            '"><i class="zmdi zmdi-delete"></i> delete</a></li></ul>',
+                        ]
+                    ).draw();
+
+                });
+            }
+            var path ;
+            $(document).on('click','.delete', function(){
+                path = bfw_url() + $(this).attr("id");
+                $("#delete_modal").modal();
+                $("#warning").html("<P>Do you really want to delete this requirement?</p>");
+            })
+
+            $("#delete_item").on('click', function(){
+                console.log(path);
+                deleteItem(path, getLoanRequirements);
+            })
+            var reqUuid;
+            var index;
+            $(document).on('click','.update',function(){
+                $("#UpdatedLoanRequirement").val($(this).data("content"));
+                reqUuid=$(this).data("uuid");
+                index = $(this).data("index");
+                $("#update_requirement_modal").modal();
+            })
+
+            $("#updateRequirementSubmit").on('click',function(){
+                var updateData = {
+                    description : $("#UpdatedLoanRequirement").val()
+                }
+                updateLoanRequirement(updateData,index);
+            })
+
+            function updateLoanRequirement(data,i) {
+                var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+                $.ajax({
+                    headers: {
+                        'bfw_token':token(),
+                        'username': username
+                    },
+                    url: bfw_url() + "/loans/requirements/update/"+reqUuid,
+                    type: "PUT", // type of action POST || GET
+                    dataType: 'json', // data type
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+                            requirements[i] = result.OBJECT;
+                            addToTable();
+                            $.alert(result.DESCRIPTION, {
+                                type: "success",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        } else {
+                            $.alert(result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                        $("#e_save").removeClass('disabled');
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+
+                    }
+                });
+            }
+        </script>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,380 @@
+
+
+<div data-th-fragment="mySidebar">
+ <aside class="leftbar">
+    <div class="left-aside-container">
+        <div class="user-profile-container " style="background: rgb(77, 77, 77);">
+            <div class="user-profile clearfix">
+                <div class="admin-user-thumb">
+                    <img src="images/user.png" alt="admin"/>
+                </div>
+                <div class="admin-user-info">
+                    <ul>
+                        <li th:if="${session.a_user!=null}"><a href="#" id='logeed_in_user_name' th:utext="${session.a_user.getNames()}">OLHS </a></li>
+                         <li th:if="${session.a_user!=null}"><span th:if=" ${session.a_user.getRole().equalsIgnoreCase('SuperAdmin')}" ><a style="color:white; text-align:center;" href="#" id='logeed_in_user_role' th:utext="${session.a_user.getRole()}">OLHS </a></span></li>
+                     
+                    </ul>
+                </div>
+            </div>
+         
+        </div>
+        <ul class="list-accordion tree-style">
+            <li class="list-title">MENU</li>
+            <li>
+                <a href="/dashboard"><i class="zmdi zmdi-view-dashboard"></i><span class="list-label">DashBord</span></a>
+            </li>
+              <li th:if=" ${session.a_user.getRole().equalsIgnoreCase('SuperAdmin')}">
+                <a href="#"><i class="zmdi zmdi-accounts"></i><span class="list-label">USER MANAGEMENT</span></a>
+                <ul>
+                    <li><a href="/users">USERS</a></li>
+                   
+                </ul>
+            </li>
+         <!--    <li th:if=" ${session.a_user.getRole().equalsIgnoreCase('SuperAdmin')}">
+                <a href="#"><i class="zmdi zmdi-map"></i><span class="list-label">LOCATIONS</span></a>
+                <ul>
+                    <li><a href="/province">PROVINCES</a></li>
+                      <li><a href="/district">DISTRICTS</a></li>
+                   
+                </ul>
+            </li> -->
+               <!--  <li  th:if=" ${session.a_user.getRole().equalsIgnoreCase('SuperAdmin')}"><a href="/locations"><i class="zmdi zmdi-map"></i><span class="list-label">LOCATIONS</span></a></li>-->  
+            <li  th:if=" ${session.a_user.getRole().equalsIgnoreCase('Entity Manager')}"><a href="lawyers"><i class="zmdi zmdi-accounts"></i><span class="list-label">LAWYERS</span></a></li>
+              <li th:if=" ${session.a_reg.getRegistrantCategory().equalsIgnoreCase('COUNCIL') ||session.a_reg.getRegistrantCategory().equalsIgnoreCase('UPCOMING_LAWYER')}">
+                <a href="#"><i class="zmdi zmdi-map"></i><span class="list-label">MEMBERSHIP</span></a>
+                <ul>
+                    <li th:if=" !${session.a_reg.getRegistrantCategory().equalsIgnoreCase('UPCOMING_LAWYER')}"><a href="/memberships">MEMBERSHIPS</a></li>
+                    <li th:if=" ${session.a_reg.getRegistrantCategory().equalsIgnoreCase('UPCOMING_LAWYER')}"><a href="/membership">MEMBERSHIP</a></li>
+                      <li  th:if=" ${session.a_reg.getRegistrantCategory().equalsIgnoreCase('COUNCIL')}"><a href="/membershiprequirements">MEMBERSHIP REQUIREMENT</a></li>
+                   
+                </ul>
+            </li>
+          <li th:if=" ${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('LAWYER'))}">
+             
+                <a href="appointments"><span class="list-label"><i class="zmdi zmdi-collection-text"></i> APPOINTMENTS</span></a>
+              
+            </li>
+            
+            <li th:if=" ${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('CITIZEN'))}">
+             
+
+                 <a href="appointment"><span class="list-label" th:if="${session.a_user.getRole().toLowerCase().equalsIgnoreCase('User')}"><i class="zmdi zmdi-collection-text"></i> APPOINTMENTS</span></a>
+            </li>
+            
+              <li th:if=" ${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('LAWYER'))}">
+             
+                <a href="contracts"><span class="list-label"><i class="zmdi zmdi-collection-text"></i> CONTRACT</span></a>
+              
+            </li>
+            
+            <li th:if=" ${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('LAWYER'))}">
+             
+                <a href="cases"><span class="list-label"><i class="zmdi zmdi-collection-text"></i> CASES PROFILE</span></a>
+              
+            </li>
+            
+            <li th:if=" ${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('CITIZEN'))}">
+             
+
+                 <a href="contracts"><span class="list-label" th:if="${session.a_user.getRole().toLowerCase().equalsIgnoreCase('User')}"><i class="zmdi zmdi-collection-text"></i> CONTRACT</span></a>
+            </li>
+            
+            
+             <li th:if="${session.a_user.getRole().toLowerCase().equalsIgnoreCase('User') || session.a_reg.getRegistrantCategory().equalsIgnoreCase('COUNCIL')}">
+             
+                <a href="/complains"><i class="zmdi zmdi-collection-text"></i><span class="list-label" >COMPLAINS</span></a>
+            </li>
+            <li  th:if="${session.a_user.getRole().toLowerCase().equalsIgnoreCase('User') || session.a_user.getRole().toLowerCase().equalsIgnoreCase('Entity Manager') }"><a href="profile"><i class="zmdi zmdi-account"></i><span class="list-label upper_case" data-localize="manage profile">Manage Profile</span></a></li>
+   
+           
+        </ul>
+    </div>
+</aside>	    </div>
+	     
+
+<!-- Modal to Edit Contract Information -->
+<div class="modal fade" id="contract_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header modal-danger" style="background: rgb(108,179,62)">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+				<h4 class="modal-title text-center " style="color:white;">You are about to change contract information</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+							<form class="form-horizontal material-form" id="c_form">
+								<div class="col-md-6">
+									<fieldset>
+										<legend>Contract</legend>
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Product</label>
+											<div class=" col-md-8">
+												<input type="text" name="c_product" class="form-control" id="c_pName" placeholder="Ibishyimbo" readonly>
+											</div>
+										</div>
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Unity Price</label>
+											<div class=" col-md-8">
+												<input type="number" min="0" name="c_unityPrice" class="form-control" id="c_unityPrice" placeholder="Unit Price"
+													required="required">
+											</div>
+										</div>
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Start Date</label>
+											<div class=" col-md-8">
+												<input type="text" name="dates" class="form-control" id="c_startDate" placeholder="2019-03-11"
+													required="required">
+											</div>
+										</div>
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Payment Term</label>
+											<div class=" col-md-8">
+												<input type="text" name="c_paymentTerm" class="form-control" id="c_paymentTerm" placeholder="terms"
+													required="required">
+											</div>
+										</div>
+										<div class="form-group sellerField">
+											<label class="col-md-4 control-label">Select Bank</label>
+											<div class=" col-md-8">
+											  <select id="c_bank" name="c_bank" class="form-control sellerInput" required>
+											    <option value="" selected disabled hidden>--Select Bank--</option>
+											  </select>
+											</div>
+										</div>
+										
+									</fieldset>
+								</div>
+								<div class="col-md-6">
+									<fieldset>
+										<legend>&nbsp;&nbsp;</legend>
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Quantity</label>
+											<div class=" col-md-8">
+												<input type="number" min="0" name="c_quantity" class="form-control" id="c_quantity" placeholder="45"
+													required="required">
+											</div>
+										</div>
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Delivery date</label>
+											<div class=" col-md-8">
+												<input type="text" name="eDate" class="form-control cs_date" id="c_Ddate" placeholder="2019-03-11"
+													required="required">
+											</div>
+										</div>
+										<div class="form-group ">
+											<label class="col-md-4 control-label">End Date</label>
+											<div class=" col-md-8">
+												<input type="text" name="eDate" class="form-control cs_date" id="c_Edate" placeholder="2019-03-11"
+													required="required">
+											</div>
+										</div>
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Payment Date</label>
+											<div class=" col-md-8">
+												<input type="text" name="eDate" class="form-control cs_date " id="c_Pdate" placeholder="2019-03-11"
+													required="required">
+											</div>
+										</div>
+										<div class="form-group sellerField">
+											<label class="col-md-4 control-label ">Bank Account</label>
+											<div class=" col-md-8">
+													<select id="c_account" name="c_account" class="form-control sellerInput" required>
+														<option value="" selected disabled hidden>--Select Account--</option>
+													</select>
+
+											</div>
+										</div>
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Delivery Mechanism</label>
+											<div class="col-md-8">
+												<select class="form-control" required="required"  id="c_mechanism">
+													<option value="" selected disabled hidden>--Select Mechanism--</option>
+													<option value="SELLER_SHIPPING">SELLER_SHIPPING</option>
+													<option value="BUYER_SHIPPING">BUYER_SHIPPING</option>
+												</select>
+											</div>
+										</div>
+										
+										<div class="form-group ">
+											<label class="col-md-4 control-label">Comment</label>
+											<div class=" col-md-8">
+												<textarea class="form-control" rows="3" id="c_comment"></textarea>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+								<div class="form-group col-md-12">
+									<div class="col-md-12">
+										<div class="form-actions">
+											<a class="btn btn-primary pull-right" id="saveContract"> <i class="zmdi zmdi-save"></i> Amend</a>
+											<a href="#" class="btn btn-default pull-left" data-dismiss="modal"> Cancel</a>
+										</div>
+									</div>
+								</div>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal to confirm Contract -->
+<div class="modal fade" id="c_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-ms">
+		<div class="modal-content">
+			<div class="modal-header modal-danger" style="background: rgb(108,179,62)">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+				<h4 class="modal-title">Warning</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						You are about to confirm Contract, do you really want to perform this
+						action?
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input type="hidden" id="c_contractUuid">
+						<div class="form-actions">
+							<a class="btn btn-primary pull-right" data-dismiss="modal" id="co_confirm"> <i
+									class="zmdi zmdi-check"></i> Yes</a>
+							<a href="#" class="btn btn-default pull-left" data-dismiss="modal"> No</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal For Terminating The Contract -->
+<div class="modal fade" id="c_terminate_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-ms">
+		<div class="modal-content">
+			<div class="modal-header modal-danger" style="background: rgb(108,179,62)">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+				<h4 class="modal-title">Warning</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						You are about to Terminate Contract, do you really want to perform this
+						action?
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">	
+						<form class="form-horizontal material-form" id="ter_form">
+							<input type="hidden" id="co_contractUuid">
+							<div class="form-group col-md-12 comment">
+								<label class="control-label">Comment</label>
+								<div class="col-md-12">
+									<textarea class="form-control" rows="3" id="co_content"></textarea>
+								</div>
+							</div>
+							<div class="form-group col-md-12">
+								<div class="form-actions col-md-12">
+									<a class="btn btn-primary pull-right"  id="co_terminate"> <i class="zmdi zmdi-check"></i>
+										Yes</a>
+									<a href="#" class="btn btn-default pull-left" data-dismiss="modal"> No</a>
+								</div>
+							</div>
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script>
+
+       
+
+		function deleted(path) {
+			var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+			var loggedinrole = $.parseJSON(sessionStorage.getItem('a_user')).role;
+			var objectId = $.parseJSON(sessionStorage.getItem('a_user')).objectId;
+			var firstName = $("#e_fname").val();
+			var role = 'Entity Manager';
+			$.ajax({
+				headers: {
+
+					'bfw_token': 'BFW' + formatDate(new Date(), "dd-MM-yyyy"),
+					'doneBy': username
+				},
+				url: path,
+				type: "DELETE", // type of action POST || GET
+				dataType: 'json', // data type
+				success: function (result, textStatus, jQxhr) {
+					$("#e_save").removeClass('disabled');
+					if (result.CODE == 200) {
+						// console.log(result)
+						$("#default_password_info").text('Member ' + result.OBJECT.names + ' is : ' + result.DESCRIPTION);
+						$.alert(result.DESCRIPTION,
+							{
+								type: "success",
+								position: ['top-right',
+									[-0.42, 0]],
+							});
+
+						$("#f_delete").each(
+							function () {
+								this.reset();
+							});
+
+						// send SMS
+						//   SendSMS(Member.phone,Member.names,Member.identity,user.password);
+					} else {
+						$.alert(result.DESCRIPTION,
+							{
+								type: "danger",
+								position: ['top-right',
+									[-0.42, 0]],
+							});
+					}
+
+
+				},
+				error: function (xhr, resp, text) {
+					console.log(xhr, resp, text);
+					$("#e_save").removeClass('disabled');
+					$.alert('Error Occurred' + xhr.responseText,
+						{
+							type: "danger",
+							position: ['top-right',
+								[-0.42, 0]],
+						});
+
+				}
+			});
+		}
+
+
+    
+	</script>
+

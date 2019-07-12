@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OLHS -MEMBERSHIPS</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+    <style>
+        .content_table,
+        .details-table {
+            width: 100%;
+            border-spacing: 8px;
+            border-collapse: separate;
+        }
+
+        .content_table td {
+            width: 20%;
+            padding-left: 7px;
+            border: 1px solid silver;
+        }
+
+        .details-table {
+            padding-left: 7px;
+            height: 30px;
+            margin: 20px;
+            border: 1px solid silver;
+        }
+
+        .content_table .td-header,
+        .details-table .td-header {
+            width: 15%;
+            background-color: #eceff1;
+        }
+
+        #w_header {
+            padding-bottom: 5px;
+        }
+
+        .activities-list {
+            position: relative;
+            list-style: none;
+            padding: 15px 15px 0px 0px;
+            margin: 0px 0px 0px 15px;
+        }
+
+        .activities-list:after {
+            content: "";
+            height: 100%;
+            width: 2px;
+            background-color: #e5e5e5;
+            position: absolute;
+            left: 20px;
+            top: 0px;
+        }
+
+        .shadow {
+            -webkit-box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+            -moz-box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+            box-shadow: 0px 0px 24px -5px rgba(196, 186, 196, 0.54);
+        }
+    </style>
+
+</head>
+
+<body class="leftbar-view">
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+        <div class="container-fluid">
+            <div class="page-header filled full-block light">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 data-localize="loan details">Membership Details</h2>
+
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-page-breadcrumb">
+                            <li> <span data-localize="menu">Menu</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                            <li> <span data-localize="loans">Memberships</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                            <li class="active-page" data-localize="loan details">Membership Details</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget-wrap">
+                        <div class="widget-header margin-bottom-0 block-header clearfix">
+                            <div class="pull-left">
+                               <div th:if="${session.a_reg.getRegistrantCategory().equalsIgnoreCase('COUNCIL')}"> <a  class="btn btn-default" href="memberships"> <i class="zmdi zmdi-arrow-left"></i> <span data-localize="back">Back</span></a></div>
+                                <div th:if=" !${session.a_reg.getRegistrantCategory().equalsIgnoreCase('COUNCIL')}"><a  class="btn btn-default" href="membership"> <i class="zmdi zmdi-arrow-left"></i> <span data-localize="back">Back</span></a></div> 
+                            </div>
+                            <!-- <div class="pull-right" id="print2"> -->
+
+                            <!-- </div> -->
+                        </div>
+                        <div class="widget-container">
+                            <div class="widget-content">
+                                <div class="row">
+                                    <div class="panel">
+                                        <header class="panel-heading tab-bg-dark-navy-blue ">
+                                            <ul class="nav nav-tabs nav-justified">
+                                                <li class="active">
+                                                    <a data-toggle="tab" id="loan" class="list"
+                                                        href="#listView" data-localize="loan">Membership</a>
+                                                </li>
+                                                <li class="">
+                                                    <a data-toggle="tab" id="docs" class="list"
+                                                        href="#listDocuments" data-localize="documents">Documents</a>
+                                                </li>
+                                             
+                                            </ul>
+                                        </header>
+                                        <div class="panel-body">
+                                            <div class="tab-content">
+                                                <div id="ListDocuments" class="tab-pane">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="widget-wrap">
+                                                                <div class="widget-container">
+                                                                    <div class="widget-content">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <table id="documentsTable"
+                                                                                    class="display table table-striped">
+                                                                                    <thead>
+                                                                                        <th>Name</th>
+                                                                                        <th>Action</th>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="membershipdetails" class="tab-pane active">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <div class="widget-wrap shadow">
+                                                                        <div class="widget-container"
+                                                                            style="padding-top: 0vh;">
+                                                                            <div class="widget-content row"
+                                                                                style="padding-top: 0vh;">
+                                                                                <h3 class="text-center" data-localize="applicant"
+                                                                                    style="margin-bottom: 4vh; margin-top: 0px;font-weight: 600">
+                                                                                    Applicant</h3>
+                                                                                <div class="col-xs-12 col-md-4" id="aImg"></div>
+                                                                                <div class="col-xs-12 col-md-4" style="margin-top: 3vh">
+                                                                                    names: <span id="aNames"></span><br>
+                                                                                    type: <span id="aType"></span><br>
+                                                                                   
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-md-4" style="margin-top: 3vh">
+                                                                                    ID: <span id="aId"></span><br>
+                                                                                    Phone: <span id="aPhone"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12">
+                                                                    <div class="widget-wrap shadow">
+                                                                        <div class="widget-container">
+                                                                            <div class="widget-content">
+                                                                                <div class="row">
+                                                                                    <div class="row #w_header">
+                                                                                        <div class="col-md-6"
+                                                                                            id="applicant">
+                                                                                        </div>
+                                                                                        <div class="col-md-6"
+                                                                                            id="finance">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row page-header">
+                                                                                    </div>
+                                                                                    <table class="content_table">
+
+                                                                                        
+                                                                                        <tr>
+                                                                                            <td class="td-header" data-localize="application date">
+                                                                                                Application Date:
+                                                                                            </td>
+                                                                                            <td id="applicationDate"></td>
+
+                                                                                            <td class="td-header" data-localize="interest rate">
+                                                                                                Applicant Name
+                                                                                            </td>
+                                                                                            <td id="applicantname"></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="td-header" data-localize="total amount">
+                                                                                                CaseType:
+                                                                                            </td>
+                                                                                            <td id="casetype"></td>
+
+                                                                                            <td class="td-header" data-localize="title">
+                                                                                                Status:
+                                                                                            </td>
+                                                                                            <td id="status"></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="td-header" data-localize="need amount">
+                                                                                                Description:
+                                                                                            </td>
+                                                                                            <td id="Desc"></td>
+
+
+                                                                                            <td class="td-header">
+                                                                                               District:</td>
+                                                                                            <td id="District"></td>
+
+                                                                                        </tr>
+
+                                                                                        <tr>
+
+                                                                                            <td class="td-header" data-localize="labour amount">
+                                                                                               
+                                                                                                Amount:</td>
+                                                                                            <td id="amount"></td>
+
+
+                                                                                            <td class="td-header">
+                                                                                               
+                                                                                                Payment Received:</td>
+                                                                                            <td id="payment"></td>
+
+                                                                                        </tr>
+                                          
+                                                                           
+
+                                                                                        <tr>
+                                                                                            <td class="td-header" data-localize="payment date">
+                                                                                                Stage:
+                                                                                            </td>
+                                                                                            <td id="stage">
+                                                                                            </td>
+                                                                                            <td class="td-header">
+                                                                                                Comment: </td>
+                                                                                            <td id="comment"></td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <!-- <div class="row" id="print">
+                                                                                </div> -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="widget-wrap shadow">
+                                                                <div
+                                                                    class="widget-header block-header margin-bottom-0 clearfix">
+                                                                    <div class="pull-left">
+                                                                        <h3 data-localize="recent activities">Recent Activities</h3>
+                                                                        <!-- <p>All users recent activities timeline</p> -->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-container margin-top-0">
+                                                                    <div class="widget-content">
+                                                                        <div class="activities-container">
+                                                                            <ul class="activities-list"
+                                                                                id="historyList">
+
+                                                                            </ul>
+                                                                            <!-- <buttson class="btn btn-link btn-block btn-loadmore">Load More</buttson> -->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="text" id="muuid" th:value=${muuid} hidden>
+                            <input type="text" id="auuid" th:value=${auuid} hidden>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    </div>
+    <div class="row">
+        <div data-th-replace="/Layout/Footer :: myFooter"></div>
+    </div>
+
+    </div>
+    </div>
+
+
+
+    <div data-th-replace="/Link/Script :: myScript"></div>
+
+    <script>
+        $(function () {
+            console.log($("#muuid").val());
+            console.log($("#auuid").val());
+            MembershipByuuid();
+        })
+function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+    
+        function MembershipByuuid() {
+            var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+            var uuid = $("#muuid").val();
+        
+            $.ajax({
+                headers: {
+                'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                },
+                url: olhs_url() + "/memberships/details/" + uuid + "/" + $("#auuid").val(),
+                type: "GET", // type of action POST || GET
+                //dataType : 'json', // data type
+                contentType: 'application/json',
+                success: function (result, textStatus, jQxhr) {
+                    if (result.CODE == 200) {
+                        console.log(result.OBJECT);
+                        populateApplicant(result.OBJECT.membership.applicant);
+                       populate(result.OBJECT.membership);
+                        populateDocs(result.OBJECT.docs);
+                        var hist = result.OBJECT.history;
+                        hist.sort(function (a, b) {
+                            var keyA = new Date(a.doneAt),
+                                keyB = new Date(b.doneAt);
+                            if (keyA > keyB) return -1;
+                            if (keyA < keyB) return 1;
+                            return 0;
+                        });
+                        populateHistory(hist);
+                        $("#print").append(
+                            '<a target="blank" class="btn btn-md btn-primary pull-right" href="' +
+                            olhs_url() + '/loans/' + uuid +
+                            '/report"><i class="zmdi zmdi-print"></i> <span data-localize="print details">Print</span></a>');
+                        $("#print2").append('<a target="blank" class="btn btn-primary pull-right" href="' +
+                            olhs_url() + '/loans/' + uuid +
+                            '/report"><i class="zmdi zmdi-print"></i> <span data-localize="print details">Print</span></a>');
+                     
+                    } else {
+                        $.alert(result.DESCRIPTION, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+                    }
+
+
+                },
+                error: function (xhr, resp, text) {
+                    console.log(xhr, resp, text);
+                    $("#e_save").removeClass('disabled');
+                    $.alert('Error Occurred' + xhr.responseText, {
+                        type: "danger",
+                        position: ['top-right',
+                            [-0.42, 0]
+                        ],
+                    });
+
+                }
+            });
+        }
+
+        function populateApplicant(applicant){
+            $("#aNames").append(applicant.names);
+            $("#aId").append(applicant.identity);
+            $("#aType").append(applicant.registrantCategory);
+            $("#aPhone").append(applicant.phone);
+           
+             var imgUrl = olhs_url() + "/pictures/registrant/" + applicant.uuid;
+            $("#aImg").append('<div class="user-thumb"><a href="javascript:void(0)"><img style="width:9vw" src="'+imgUrl+'" alt="user"></a></div>') 
+        }
+
+        function populate(membership) {
+            $("#applicationDate").html(""+ formatDate(membership.applicationDate, "dd-MM-yyyy HH:mm:ss"));
+            
+            $("#applicantname").html("" +membership.applicant.names);
+           
+            $("#status").html("" + membership.memberStatus);
+            $("#casetype").html("" +membership.casetype);
+            $("#Desc").html("" + membership.description);
+            $("#District").html("" + membership.district.name);
+            $("#amount").html("" +membership.amount);
+            if(membership.paymentReceived){
+            	
+           $("#payment").html("YES");
+            }else{
+            	$("#payment").html("NO");
+            }
+             $("#comment").html(""+membership.comment);
+           
+             $("#stage").html(""+membership.membershipStage);
+          
+        }
+
+        function populateDocs(docs) {
+            var table = $("#documentsTable").DataTable();
+            table.clear().draw();
+            if (table)
+                console.log('table available');
+            docs.forEach(doc => {
+                table.row.add(
+                    [
+                        doc.fileName,
+                        '<a href="' + olhs_url() + '/memberships/documents/download/' + doc.uuid +
+                        '"><i class="zmdi zmdi-download"></i> Download</a>',
+                    ]
+                ).draw();
+            })
+        }
+
+      // The Method to Membership Action History
+        function populateHistory(histories) {
+            histories.forEach(history => {
+                $('#historyList').append(
+                    '<li><div class="activities-badge"><span style="background-color:#6cb33e"><i class="fa fa-clock-o"></i></span></div><div class="activities-details"><h3 class="activities-header"><a href="#">' +
+                    history.action +
+                    '</a></h3><div class="activities-meta"><span><i class="fa fa-clock-o"></i> ' +
+                    formatDate(history.doneAt, "dd-MM-yyyy HH:mm:ss") +
+                    '</span><br><span><i class="fa fa-user"></i> '+history.doneBy+'</span></div><div class="activities-post"><ul class="new-comments-lists"><li>Stage: ' +
+                    history.membershipStage + '</li><li>Status: ' + history.membershipStatus +
+                    '</li><li><span>comment: ' + history.comment + '</span></li></ul></div></div></li>')
+            });
+        }
+
+       
+        $('#docs').on('click', function () {
+            $(".tab-pane").each(function () {
+                $(this).removeClass("active");
+            });
+            $('#ListDocuments').addClass("active");
+        });
+        $('#pats').on('click', function () {
+            $(".tab-pane").each(function () {
+                $(this).removeClass("active");
+            });
+            if (participants.teamName !== undefined)
+                $('#ListTeams').addClass("active");
+            else if (participants.names !== undefined)
+                $('#Listmembers').addClass("active");
+
+        });
+        $('#loan').on('click', function () {
+            $(".tab-pane").each(function () {
+                $(this).removeClass("active");
+            });
+            $('#membershipdetails').addClass("active");
+        })
+    </script>
+    </section>
+</body>
+
+</html>

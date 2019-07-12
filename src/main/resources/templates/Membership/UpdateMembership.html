@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OLHS -MEMBERSHIPS</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+
+</head>
+
+<body class="leftbar-view">
+
+    <div data-th-replace="/Layout/Navbar :: myHeader"></div>
+    <div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+    <section class="main-container">
+        <div class="container-fluid">
+            <div>
+
+                <div class="page-header filled full-block light">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 data-localize="update loan application">Update Membership Application</h2>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-page-breadcrumb">
+                                <li> <span data-localize="menu">Menu</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li> <span data-localize="loan">Membership</span> <i class="zmdi zmdi-chevron-right"></i>
+                                </li>
+                                <li class="active-page" data-localize="update loan application"> Update Membership Application</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="text" id="muuid" th:value=${muuid} hidden>
+                <input type="text" id="auuid" th:value=${auuid} hidden>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget-wrap">
+                            <div class="widget-header margin-bottom-0 block-header clearfix">
+                                <div class="pull-left">
+                                    <a class="btn btn-primary" href="loans"> <i class="zmdi zmdi-arrow-left"></i> <span data-localize="back">Back</span></a>
+                                </div>
+                            </div>
+                            <div class="widget-container">
+                                <div class="widget-content">
+                                    <div class="row">
+
+                                    </div>
+                                    <div class="row" th:if="${!(session.a_reg.getRegistrantCategory().equalsIgnoreCase('INDIVIDUAL_FARMER'))}">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <div class="md-stepper-horizontal blue">
+                                                <div class="md-step">
+                                                    <a href="javascript:void(0)" id="step2">
+                                                        <div class="md-step-circle"><span>1</span></div>
+                                                    </a>
+                                                    <div class="md-step-title" data-localize="update form">Update Form</div>
+                                                    <div class="md-step-bar-left"></div>
+                                                    <div class="md-step-bar-right"></div>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- <div class="col-md-12"> -->
+                                        <form class="form-horizontal material-form" method="POST" enctype="multipart/form-data"
+                                            id="newMembershipForm">
+                                            <div id="form2" class="row">
+                                                <div class="row">
+                                                    <div class=" col-md-offsett-1 col-md-10">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-4" for="loanTitle"><span
+                                                                    data-localize="title">Comment</span><span
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" name="comment" class="form-control"
+                                                                    id="comment" required="required">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 control-label">Application Date
+                                                                <span class="text-danger">*</span> </label>
+                                                            <div class="col-md-8">
+                                                                <input type="date" name="date" class="form-control"
+                                                                    id="applicationDate" required="required">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-4" for="description"><span
+                                                                    data-localize="title">Description</span><span
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                                <textarea type="text" class="form-control"
+                                                                    name="description" id="description" required></textarea>
+                                                            </div>
+                                                        </div>
+                                  
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-4"
+                                                                for="CaseType"><span
+                                                                    data-localize="labour amount">CaseType</span><span
+                                                                    
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                               <select class="form-control" required="required" id="m_casetype" name="martalstatus">
+                                                                <option value="PENAL">PENAL</option>
+                                                                <option value="DIVORCE">DIVORCE</option>
+                                                                <option value="WILL">WILL</option>
+                                                                <option value="BUSINESS">BUSINESS</option>
+                                                                
+                                                            </select>
+                                                            </div>
+                                                        </div>                       
+                                                         <div class="form-group">
+                                                            <label class="control-label col-md-4"
+                                                                for="District"><span
+                                                                    data-localize="labour amount">District</span><span
+                                                                    
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                               <select class="form-control" required="required" id="m_district" name="district">
+                                                              
+                                                                
+                                                            </select>
+                                                            </div>
+                                                        </div>
+
+                                                   <div class="form-group">
+                                                            <label class="control-label col-md-4" for="files"> <span data-localize="files">Files</span> <span
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                                <input type="file" class="file" id="files" multiple
+                                                                    required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                 <div class="row">
+                                                    <div class="col-md-offset-1 col-md-10">
+                                                        <div
+                                                            th:if="${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('UPCOMMING_LAWYER'))}">
+                                                            <a
+                                                                class="btn btn-md  btn-default pull-left previous1" data-localize="previous">Previous</a>
+                                                            <a class="btn btn-md  btn-primary pull-right"
+                                                                id="next2" data-localize="next">Next</a>
+                                                        </div>
+                                                        <div
+                                                            th:if="${(session.a_reg.getRegistrantCategory().equalsIgnoreCase('UPCOMING_LAWYER'))}">
+                                                            <a
+                                                                class="btn btn-md  btn-default pull-left previous1" data-localize="previous">Previous</a>
+                                                            <a class="btn btn-md - btn-primary pull-right" type="submit"
+                                                                id="newMembershipSubmit" data-localize="submit">Submit</a><br><br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            <div id="form3" class="row hidden">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-11">
+                                                   
+                                                </div>
+                                                <a class="btn btn-md  btn-primary pull-right" style="margin-right: 1vw"
+                                                    type="submit" id="newMembershipSubmit" data-localize="submit">Submit</a><br><br>
+                                                <a class="btn btn-md  btn-default pull-left" style="margin-left: 1vw"
+                                                    href="javascript:void(0)" id="previous2" data-localize="previous">previous</a><br><br>
+                                            </div>
+                                        </form>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal for confirm -loan application when no teams or members were chosen-->
+
+        <div class="modal fade" id="confirmation_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-ms">
+                <div class="modal-content">
+                    <div class="modal-header modal-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;
+                        </button>
+                        <h4 class="modal-title">Warning</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12" id="confirmationmessage">
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-actions">
+                                    <a class="btn btn-default pull-right" data-dismiss="modal"> <i
+                                            class="zmdi zmdi-check"></i>
+                                        Okay</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="list_users"></div>
+
+        <div class="row">
+            <div data-th-replace="/Layout/Footer :: myFooter"></div>
+        </div>
+
+        </div>
+        </div>
+
+
+
+
+        <div data-th-replace="/Link/Script :: myScript"></div>
+
+        <script>
+        $('input[name="dates"]').daterangepicker({
+			singleDatePicker: true,
+		   
+		    
+			locale: {
+                format: 'YYYY-MM-DD '
+              }
+		
+		});
+        function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+            var financials;
+            var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+            var applicantId = $.parseJSON(sessionStorage.getItem('a_registrant')).uuid;
+            var pType = "";
+            var table, allPages;
+            $(function () {
+
+                $("#step2").parent().addClass("active");
+               RetrieveDistrict();
+                MembershipByuuid();
+               
+            });
+            $("input[name='all']").on('change', function () {
+                allPages = table.rows().nodes();
+                if ($(this).prop("checked") === true) {
+                    $.each($("input[name='uuid']", allPages), function () {
+                        $(this).prop('checked', true);
+                    });
+                } else {
+                    console.log("remove attr");
+                    $.each($("input[name='uuid']", allPages), function () {
+                        $(this).prop('checked', false);
+                    });
+                }
+            });
+            var data = new FormData();
+            $("#files").on('change', function () {
+                console.log("change listened")
+                fileList = [];
+                files = this.files;
+                for (var i = 0; i < files.length; i++) {
+                    fileList.push(files[i]);
+                }
+                console.log(files.length);
+                console.log(fileList);
+            });
+
+            function populateLoanForm(membership) {
+                $("#comment").val(membership.comment);
+                $("#applicationDate").val(formatDate(membership.applicationDate,"yyyy-MM-dd"));
+                $("#description").val(membership.description);
+               // $("#m_district").val(membership.district.name);
+                
+               
+               
+            }
+
+            function createLoan() {
+                data = new FormData();
+                // console.log(form);
+              data.append("rguuid", applicantId);
+                data.append("comment", $("#comment").val());
+                data.append("username", username);
+                data.append("description", $("#description").val());
+                data.append("districtuuid", $("#m_district").val());
+                data.append("casetype", $("#m_casetype").val());
+                data.append("membership_date", $("#applicationDate").val());
+                fileList.forEach(file => {
+                    data.append("files", file, file.name);
+                });
+             
+
+
+                $.ajax({
+
+                    headers: {
+
+                    	'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                    },
+                    url: olhs_url() + '/memberships/update/' + $("#muuid").val(),
+                    type: "PUT", // type of action POST || GET
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: 'PUT',
+                    data: data,
+                    success: function (result, textStatus, jQxhr) {
+                        $("#newMembershipSubmit").removeClass('disabled');
+                        if (result.CODE == 200) {
+                            $.alert(result.DESCRIPTION, {
+                                type: "success",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+
+                            $("#newMembershipForm").each(
+                                function () {
+                                    this.reset();
+                                });
+
+
+                            window.location.href="membership";
+
+                        } else {
+                            $.alert(result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                        $("#newMembershipSubmit").removeClass('disabled');
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+
+                    }
+                });
+            }
+            var fileList = [];
+            $("#files").on('change', function () {
+                console.log("change listened")
+                fileList = [];
+                files = this.files;
+                for (var i = 0; i < files.length; i++) {
+                    fileList.push(files[i]);
+                }
+                console.log(files.length);
+                console.log(fileList);
+            });
+
+
+            $("#newMembershipSubmit").on('click', function (event) {
+                
+                if ($("#newMembershipForm").valid()) {
+                    $(this).addClass("disabled");
+                    var count = 0;
+                   
+                    
+                        createLoan();
+                    
+                }
+            });
+
+            var requirements;
+
+
+
+
+            function MembershipByuuid() {
+                var username = $.parseJSON(sessionStorage.getItem('a_user')).username;
+                $.ajax({
+                    headers: {
+                    	'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                    },
+                    url: olhs_url() + "/memberships/details/" + $("#muuid").val() + "/" + $("#auuid").val(),
+                    type: "GET", // type of action POST || GET
+                    //dataType : 'json', // data type
+                    contentType: 'application/json',
+                    success: function (result, textStatus, jQxhr) {
+                        if (result.CODE == 200) {
+                            console.log(result.OBJECT);
+                            
+                            populateLoanForm(result.OBJECT.membership);
+
+                        } else {
+                            $.alert(result.DESCRIPTION, {
+                                type: "danger",
+                                position: ['top-right',
+                                    [-0.42, 0]
+                                ],
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                        $("#e_save").removeClass('disabled');
+                        $.alert('Error Occurred' + xhr.responseText, {
+                            type: "danger",
+                            position: ['top-right',
+                                [-0.42, 0]
+                            ],
+                        });
+
+                    }
+                });
+            }
+
+            function addToTable() {
+                var table = $("#table").DataTable();
+                table.clear().draw();
+                if (table)
+                    console.log('table available');
+                requirements.forEach(rq => {
+                    console.log(rq);
+                    table.row.add(
+                        [
+                            rq.description
+                        ]
+                    ).draw();
+
+                });
+            }
+
+
+            $("#next2").on('click', function () {
+                if ($("#newMembershipForm").valid()) {
+                    $("#step3").parent().addClass("active");
+                    $("#step3").parent().removeClass("done");
+                    $("#step2").parent().removeClass("active");
+                    $("#step2").parent().addClass("done");
+                    $("#form3").removeClass("hidden");
+                    $("#form2").addClass("hidden");
+                }
+            });
+            $("#previous2").on('click', function () {
+                $("#step2").parent().addClass("active");
+                $("#step2").parent().removeClass("done");
+                $("#step3").parent().removeClass("active");
+                $("#form2").removeClass("hidden");
+                $("#form3").addClass("hidden");
+            });
+
+            //prevent from entering a character in input but decimal allowed
+
+            $('.numberRequired').keypress(function (event) {
+                var self = $(this);
+                self.val(self.val().replace(/[^0-9\.]/g, ''));
+                if ((event.which != 46 || self.val().indexOf('.') != -1) && (event.which < 48 || event.which >
+                        57)) {
+                    event.preventDefault();
+                }
+
+            });
+
+            $('.numberRequired').keyup(function () {
+                var total = 0;
+                var a;
+                $.each($(".amounts"), function () {
+                    if (isNaN(parseInt($(this).val()))) {
+                        a = 0;
+                    } else {
+                        a = parseInt($(this).val());
+                    }
+                    total += a;
+                });
+                $("#amount").val(total);
+            });
+            
+            //The Method to retrieve District
+            function RetrieveDistrict() {
+    			var tables=$('#table').DataTable().clear().draw();
+    			$.ajax({
+    				url: olhs_url() + '/districts',
+    				type: "GET", // type of action POST || GET
+    				dataType: 'json', // data type
+    				headers: {
+    					'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+    				},
+    				data: {}, // post data || get data
+    				contentType: 'application/json',
+    				success: function (result, textStatus, jQxhr) {
+    					if (result.CODE == 200) {
+    						
+    					var provinces=result.OBJECT;
+    					 console.log(provinces);
+    						
+    						  $('#m_district').children('option').remove();
+    							$.each(provinces, function (i, item) {
+    								$('#m_district').append($('<option>', {
+    									value: item.uuid,
+    									text: item.name
+    								}));
+    							});
+    			        		
+    							
+    					
+    					} else {
+    						$.alert(result.DESCRIPTION, {
+    							type: "danger",
+    							position: ['center',
+    								[-0.42, 0]
+    							],
+    						});
+    					}
+    				},
+    				error: function (xhr, resp, text) {
+    					console.log(xhr, resp, text);
+    					$.alert('Error Occurred', {
+    						type: "danger",
+    						position: ['center',
+    							[-0.42, 0]
+    						],
+    					});
+
+    				}
+    			})
+
+    		}
+    		
+    		
+        </script>
+    </section>
+</body>
+
+</html>

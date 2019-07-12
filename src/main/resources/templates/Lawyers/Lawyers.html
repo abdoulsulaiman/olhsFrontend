@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OLHS -LAWYERS</title>
+
+<div data-th-replace="Link/CSS :: myCss"></div>
+<style >
+  .ad{
+  margin-top:20px;
+  }
+</style>
+</head>
+
+<body class="leftbar-view">
+
+	<div data-th-replace="/Layout/Navbar :: myHeader"></div>
+	<div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+	<section class="main-container">
+		<div class="container-fluid">
+			<div>
+			
+			 <div class="page-header filled full-block light">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 data-localize="seasons">LAWYERS</h2>
+                    
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-page-breadcrumb">
+                        <li>Menu<i class="zmdi zmdi-chevron-right"></i></li>
+                        <li>Lawyers<i class="zmdi zmdi-chevron-right"></i></li>
+                        <li data-localize="seasons" class="active-page"> Lawyer</li> 
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+              <div class="row">
+            <div class="col-md-12">
+                <div class="widget-wrap">
+                    <div class="widget-header margin-bottom-0 block-header clearfix">
+                        
+                    </div>
+                    <div class="widget-container">
+                        <div class="widget-content">
+                            
+
+                            <div class="row">
+							 <div class="col-md-12">
+                <div class="widget-wrap">
+                    <div class="widget-header block-header clearfix">
+                        <h2 data-localize="seasons list">LAWYERS LIST </h2>
+                    </div>
+                    <div class="widget-container">
+                        <div class="widget-content">
+                            <table id="stable" class="table table-hover">
+                                <thead>
+                                <tr>
+                                	<th>#</th>
+                                    <th>NAMES</th>
+                                     <th>ADDRESS</th>
+                                    <th>CASE TYPE</th>
+                                    <th>WORK STATUS</th>
+                                     <th>ACTIONS</th>
+                                    
+                                      
+                                </tr>
+                                </thead>
+                                <tbody id="stbody">
+                              
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                     <input type="hidden" th:value="${session.a_reg.getRegistrantCategory()}" id="reg_category">
+                </div>
+            </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
+				
+				<div id="list_users"></div>
+
+
+				<div class="row">
+					<div data-th-replace="/Layout/Footer :: myFooter"></div>
+				</div>
+
+			</div>
+		</div>
+	
+                <!--Modal for cancel-Complain  items-->
+
+                <div class="modal fade" id="cancel_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-ms">
+                        <div class="modal-content">
+                            <div class="modal-header modal-danger" style="background: rgb(253, 97, 2)">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;
+                                </button>
+                                <h4 class="modal-title">Warning</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        You are about to cancel a loan application, do you really want to perform this
+                                        action?
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-md-12">
+                                    <form action="" id="">
+                                    <div class="form-group">
+                                                            <label class="control-label col-md-4" for="loanTitle"><span
+                                                                    data-localize="title">Comment</span><span
+                                                                    class="text-danger">*</span></label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" name="comment" class="form-control"
+                                                                    id="c_comment" required="required">
+                                                            </div>
+                                                        </div>
+                                    </form>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="row ad">
+                                    <div class="col-md-12">
+                                        <div class="form-actions">
+                                            <a class="btn btn-primary pull-right" data-dismiss="modal" id="cancel"> <i
+                                                    class="zmdi zmdi-block"></i> Yes, cancel</a>
+                                            <a href="#" class="btn btn-default pull-left" data-dismiss="modal"> No</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+	
+	
+		
+
+		<div data-th-replace="/Link/Script :: myScript"></div>
+		
+		<script>
+		//	// the Method to retrieve all season 
+		
+		
+        function olhs_url() {
+		      var olhs_url = "http://localhost:8003";
+
+		      return olhs_url;
+		    }
+		  $(function (){
+			  var category = $.parseJSON(sessionStorage.getItem('a_registrant')).registrantCategory;  
+			  
+			  listComplainByLawyer();
+        });
+		
+		
+		// THE METHOD TO RETRIEVE LAWYERS
+		function listComplainByLawyer() {
+        	  var ruuid = $.parseJSON(sessionStorage.getItem('a_registrant')).uuid;
+            var all=[];
+         	var tables=$('#stable').DataTable().clear().draw();
+             var res;
+             var l="";
+             $.ajax({
+                 url: olhs_url() +'/lawyers/',
+                 type: "GET", // type of action POST || GET
+                 data: {}, // post data || get data
+                 headers: {
+                     'olhs_token':'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                 },
+                 success: function (result, textStatus, jQxhr) {
+                     if (result.CODE == 200) {
+                         pending = result.OBJECT;
+                        console.log(pending);
+                      
+                        $.each(result.OBJECT, function (i, p) {
+                        	var l=''; 
+                        	l += " <ul class='icons-list' style='list-style: none'>";
+							l += "<li class='dropdown'>"
+							l += "  <a href='datatable_basic.htm#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-bars'></i></a>";
+							l += " <ul class='dropdown-menu dropdown-menu-right'>";
+							l+= "<li><a data-uuid='"+p.uuid+"' href='javascript:void(0)' class='dropdown-toggle check ' id='deactivate'  data-toggle='tooltip'  title='Deactivate This Lawyers' ><i class='zmdi zmdi-close'></i> Deactivate<a></li>";
+							 l+= "<li class='divider'></li><li><a data-toggle='tooltip'  title='View details of this complain' href='lawyerDetails_"+p.uuid+"'><i class='zmdi zmdi-eye'></i> view details</a></li></ul>";
+							 
+								l+= " </ul>";
+								l+= " </li>";
+								l+= " </ul>";
+								tables.row.add(
+									[
+										i+1,
+										p.names,
+										p.address,
+										p.casetype,
+										p.workstatus,
+										
+									    l
+										
+									]
+								).draw();
+								
+							});
+                         $("#pending").removeClass("spinner");
+                     } else {
+                         $.alert('Error Occurred ' + result.DESCRIPTION, {
+                             type: "danger",
+                             position: ['top-right',
+                                 [-0.42, 0]
+                             ],
+                         });
+                     }
+                 },
+                 error: function (xhr, resp, text) {
+                     console.log(xhr, resp, text);
+
+                     $.alert('Error Occurred' + xhr.responseText, {
+                         type: "danger",
+                         position: ['top-right',
+                             [-0.42, 0]
+                         ],
+                     });
+                 }
+             });
+         }
+		
+		
+          $(document).ready(function(){
+        	    $('input.timepicker').timepicker({});
+        	});
+		
+          $(document).on('click','.edit',function (){
+              var id=$(this).data('id');
+              $('#appointment_modal').modal();
+              $(document).on('click','#ra_save',function (){
+            	  appointApproval(id);
+         		});
+             
+     	 });
+          
+          
+          function appointApproval(id){
+        	  
+        	  console.log(id);
+        	     if($("#ra_form").valid()){ 
+ 					$("#ra_save").addClass('disabled');
+ 					
+ 					var app={
+ 							
+ 							scheduledate:$("#schedule_date").val(),
+ 							scheduleTime:$("#schedule_time").val()
+ 			    
+ 					
+ 			        }	
+ 					console.log(app);	
+ 					var username=$.parseJSON(sessionStorage.getItem('a_registrant')).names;
+ 					$.ajax({ 
+ 				        
+ 						headers: {
+ 					        
+ 		                   'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+ 					        'doneBy':username
+ 					    },
+ 						url:olhs_url()+'/appointments/approve/'+id, 
+ 				        type : "PUT", // type of action POST || GET
+ 				        dataType : 'json', // data type
+ 				        data : JSON.stringify(app), // post data || get data
+ 				        contentType: 'application/json',
+ 				        success : function(result, textStatus, jQxhr) {
+ 				        	$("#ra_save").removeClass('disabled');
+ 				        	if(result.CODE==200){
+ 				        		$.alert(result.DESCRIPTION,
+ 										{
+ 											type : "success",
+ 											position : [ 'top-right',
+ 													[ -0.42, 0 ] ],
+ 										}); 
+ 					        	
+ 					        	$("#ra_form").each(
+ 										function() {
+ 											this.reset();
+ 										});
+ 					        	 
+ 					        	}else{
+ 					        		 $.alert(result.DESCRIPTION,
+ 											{
+ 												type : "danger",
+ 												position : [ 'top-right',
+ 														[ -0.42, 0 ] ],
+ 											}); 
+ 					        	}
+ 					        		
+ 				        	
+
+ 								
+
+ 							},
+ 							error: function (xhr, resp, text) {
+ 								console.log(xhr, resp, text);
+ 								$("#ra_save").removeClass('disabled');
+ 								$.alert('Error Occurred' + xhr.responseText, {
+ 									type: "danger",
+ 									position: ['top-right',
+ 										[-0.42, 0]
+ 									],
+ 								});
+
+ 							}
+ 						});
+
+ 				}
+ 					
+          }
+          
+          $(document).on('click','.cancel',function (){
+              var id=$(this).data('id');
+              $('#cancel_modal').modal();
+              $(document).on('click','#cancel',function (){
+            	  cancelComplain(id);
+         		});
+             
+     	 });
+          
+      
+          // The Method to cancel an Appointment
+        
+        	  
+        	function cancelComplain(id){
+        	  
+        	  var ComplainComet={
+        		comment:$('#c_comment').val()  
+        	  }
+        	 
+        	  var username=$.parseJSON(sessionStorage.getItem('a_registrant')).names;
+        	  $.ajax({ 
+			        
+					headers: {
+				        
+	                   'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+				        'doneBy':username
+				    },
+					url:olhs_url()+'/complains/cancel/'+id,
+			        type : "PUT", // type of action POST || GET
+			        dataType : 'json', // data type
+			        data :JSON.stringify(ComplainComet), // post data || get data
+			        contentType: 'application/json',
+			        success : function(result, textStatus, jQxhr) {
+			        	$("#cancel").removeClass('disabled');
+			        	if(result.CODE==200){
+			        		$.alert(result.DESCRIPTION,
+									{
+										type : "success",
+										position : [ 'top-right',
+												[ -0.42, 0 ] ],
+									}); 
+			        		listComplains();
+				        	
+				        	$("#ra_form").each(
+									function() {
+										this.reset();
+									});
+				        	 
+				        	}else{
+				        		 $.alert(result.DESCRIPTION,
+										{
+											type : "danger",
+											position : [ 'top-right',
+													[ -0.42, 0 ] ],
+										}); 
+				        	}
+				        		
+			        	
+
+							
+
+						},
+						error: function (xhr, resp, text) {
+							console.log(xhr, resp, text);
+							$("#ra_save").removeClass('disabled');
+							$.alert('Error Occurred' + xhr.responseText, {
+								type: "danger",
+								position: ['top-right',
+									[-0.42, 0]
+								],
+							});
+
+						}
+					});
+
+			
+          }
+          
+          
+$(document).on('click','#deactivate',function (){
+				
+				uuid=$(this).data('uuid');
+				var username=$.parseJSON(sessionStorage.getItem('a_user')).username;
+				var loggedinrole=$.parseJSON(sessionStorage.getItem('a_user')).role;
+				
+			
+					$.ajax({ 
+				        
+						headers: {
+					        
+		                   'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+					        'doneBy':username
+					    },
+						url: olhs_url()+'/lawyers/deactivate/'+uuid, 
+				        type : "DELETE", // type of action POST || GET
+				        dataType : 'json', // data type
+				        data :{}, // post data || get data
+				        contentType: 'application/json',
+				        success : function(result, textStatus, jQxhr) {
+				        	
+				        	if(result.CODE==200){
+				          
+				        	 $.alert(result.DESCRIPTION,
+									{
+										type : "success",
+										position : [ 'top-right',
+												[ -0.42, 0 ] ],
+									}); 
+				        
+				        	  // window.location.href="cases";
+				        	   RetrieveLawyerCases();
+				        	}else{
+				        		 $.alert(result.DESCRIPTION,
+										{
+											type : "danger",
+											position : [ 'top-right',
+													[ -0.42, 0 ] ],
+										}); 
+				        	}
+				        	
+				        	
+				        },
+				        error: function(xhr, resp, text) {
+				            console.log(xhr, resp, text);
+				            $("#s_save").removeClass('disabled');
+				            $.alert('Error Occurred'+xhr.responseText,
+									{
+										type : "danger",
+										position : [ 'top-right',
+												[ -0.42, 0 ] ],
+									});
+				            
+				        }
+				    });
+			
+			
+			});
+			
+			
+			
+         
+          
+        
+	
+		</script>
+	</section>
+</body>
+</html>
+>

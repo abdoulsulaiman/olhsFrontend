@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OLHS -Profile</title>
+
+    <div data-th-replace="Link/CSS :: myCss"></div>
+
+     <style>
+      .land-table td{
+             width: 5%;
+         }
+         .land-table .td-header{
+               background-color: #eceff1;
+         }
+         .land-table,.profile-table{
+             width: 100%;
+             border-spacing: 8px;
+         }
+         .land-table td,.profile-table td{
+            padding-left: 7px;
+             height: 30px;
+             margin: 20px;
+             border: 1px solid silver;
+         }
+         .profile-table .td-header{
+             width:20%;
+             background-color: #eceff1;
+         }
+         #w_header{
+             padding-bottom: 5px;
+         }
+         #w_wrap{
+             padding-top: 10px;
+             padding-bottom: 5px;
+         }
+
+     </style>
+</head>
+
+<body class="leftbar-view">
+
+<div data-th-replace="/Layout/Navbar :: myHeader"></div>
+<div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+<section class="main-container">
+    <div class="container-fluid">
+        <div>
+           <input type="hidden" th:value="${session.a_reg.getNames()}" id="reg_name">
+            <input type="hidden" th:value="${session.a_reg.getUuid()}" id="reg_uuid">
+            <input type="hidden" th:value="${session.a_reg.getFile()}" id="reg_file">
+            <div class="page-header filled full-block light">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 data-localize="profile">Profile</h2>
+
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-page-breadcrumb">
+                            <li> <span data-localize="menu">Menu</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                            <li><span data-localize="manage profile">Manage Profile</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                            <li class="active-page" data-localize="profile">Profile</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-3 col-sm-4">
+                    <div>
+                        <a href="#" class="thumbnail" id="logo">
+                            
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-4">
+                    <div class="widget-wrap" id="w_wrap">
+                        <div class="widget-header block-header margin-bottom-0 clearfix" id="w_header">
+                            <div class="pull-left">
+                                <h3 data-localize="entity details">USER Details</h3>
+                            </div>
+                            <div class="pull-right">
+                               <a class="btn btn-primary" href="updateEntity"> <i class="zmdi zmdi-edit"></i> <span data-localize="update">Update</span></a>
+                            </div>
+                        </div>
+                        <div class="widget-container margin-top-0">
+                            <div class="widget-content">
+                                <div class="row">
+                                  <table class="profile-table">
+                                      <tr>
+                                          <td class="td-header">ID</td>
+                                          <td id="e_identity"></td>
+                                        <td class="td-header">Gender</td>
+                                        <td id="e_gender"></td>
+                                      </tr>
+                                      <tr>
+                                          <td class="td-header" data-localize="name">Name</td>
+                                          <td id="e_names"></td>
+                                          <td class="td-header" data-localize="start year">Email</td>
+                                          <td id="e_email"></td>
+                                      </tr>
+                                      
+                                      <tr>
+                                          <td class="td-header" data-localize="phone">Phone</td>
+                                          <td id="e_phone"></td>
+                                        <td class="td-header" data-localize="entity category">Registrant Category</td>
+                                        <td id="e_category"></td>
+                                      </tr>
+                                      <tr>
+                                          <td class="td-header" data-localize="address">Address</td>
+                                          <td id="e_address"></td>
+                                          <td class="td-header" data-localize="about">Martal Status</td>
+                                          <td id="e_mstatus"></td>
+                                       </tr>
+                                        <tr  class="sellerField hidden">
+                                          <td class="td-header" data-localize="address">Year Of Experience</td>
+                                          <td id="e_year"></td>
+                                          
+                                       </tr>
+                                  </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div data-th-replace="/Layout/Footer :: myFooter"></div>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Modal for Inserting Profile-->
+
+    <div class="modal fade" id="r_log_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-ms">
+            <div class="modal-content">
+                <div class="modal-header modal-danger" style="background: rgb(108,179,62)">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                    <h4 class="modal-title">Change Profile Picture</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                           
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal material-form" id="ter_form">
+                                <input type="hidden" id="co_contractUuid">
+                                <div class="form-group ">
+                                    <label class="col-md-4 control-label input_label">Upload Picture</label>
+                                    <div class=" col-md-8">
+                                        <input type="file" name="attachement" class="form-control" id="r_image"
+                                            placeholder="Logo" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div class="col-md-12">
+                                        <div class="form-actions">
+                                            <a class="btn btn-primary pull-right" id="c_logo"> <i class="zmdi zmdi-save"></i> Submit</a>
+                                            <a href="#" class="btn btn-default pull-left" data-dismiss="modal"> Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div data-th-replace="/Link/Script :: myScript"></div>
+
+    <script>
+    function olhs_url() {
+	      var olhs_url = "http://localhost:8003";
+
+	      return olhs_url;
+	    }
+        var registrantUuid=$.parseJSON(sessionStorage.getItem('a_registrant')).uuid;
+        var role=$.parseJSON(sessionStorage.getItem('a_user')).role;
+        console.log(role);
+       
+        $(function (){
+            var image=$("#reg_file").val();
+            //  $("#profile").attr('src', bfw_url()+"/"+image);
+             var category=$.parseJSON(sessionStorage.getItem('a_registrant')).registrantCategory;
+             /* if(category==="CITIZEN"){
+            	 $('.sellerField').addClass('hidden');
+             }else if(category==="UPCOMMING"){
+            	 $('.sellerField').addClass('hidden');
+             }else if(category==="COUNCIL"){
+            	 $('.sellerField').addClass('hidden');
+             } */
+             if(category==="LAWYER"){
+            	 $('.sellerField').removeClass('hidden');
+             }
+            populateRegistrantInfo();
+           
+            $("#logo").append('<img src="'+olhs_url()+'/pictures/registrant/'+registrantUuid+'" id="profile" alt="entity" width="190" height="150">');
+        });
+
+
+
+
+    // Updating section
+
+            //Hide and show update and show buttons
+             $(document).on("click", "#new_c", function () {    
+                     $("#c_save").removeClass("hidden");
+                    $("#c_update").addClass("hidden");   
+             })
+
+
+                    //changing logo
+       
+                        var data = new FormData();
+                        $(document).on('click', '#logo', function () {
+                            
+                            $("#r_log_modal").modal();
+
+                        })
+                        $(document).on('click', '#c_logo', function () {
+                            var ruuid = $("#reg_uuid").val();;
+                            data = new FormData();
+
+
+                            file = $("#r_image").prop('files')[0];
+                            data.append("file", file);
+
+
+                            $.ajax({
+
+                                headers: {
+
+                                	'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+        					        
+                                },
+                                url: olhs_url() + '/registrants/saveProfile/' +ruuid,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                method: 'POST',
+                                data: data,
+                                success: function (result, textStatus, jQxhr) {
+                                    
+                                    if (result.CODE == 200) {
+                                        
+                                        $.alert(result.DESCRIPTION, {
+                                            type: "success",
+                                            position: ['top-right',
+                                                [-0.42, 0]
+                                            ],
+                                        });
+                                        
+                                        $("#newLoanForm").each(
+                                            function () {
+                                                this.reset();
+                                            });
+                                            window.location.replace("/profile");
+                                        // send SMS
+                                        // SendSMS(user.phone, user.names, user.nationalId, user.password);
+                                    } else {
+                                        $.alert(result.DESCRIPTION, {
+                                            type: "danger",
+                                            position: ['top-right',
+                                                [-0.42, 0]
+                                            ],
+                                        });
+                                    }
+
+
+                                },
+                                error: function (xhr, resp, text) {
+                                    console.log(xhr, resp, text);
+                                    $("#newLoanSubmit").removeClass('disabled');
+                                    $.alert('Error Occurred' + xhr.responseText, {
+                                        type: "danger",
+                                        position: ['top-right',
+                                            [-0.42, 0]
+                                        ],
+                                    });
+
+                                }
+                            });
+                        })
+
+
+/**
+        * Retrieving Registrant Information
+        */
+
+        function populateRegistrantInfo() {
+                var reg_uuid=$("#reg_uuid").val();
+    
+                 // tables.clear();
+                 $.ajax({
+                     headers: {
+    
+                    	 'olhs_token': 'OLHS'+formatDate(new Date(), "dd-MM-yyyy"),
+                     },
+                     type: "GET",
+                     url: olhs_url()+"/registrants/"+reg_uuid,
+    
+                     success: function (result) {
+                         if (result.CODE == 200) { 
+                             var entity=result.OBJECT;
+                             
+                              entity=result.OBJECT;
+                             $("#e_identity").text(entity.reg.identity);
+                             $("#e_names").text(entity.reg.names);
+                             $("#e_address").text(entity.reg.address);
+                             $("#e_gender").text(entity.reg.gender);
+                             $("#e_email").text(entity.reg.email); 
+                             $("#e_year").text(entity.la.yearofexperience); 
+                             $("#e_phone").text(entity.reg.phone);
+                             $("#e_category").text(entity.reg.registrantCategory);
+                            
+                             $("#e_email").text(entity.reg.email);
+                             $("#e_mstatus").text(entity.reg.martalStatus);
+                             
+                             
+                         } else {
+                             console.log("fail get", resurt)
+                         }
+                     },
+                     error: function () {
+                         //  console.log("ERROR", e);
+                     }
+                 })
+             }
+             
+
+
+
+
+
+
+
+
+
+
+
+
+             //   Method to check if the number start with +250
+function checkNumber(){
+	  
+      var number=$("#c_phone").val();
+   
+   if(!number.startsWith("+250")){
+       $("#errorPhone").remove();
+       $("#c_phone").after("<span id='errorPhone'>Invalid phone Number</span>")
+        $("#errorPhone").css("color","red");
+       $("#c_save").addClass('disabled');
+   }else if(phonenumber(number)==false){
+        $("#errorPhone").remove();
+        $("#c_phone").after("<span id='errorPhone'>Invalid phone Number</span>")
+        $("#errorPhone").css("color","red");
+        $("#c_save").addClass('disabled');
+   }else{
+       $("#errorPhone").remove();
+       $("#c_save").removeClass('disabled');
+   }
+}
+
+
+//Datable EXPORT
+$("#list_contacts").DataTable({ 
+    "createdRow": function( row, data, dataIndex ) {
+
+        $(row).addClass( 'client' );
+        },
+        dom: 'Bfrtip',
+        dom: 'lBfrtip',
+
+        buttons: [
+        {
+            className: 'btn-primary',
+            extend: 'excelHtml5',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            text: function ( dt, button, config ) {
+                return dt.i18n( 'buttons.print', 'Print Excel File' );
+            },
+            messageTop:'List of Entity Contacts'
+
+        },
+        {
+            extend: 'pdfHtml5',
+            className: 'btn-primary',
+            exportOptions: {
+                columns: [0,1,2,3,4]
+            },
+            text: function ( dt, button, config ) {
+                return dt.i18n( 'buttons.print', 'Print Pdf File' );
+            },
+            messageTop:'List of Entity Contacts'
+        },
+
+        // 'colvis'
+        ],
+}).clear().draw();
+
+$("#list_landInfo").DataTable({
+    "createdRow": function( row, data, dataIndex ) {
+
+        $(row).addClass( 'client' );
+        },
+        dom: 'Bfrtip',
+        dom: 'lBfrtip',
+
+        buttons: [
+        {
+            className: 'btn-primary',
+            extend: 'excelHtml5',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            text: function ( dt, button, config ) {
+                return dt.i18n( 'buttons.print', 'Print Excel File' );
+            },
+            messageTop:'List of Entity Land Information'
+
+        },
+        {
+            extend: 'pdfHtml5',
+            className: 'btn-primary',
+            exportOptions: {
+                columns: [0,1,2,3,4,5]
+            },
+            text: function ( dt, button, config ) {
+                return dt.i18n( 'buttons.print', 'Print Pdf File' );
+            },
+            messageTop:'List of Entity Land Information'
+        },
+
+        // 'colvis'
+        ],
+
+}).clear().draw();
+$("#list_site").DataTable({
+    "createdRow": function( row, data, dataIndex ) {
+
+            $(row).addClass( 'client' );
+            },
+            dom: 'Bfrtip',
+            dom: 'lBfrtip',
+
+            buttons: [
+            {
+                className: 'btn-primary',
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0,1,2]
+                },
+                text: function ( dt, button, config ) {
+                    return dt.i18n( 'buttons.print', 'Print Excel File' );
+                },
+                messageTop:'List of Harvest Correction Sites'
+
+            },
+            {
+                extend: 'pdfHtml5',
+                className: 'btn-primary',
+                exportOptions: {
+                    columns: [ 0, 1, 2 ]
+                },
+                text: function ( dt, button, config ) {
+                    return dt.i18n( 'buttons.print', 'Print Pdf File' );
+                },
+                messageTop:'List of Harvest Correction Sites'
+            },
+
+            // 'colvis'
+            ],
+
+}).clear().draw();
+
+
+
+       
+             
+
+    </script>
+</section>
+</body>
+</html>

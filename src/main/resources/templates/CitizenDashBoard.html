@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>OLHS - DASHBOARD</title>
+
+<div data-th-replace="Link/CSS :: myCss"></div>
+
+<!-- /global stylesheets -->
+
+<!-- Core JS files -->
+
+
+</head>
+
+<body class="leftbar-view">
+
+	<div data-th-replace="/Layout/Navbar :: myHeader"></div>
+	<div data-th-replace="/Layout/Sidebar :: mySidebar"></div>
+	<section class="main-container">
+		   <!-- <input type="hidden" id="userRole" th:value="${session.a_user.getRole()}"> -->
+		  <!--  <input type="hidden" id="reg_uuid" th:if="${session.a_reg!=null}" th:value="${session.a_reg.getUuid()}"> -->
+		<div class="container-fluid">
+			<div>			
+			   <div class="page-header filled full-block light">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2> <span data-localize="loans">SYSTEM FEATURES</span></h2>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-page-breadcrumb">
+                                <li> <span data-localize="menu">Menu</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li> <span data-localize="loans">Statistics</span> <i class="zmdi zmdi-chevron-right"></i></li>
+                                <li class="active-page"> <span data-localize="loans">statistic</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+				
+				<div class="row">
+					<div class="col-md-6">
+              <div class="widget-wrap">
+                          <div class="widget-header block-header margin-bottom-0 clearfix">
+                                  <div class="row">
+										<div class="col-md-6">
+												<div>Creating Appointment Steps</div>
+										 </div>
+										
+								   </div>
+						  </div>
+						  <div  class="widget-container margin-top-0">
+								<div class="widget-content">
+									<div id="financialBar">
+									<br>
+									<h5>* Click Appointment on sidebar</h5><br>
+									<h5>* Click New Button on current page</h5>
+									</div>
+							    </div>
+						  </div>
+						</div>
+					</div>
+
+            	<div class="col-md-6">
+            		<div class="widget-wrap">
+            			<div class="widget-header block-header margin-bottom-0 clearfix">
+            				<div class="pull-left">
+            					<div class="">Creating A Complaint Steps</div>
+            					<div class=""></div>
+            				</div>
+            				<form class="form-horizontal material-form" id="rg_form">
+            					<input type="hidden" id="registrant" th:value="${session.a_reg.getUuid()}">
+            					<div class="col-md-10">
+
+            					</div>
+
+            				</form>
+            			</div>
+            			<div class="widget-container margin-top-0">
+            				<div class="widget-content">
+            					<div id="chart">
+
+            					</div>
+            				</div>
+            			</div>
+            		</div>
+
+            	</div>
+
+				</div>
+				
+				<div class="row">
+					<div class="col-md-6">
+              <div class="widget-wrap">
+                          <div class="widget-header block-header margin-bottom-0 clearfix">
+                                  <div class="row">
+										<div class="col-md-6">
+												<div>Manage Profile Steps</div>
+										 </div>
+										
+								   </div>
+						  </div>
+						  <div  class="widget-container margin-top-0">
+								<div class="widget-content">
+									<div id="financialBar">
+
+									</div>
+							    </div>
+						  </div>
+						</div>
+					</div>
+
+            	<div class="col-md-6">
+            		<div class="widget-wrap">
+            			<div class="widget-header block-header margin-bottom-0 clearfix">
+            				<div class="pull-left">
+            					<div class="">Manage Contract Steps</div>
+            					<div class=""></div>
+            				</div>
+            				<form class="form-horizontal material-form" id="rg_form">
+            					<input type="hidden" id="registrant" th:value="${session.a_reg.getUuid()}">
+            					<div class="col-md-10">
+
+            					</div>
+
+            				</form>
+            			</div>
+            			<div class="widget-container margin-top-0">
+            				<div class="widget-content">
+            					<div id="chart">
+
+            					</div>
+            				</div>
+            			</div>
+            		</div>
+
+            	</div>
+
+				</div>
+				<div class="row">
+					<div data-th-replace="/Layout/Footer :: myFooter"></div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- <div th:if="${session.a_reg!=null}">
+		<input type="hidden" th:value="${session.a_reg.getRegistrantCategory()}" id="entityType" hidden=""/>
+		 <input type="hidden" id="registrant" th:value="${session.a_reg.getUuid()}" hidden="" />
+		</div> -->
+		<div data-th-replace="/Link/Script :: myScript"></div>
+
+
+
+		   <script>
+			     
+		   </script>
+
+	</section>
+</body>
+</html>
